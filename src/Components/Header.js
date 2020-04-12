@@ -21,7 +21,7 @@ const Header = (props) => {
                             </>
                         }
                         {
-                            (authUser && authUser.role == "ADMIN") &&
+                            (authUser && authUser.role === "ADMIN") &&
                                 <p style={ {color: 'black'} }>Admin</p>
                         }
                     </div>
@@ -32,11 +32,18 @@ const Header = (props) => {
     );
 }
 
-const SignOutButtonBase = ({ firebase }) => (
-    <button type="button" onClick={firebase.doSignOut}>
-        Sign Out
-    </button>
-);
+const SignOutButtonBase = (props) => {
+    const handleSignOut = () => {
+        props.firebase.doSignOut();
+        window.location = '/';
+    }
+
+    return(
+        <button type="button" onClick={handleSignOut}>
+            Sign Out
+        </button>
+    );
+}
 
 const SignOutButton = withFirebase(SignOutButtonBase);
 
