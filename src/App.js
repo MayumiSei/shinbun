@@ -5,33 +5,22 @@ import './Assets/style/index.scss';
 import './App.scss';
 import Home from "./Pages/Home";
 import Header from "./Components/Header";
+import { withAuthentication } from './Components/Session';
+import * as ROUTES from './Routes';
+import SignUp from './Pages/SignUp';
+import SignIn from './Pages/SignIn';
 
-
-function App() {
+const App = () => {
 	return (
 		<Router>
 			<Header />
-			{/* <div className="App">
-				<header className="App-header">
-					<img src={logo} className="App-logo" alt="logo" />
-					<p>
-						Edit <code>src/App.js</code> and save to reload.
-           			</p>
-					<a
-						className="App-link"
-						href="https://reactjs.org"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						Learn React
-          			</a>
-				</header>
-			</div> */}
 			<Switch>
-				<Route exact path="/" component={Home} />
+				<Route exact path={ROUTES.HOME} component={Home} />
+				<Route path={ROUTES.SIGNUP} component={SignUp} />
+				<Route path={ROUTES.SIGNIN} component={SignIn} />
 			</Switch>
 		</Router>
 	);
 }
 
-export default App;
+export default withAuthentication(App)
