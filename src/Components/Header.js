@@ -4,9 +4,7 @@ import '../Assets/style/index.scss';
 const Header = (props) => {
     return(
         <header>
-            <div className="container">
-                <h1>Shinbun</h1>
-            </div>
+            <div className="container"></div>
         </header>
     );
 }
