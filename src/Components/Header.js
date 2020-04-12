@@ -1,7 +1,9 @@
 import React from 'react';
 import '../Assets/style/index.scss';
 import { withFirebase } from './Firebase';
-import { AuthUserContext } from './Session';
+import { AuthUserContext} from './Session';
+import { Link } from 'react-router-dom';
+import * as ROUTES from '../Routes';
 
 const Header = (props) => {
     return(
@@ -12,7 +14,15 @@ const Header = (props) => {
                     <div className="container">
                         <h1>Shinbun</h1>
                         {
-                            authUser && <SignOutButton />
+                            authUser &&
+                            <>
+                                <SignOutButton />
+                                <Link to={ROUTES.ACCOUNT}>Compte</Link>
+                            </>
+                        }
+                        {
+                            (authUser && authUser.role === 'ADMIN ') &&
+                                <p>Admin</p>
                         }
                     </div>
                 </header>
