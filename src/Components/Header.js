@@ -11,9 +11,6 @@ const Header = (props) => {
             {
                 authUser =>
                 <header>
-                    {
-                        console.log('authUser ', authUser && authUser.role)
-                    }
                     <div className="container">
                         <h1>Shinbun</h1>
                         {

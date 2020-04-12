@@ -12,7 +12,7 @@ const withAuthentication = Component => {
         }
 
         componentDidMount() {
-            this.props.firebase.auth.onAuthStateChanged(async (_authUser) => {
+            this.props.firebase.auth.onAuthStateChanged( async (_authUser) => {
                 if(_authUser) {
                     this.props.firebase.user(_authUser.uid).on("value", function(snapshot) {
                         this.setState({authUser: snapshot.val()});

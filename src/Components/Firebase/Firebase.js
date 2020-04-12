@@ -3,39 +3,41 @@ import 'firebase/auth';
 import 'firebase/database';
 
 const config = {
-    apiKey: process.env.REACT_APP_API_KEY,
-    authDomain: process.env.REACT_APP_AUTH_DOMAIN,
-    databaseURL: process.env.REACT_APP_DATABASE_URL,
-    projectId: process.env.REACT_APP_PROJECT_ID,
-    storageBucket: '',
-    messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+	apiKey: process.env.REACT_APP_API_KEY,
+	authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+	databaseURL: process.env.REACT_APP_DATABASE_URL,
+	projectId: process.env.REACT_APP_PROJECT_ID,
+	storageBucket: '',
+	messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
 };
 
 class Firebase {
-    constructor() {
-      app.initializeApp(config);
+	constructor() {
+		app.initializeApp(config);
 
-      this.auth = app.auth();
-      this.database = app.database();
-    }
+		this.auth = app.auth();
+		this.database = app.database();
+	}
 
-    // *** Auth API ***
-    doCreateUserWithEmailAndPassword = (email, password) =>
-        this.auth.createUserWithEmailAndPassword(email, password);
+	// *** Auth API ***
+	doCreateUserWithEmailAndPassword = (email, password) =>
+		this.auth.createUserWithEmailAndPassword(email, password);
 
-    doSignInWithEmailAndPassword = (email, password) =>
-        this.auth.signInWithEmailAndPassword(email, password);
+	doSignInWithEmailAndPassword = (email, password) =>
+		this.auth.signInWithEmailAndPassword(email, password);
 
-    doSignOut = () => this.auth.signOut();
+	doSignOut = () => this.auth.signOut();
 
-    doPasswordReset = email => this.auth.sendPasswordResetEmail(email);
-    
-    doPasswordUpdate = password =>
-      this.auth.currentUser.updatePassword(password);
+	doPasswordReset = email => this.auth.sendPasswordResetEmail(email);
 
-    // *** User API ***
-    user = uid => this.database.ref(`users/${uid}`);
-    users = () => this.database.ref('users');
- }
+	doPasswordUpdate = password =>
+		this.auth.currentUser.updatePassword(password);
 
- export default Firebase;
+	// *** User API ***
+	user = uid => this.database.ref(`users/${uid}`);
+	users = () => this.database.ref('users');
+
+	getUser = (uid) => this.user(uid).once("value", function(snapshot) { console.log("hythhtyht ", snapshot.val()); return snapshot.val() })
+}
+
+export default Firebase;
