@@ -36,8 +36,6 @@ class Firebase {
 	// *** User API ***
 	user = uid => this.database.ref(`users/${uid}`);
 	users = () => this.database.ref('users');
-
-	getUser = (uid) => this.user(uid).once("value", function(snapshot) { console.log("hythhtyht ", snapshot.val()); return snapshot.val() })
 }
 
 export default Firebase;
