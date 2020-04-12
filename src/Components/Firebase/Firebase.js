@@ -1,12 +1,12 @@
 import app from 'firebase/app';
 
 const config = {
-    apiKey: 'AIZASYAY0DN-4RNIMYYK40EEUUSIKAQR8FMRVFA',
-    authDomain: 'PROJECT-216520449094',
-    databaseURL: 'HTTPS://SHINBUN-SEI.FIREBASEIO.COM',
-    projectId: 'SHINBUN-SEI',
+    apiKey: process.env.REACT_APP_API_KEY,
+    authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+    databaseURL: process.env.REACT_APP_DATABASE_URL,
+    projectId: process.env.REACT_APP_PROJECT_ID,
     storageBucket: '',
-    messagingSenderId: '216520449094',
+    messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
 };
 
 class Firebase {
