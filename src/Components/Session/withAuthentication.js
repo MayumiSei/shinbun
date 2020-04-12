@@ -10,18 +10,15 @@ const withAuthentication = Component => {
                 authUser: null,
             };
         }
-        componentDidMount() {
-            this.listener = this.props.firebase.auth.onAuthStateChanged(
-                authUser => {
-                    authUser
-                        ? this.setState({ authUser })
-                        : this.setState({ authUser: null });
-                },
-            );
-        }
 
-        componentWillUnmount() {
-            this.listener();
+        componentDidMount() {
+            this.props.firebase.auth.onAuthStateChanged(async (_authUser) => {
+                if(_authUser) {
+                    this.props.firebase.user(_authUser.uid).on("value", function(snapshot) {
+                        this.setState({authUser: snapshot.val()});
+                    }.bind(this));
+                }
+            });
         }
 
         render() {

@@ -11,6 +11,9 @@ const Header = (props) => {
             {
                 authUser =>
                 <header>
+                    {
+                        console.log('authUser ', authUser && authUser.role)
+                    }
                     <div className="container">
                         <h1>Shinbun</h1>
                         {
@@ -21,8 +24,8 @@ const Header = (props) => {
                             </>
                         }
                         {
-                            (authUser && authUser.role === 'ADMIN ') &&
-                                <p>Admin</p>
+                            (authUser && authUser.role == "ADMIN") &&
+                                <p style={ {color: 'black'} }>Admin</p>
                         }
                     </div>
                 </header>
