@@ -38,7 +38,7 @@ class SignUpFormBase extends Component {
 						username,
 						email,
 						role: 'MEMBER'
-				});
+					});
 			})
 			.then(authUser => {
 				this.setState({ ...INITIAL_STATE });
