@@ -20,7 +20,7 @@ const init = {
               bullist numlist outdent indent | removeformat | help | code'
 }
 
-const ArticleAdd = (props) => {
+const articleAdd = (props) => {
     const handleEditorChange = (content, editor) => {
         console.log('Content was updated:', content);
     }
@@ -54,4 +54,4 @@ const ArticleAdd = (props) => {
 
 const condition = authUser => authUser && authUser.role === "ADMIN";
 
-export default withAuthorization(condition)(ArticleAdd);
+export default withAuthorization(condition)(articleAdd);
