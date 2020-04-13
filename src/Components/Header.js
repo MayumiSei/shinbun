@@ -1,5 +1,6 @@
 import React from 'react';
 import '../Assets/style/index.scss';
+import '../Assets/style/header.scss'
 import { withFirebase } from './Firebase';
 import { AuthUserContext} from './Session';
 import { Link } from 'react-router-dom';

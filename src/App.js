@@ -11,7 +11,7 @@ import SignUp from './Pages/SignUp';
 import SignIn from './Pages/SignIn';
 import Account from './Pages/Account';
 import PasswordForget from './Components/PasswordForget';
-import ArticleAdd from './Pages/Article/articleAdd';
+import ArticleAdd from './Pages/Article/ArticleAdd';
 
 const App = () => {
 	return (

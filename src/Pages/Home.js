@@ -9,7 +9,7 @@ const Home = (props) => {
         <AuthUserContext.Consumer>
             {
                 authUser =>
-                <div>
+                <div className="container">
                     <h1>test</h1>
                     {
                         (authUser && authUser.role === "ADMIN") &&
