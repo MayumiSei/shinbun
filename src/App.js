@@ -11,6 +11,7 @@ import SignUp from './Pages/SignUp';
 import SignIn from './Pages/SignIn';
 import Account from './Pages/Account';
 import PasswordForget from './Components/PasswordForget';
+import ArticleAdd from './Pages/Article/ArticleAdd';
 
 const App = () => {
 	return (
@@ -22,6 +23,7 @@ const App = () => {
 				<Route path={ROUTES.SIGNIN} component={SignIn} />
 				<Route path={ROUTES.ACCOUNT} component={Account} />
 				<Route path={ROUTES.PASSWORD_FORGET} component={PasswordForget} />
+				<Route path={ROUTES.ARTICLEADD} component={ArticleAdd} />
 			</Switch>
 		</Router>
 	);

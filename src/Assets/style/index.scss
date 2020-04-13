@@ -1,1 +1,30 @@
+@import 'utilities/values.scss';
 @import 'utilities/utilities.scss';
+
+body {
+    color: black;
+}
+
+.container {
+    @media screen and (max-width: $xs-width) {
+        width: 570px;
+        max-width: 570px;
+    }
+    @media screen and (min-width: $xs-width) and (max-width: $sm-width) {
+        width: 860px;
+        max-width: 860px;
+    }
+    @media screen and (min-width: $sm-width) and (max-width: $md-width) {
+        width: 960px;
+        max-width: 960px;
+    }
+    @media screen and (min-width: $md-width) and (max-width: $lg-width) {
+        width: 1140px;
+        max-width: 1140px;
+    }
+    @media screen and (min-width: $lg-width) {
+        width: 1400px;
+        max-width: 1400px;
+    }
+
+}

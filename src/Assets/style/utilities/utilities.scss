@@ -1,3 +1,31 @@
+// ----------------
+// Screen hide
+// ----------------
+
+.hide-xs {
+    @media screen and (max-width: $xs-width) {
+        display: none !important;
+    }
+}
+
+.hide-sm {
+    @media screen and (min-width: $xs-width) and (max-width: $sm-width) {
+        display: none !important;
+    }
+}
+
+.hide-md {
+    @media screen and (min-width: $sm-width) and (max-width: $md-width) {
+        display: none !important;
+    }
+}
+
+.hide-lg {
+    @media screen and (min-width: $md-width) {
+        display: none !important;
+    }
+}
+
 p {
-    color: white;
+    color: black;
 }
