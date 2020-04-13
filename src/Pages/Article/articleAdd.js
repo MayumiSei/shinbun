@@ -1,10 +1,10 @@
 import React from 'react';
-import '../../Assets/style/index.scss';
 import { withFirebase } from '../../Components/Firebase';
-import { Link } from 'react-router-dom';
-import * as ROUTES from '../../Routes';
 import { AuthUserContext, withAuthorization} from '../../Components/Session';
 import { Editor } from '@tinymce/tinymce-react';
+import CreatableSelect from 'react-select/creatable';
+import '../../Assets/style/index.scss';
+import '../../Assets/style/articles/tinymce.scss'
 
 const init = {
     height: 500,
@@ -20,10 +20,28 @@ const init = {
               bullist numlist outdent indent | removeformat | help | code'
 }
 
-const ArticleAdd = (props) => {
+const categories = [
+    {
+        label: 'Japon',
+        value: 'japon'
+    },
+    {
+        label: 'Mythologie',
+        value: 'mythologie'
+    }
+]
+
+const articleAdd = (props) => {
     const handleEditorChange = (content, editor) => {
         console.log('Content was updated:', content);
     }
+
+    const handleChange = (newValue, actionMeta) => {
+        console.group('Value Changed');
+        console.log(newValue);
+        console.log(`action: ${actionMeta.action}`);
+        console.groupEnd();
+    };
 
     return(
         <AuthUserContext.Consumer>
@@ -36,9 +54,9 @@ const ArticleAdd = (props) => {
                             <h1>Article Add</h1>
 
                             <form onSubmit="">
-
+                                <CreatableSelect isMulti isClearable onChange={handleChange} options={categories} className="mb-4"/>
                                 <Editor initialValue="<p>This is the initial content of the editor</p>" init={ init } onEditorChange={handleEditorChange} />
-
+                                <button type="submit" className="btn">Ok</button>
                             </form>
                         </div> :
                         <p style={ { color: 'black'} }>Vous ne pouvez pas accéder à cette page</p>
@@ -54,4 +72,4 @@ const ArticleAdd = (props) => {
 
 const condition = authUser => authUser && authUser.role === "ADMIN";
 
-export default withAuthorization(condition)(ArticleAdd);
+export default withAuthorization(condition)(articleAdd);
