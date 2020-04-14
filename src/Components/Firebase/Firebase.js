@@ -39,6 +39,9 @@ class Firebase {
 	
 	category = uid => this.database.ref(`categories/${uid}`);
 	categories = () => this.database.ref('categories');
+
+	article = uid => this.database.ref(`articles/${uid}`);
+	articles = () => this.database.ref('articles');
 }
 
 export default Firebase;

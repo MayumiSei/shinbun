@@ -4,7 +4,7 @@ import { AuthUserContext, withAuthorization} from '../../Components/Session';
 import { Editor } from '@tinymce/tinymce-react';
 import CreatableSelect from 'react-select/creatable';
 import '../../Assets/style/index.scss';
-import '../../Assets/style/articles/tinymce.scss'
+import '../../Assets/style/articles/articleForm.scss'
 
 const init = {
     height: 500,
@@ -26,7 +26,9 @@ class articleAdd extends Component {
 
 		this.state = {
             categories: [],
-            categoriesSelected: []
+            categoriesSelected: [],
+            title: '',
+            content: ''
         };
     }
 
@@ -60,8 +62,14 @@ class articleAdd extends Component {
         return Math.floor(Math.random() * 100) + Date.now();
     }
 
+    titleChange = event => {
+        let targetValue = event.target.value;
+        this.setState({title: targetValue});
+    };
+
     onSubmit = event => {
         event.preventDefault();
+        ;
         for(let i = 0; i < this.state.categoriesSelected.length; i++) {
             const isCategoryExists = this.state.categories.filter(item => item.uid === this.state.categoriesSelected[i].uid);
             if(isCategoryExists.length === 0) {
@@ -72,6 +80,13 @@ class articleAdd extends Component {
                     value: this.state.categoriesSelected[i].value
                 });
             }
+        }
+        if(this.state.title && this.state.titlte !== '') {
+            this.props.firebase
+            .article(this.createUid())
+            .set({
+                title: this.state.title
+            })
         }
     }
 
@@ -87,8 +102,9 @@ class articleAdd extends Component {
                                 <h1>Ajouter un article</h1>
     
                                 <form onSubmit={this.onSubmit}>
-                                    <CreatableSelect isMulti isClearable onChange={this.handleChange} options={this.state.categories} className="mb-4"/>
-                                    <Editor initialValue="<p>This is the initial content of the editor</p>" init={ init } onEditorChange={this.handleEditorChange} />
+                                    <CreatableSelect isMulti isClearable onChange={this.handleChange} options={this.state.categories} className="mb-4 select-categories"/>
+                                    <input type="text" onChange={this.titleChange} className="input-title-article w-100 mb-4" required></input>
+                                    <Editor initialValue="" init={ init } onEditorChange={this.handleEditorChange} />
                                     <button type="submit" className="btn">Ok</button>
                                 </form>
                             </div> :
