@@ -4,3 +4,4 @@ export const SIGNIN = '/signin';
 export const ACCOUNT = '/account';
 export const PASSWORD_FORGET = '/password-forget';
 export const ARTICLEADD = '/article/add';
+export const ARTICLESLIST = '/:categories'

@@ -12,6 +12,7 @@ import SignIn from './Pages/SignIn';
 import Account from './Pages/Account';
 import PasswordForget from './Components/PasswordForget';
 import articleAdd from './Pages/Article/articleAdd';
+import articlesList from './Pages/Article/articlesList';
 
 const App = () => {
 	return (
@@ -19,11 +20,12 @@ const App = () => {
 			<Header />
 			<Switch>
 				<Route exact path={ROUTES.HOME} component={Home} />
-				<Route path={ROUTES.SIGNUP} component={SignUp} />
-				<Route path={ROUTES.SIGNIN} component={SignIn} />
-				<Route path={ROUTES.ACCOUNT} component={Account} />
-				<Route path={ROUTES.PASSWORD_FORGET} component={PasswordForget} />
-				<Route path={ROUTES.ARTICLEADD} component={articleAdd} />
+				<Route exact path={ROUTES.SIGNUP} component={SignUp} />
+				<Route exact path={ROUTES.SIGNIN} component={SignIn} />
+				<Route exact path={ROUTES.ACCOUNT} component={Account} />
+				<Route exact path={ROUTES.PASSWORD_FORGET} component={PasswordForget} />
+				<Route exact path={ROUTES.ARTICLEADD} component={articleAdd} />
+				<Route path={ROUTES.ARTICLESLIST} component={articlesList} />
 			</Switch>
 		</Router>
 	);

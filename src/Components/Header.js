@@ -5,6 +5,7 @@ import { withFirebase } from './Firebase';
 import { AuthUserContext} from './Session';
 import { Link } from 'react-router-dom';
 import * as ROUTES from '../Routes';
+import snapshotToArray from '../Helpers/firebaseHelper'
 
 class Header extends Component {
     constructor(props) {
@@ -17,13 +18,9 @@ class Header extends Component {
 
     componentDidMount = () => {
         this.props.firebase.categories().on('value', snapshot => {
-            const categoriesObject = snapshot.val();
-            const categoriesList = Object.keys(categoriesObject).map(key => ({
-                ...categoriesObject[key],
-                uid: key
-            }));
+            const categories = snapshotToArray(snapshot);
             this.setState({
-                categories: categoriesList
+                categories
             });
         });
     }
@@ -51,7 +48,11 @@ class Header extends Component {
                             <ul className="list-unstyled li-inline ul-header">
                                 {
                                     this.state.categories.map((item, index) => {
-                                        return <li key={index}>{item.label}</li>
+                                        return(
+                                            <li key={index}>
+                                                <Link to={`/${item.value}`}>{item.label}</Link>
+                                            </li>
+                                        )
                                     })
                                 }
                             </ul>

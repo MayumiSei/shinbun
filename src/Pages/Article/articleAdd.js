@@ -3,6 +3,7 @@ import { withFirebase } from '../../Components/Firebase';
 import { AuthUserContext, withAuthorization} from '../../Components/Session';
 import { Editor } from '@tinymce/tinymce-react';
 import CreatableSelect from 'react-select/creatable';
+import snapshotToArray from '../../Helpers/firebaseHelper';
 import '../../Assets/style/index.scss';
 import '../../Assets/style/articles/articleForm.scss'
 
@@ -29,6 +30,7 @@ class articleAdd extends Component {
             categoriesSelected: [],
             tags: [],
             tagsSelected: [],
+            image: '',
             title: '',
             content: '',
             articleCategory: '',
@@ -40,28 +42,17 @@ class articleAdd extends Component {
     // Appelé au loading de la classe articleAdd
     componentDidMount = () => {
         this.props.firebase.categories().on('value', snapshot => {
-            const categoriesObject = snapshot.val();
-            // Object.keys = renvoi tableau de clés de categoriesObject
-            // .map = boucle
-            // map(key) = map(categoriesObject[i])
-            const categoriesList = Object.keys(categoriesObject).map(key => ({
-                ...categoriesObject[key],
-                uid: key,
-            }));
+            const categories = snapshotToArray(snapshot);
             this.setState({
-                categories: categoriesList,
+                categories
                 // loadingUser: false,
             });
         });
 
         this.props.firebase.tags().on('value', snapshot => {
-            const tagsObject = snapshot.val();
-            const tagsList = Object.keys(tagsObject).map(key => ({
-                ...tagsObject[key],
-                uid: key,
-            }));
+            const tags = snapshotToArray(snapshot);
             this.setState({
-                tags: tagsList,
+                tags
             });
         });
     }
@@ -82,6 +73,10 @@ class articleAdd extends Component {
         this.setState({isNotPublished: event.target.checked});
     }
 
+    handleChangeUploadFile = event => {
+        this.setState({image: event.target.files[0]});
+    }
+
     titleChange = event => {
         this.setState({title: event.target.value});
     };
@@ -90,7 +85,7 @@ class articleAdd extends Component {
         return Math.floor(Math.random() * 100) + Date.now();
     }
 
-    onSubmit = event => {
+    onSubmit = async event => {
         event.preventDefault();
         for(let i = 0; i < this.state.categoriesSelected.length; i++) {
             const isCategoryExists = this.state.categories.filter(item => item.uid === this.state.categoriesSelected[i].uid && item.value === this.state.categoriesSelected[i].value);
@@ -99,7 +94,7 @@ class articleAdd extends Component {
                 .category(this.createUid())
                 .set({
                     label: this.state.categoriesSelected[i].label,
-                    value: this.state.categoriesSelected[i].value
+                    value: this.state.categoriesSelected[i].value.replace(/ /g,"-")
                 });
             }
         }
@@ -111,21 +106,29 @@ class articleAdd extends Component {
                 .tag(this.createUid())
                 .set({
                     label: this.state.tagsSelected[i].label,
-                    value: this.state.tagsSelected[i].value
+                    value: this.state.tagsSelected[i].value.replace(/ /g,"-")
                 });
             }
         }
 
-        if((!this.state.title && this.state.titlte === '') || (!this.state.content && this.state.content == '')) {
+        const articleUid = this.createUid();
+
+        // On pousse l'image dans le Storage
+        await this.props.firebase.articlesImg(articleUid, this.state.image.name).put(this.state.image);
+        // On récupère l'URL de l'image qu'on vient de pousser dans le Storage
+        const urlImage = await this.props.firebase.articlesImg(articleUid, this.state.image.name).getDownloadURL();
+
+        if((!this.state.title && this.state.titlte === '') || (!this.state.content && this.state.content === '')) {
             return this.setState({error: "L'article n'est pas terminé"});
         }
 
         this.props.firebase
-        .article(this.createUid())
+        .article(articleUid)
         .set({
             title: this.state.title,
             content: this.state.content,
-            articleCategory: JSON.stringify(this.state.categoriesSelected),
+            categories: JSON.stringify(this.state.categoriesSelected),
+            image: urlImage,
             createdAt: new Date().toString(),
             updatedAt: new Date().toString(),
             isNotPublished: this.state.isNotPublished
@@ -147,6 +150,7 @@ class articleAdd extends Component {
                                 <form onSubmit={this.onSubmit}>
                                     <CreatableSelect isMulti isClearable onChange={this.handleChangeCategories} options={this.state.categories} className="mb-4 select-categories" required/>
                                     <input type="text" onChange={this.titleChange} value={this.state.title} className="input-title-article w-100 mb-4" required></input>
+                                    <input type="file" onChange={this.handleChangeUploadFile} className="w-100 mb-4" required></input>
                                     <Editor initialValue="" init={ init } onEditorChange={this.handleEditorChange} />
                                     {
                                         this.state.error &&
