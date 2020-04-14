@@ -50,8 +50,9 @@ class articleAdd extends Component {
         });
     }
     
-    handleEditorChange = (content, editor) => {
-        console.log('Content was updated:', content);
+    handleEditorChange = (newContent, editor) => {
+        console.log('Content was updated:', newContent);
+        this.setState({content: newContent});
     }
 
     handleChange = (newValue) => {
@@ -81,11 +82,12 @@ class articleAdd extends Component {
                 });
             }
         }
-        if(this.state.title && this.state.titlte !== '') {
+        if(this.state.title && this.state.titlte !== '' && this.state.content && this.state.content !== '') {
             this.props.firebase
             .article(this.createUid())
             .set({
-                title: this.state.title
+                title: this.state.title,
+                content: this.state.content
             })
         }
     }
