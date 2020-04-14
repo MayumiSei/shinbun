@@ -27,6 +27,8 @@ class articleAdd extends Component {
 		this.state = {
             categories: [],
             categoriesSelected: [],
+            tags: [],
+            tagsSelected: [],
             title: '',
             content: '',
             articleCategory: '',
@@ -51,14 +53,29 @@ class articleAdd extends Component {
                 // loadingUser: false,
             });
         });
+
+        this.props.firebase.tags().on('value', snapshot => {
+            const tagsObject = snapshot.val();
+            const tagsList = Object.keys(tagsObject).map(key => ({
+                ...tagsObject[key],
+                uid: key,
+            }));
+            this.setState({
+                tags: tagsList,
+            });
+        });
     }
     
     handleEditorChange = (newContent, editor) => {
         this.setState({content: newContent});
     }
 
-    handleChange = (newValue) => {
+    handleChangeCategories = (newValue) => {
         this.setState({categoriesSelected: newValue});
+    };
+
+    handleChangeTags = (newValue) => {
+        this.setState({tagsSelected: newValue});
     };
 
     publishedChange = event => {
@@ -76,7 +93,7 @@ class articleAdd extends Component {
     onSubmit = event => {
         event.preventDefault();
         for(let i = 0; i < this.state.categoriesSelected.length; i++) {
-            const isCategoryExists = this.state.categories.filter(item => item.uid === this.state.categoriesSelected[i].uid);
+            const isCategoryExists = this.state.categories.filter(item => item.uid === this.state.categoriesSelected[i].uid && item.value === this.state.categoriesSelected[i].value);
             if(isCategoryExists.length === 0) {
                 this.props.firebase
                 .category(this.createUid())
@@ -86,6 +103,19 @@ class articleAdd extends Component {
                 });
             }
         }
+
+        for(let i = 0; i < this.state.tagsSelected.length; i++) {
+            const isTagExists = this.state.tags.filter(item => item.uid === this.state.tagsSelected[i].uid && item.value === this.state.tagsSelected[i].value);
+            if(isTagExists.length === 0) {
+                this.props.firebase
+                .tag(this.createUid())
+                .set({
+                    label: this.state.tagsSelected[i].label,
+                    value: this.state.tagsSelected[i].value
+                });
+            }
+        }
+
         if((!this.state.title && this.state.titlte === '') || (!this.state.content && this.state.content == '')) {
             return this.setState({error: "L'article n'est pas terminé"});
         }
@@ -96,8 +126,8 @@ class articleAdd extends Component {
             title: this.state.title,
             content: this.state.content,
             articleCategory: JSON.stringify(this.state.categoriesSelected),
-            createdAt: new Date(),
-            updatedAt: new Date(),
+            createdAt: new Date().toString(),
+            updatedAt: new Date().toString(),
             isNotPublished: this.state.isNotPublished
         })
 
@@ -115,13 +145,14 @@ class articleAdd extends Component {
                                 <h1>Ajouter un article</h1>
     
                                 <form onSubmit={this.onSubmit}>
-                                    <CreatableSelect isMulti isClearable onChange={this.handleChange} options={this.state.categories} className="mb-4 select-categories"/>
+                                    <CreatableSelect isMulti isClearable onChange={this.handleChangeCategories} options={this.state.categories} className="mb-4 select-categories" required/>
                                     <input type="text" onChange={this.titleChange} value={this.state.title} className="input-title-article w-100 mb-4" required></input>
                                     <Editor initialValue="" init={ init } onEditorChange={this.handleEditorChange} />
                                     {
                                         this.state.error &&
                                             <p>{this.state.error}</p>
                                     }
+                                    <CreatableSelect isMulti isClearable onChange={this.handleChangeTags} options={this.state.tags} className="mb-4 select-tags"/>
                                     <input type="checkbox" onChange={this.publishedChange} value={this.state.isNotPublished}></input>
                                     <button type="submit" className="btn">Ok</button>
                                 </form>

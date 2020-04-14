@@ -40,6 +40,9 @@ class Firebase {
 	category = uid => this.database.ref(`categories/${uid}`);
 	categories = () => this.database.ref('categories');
 
+	tag = uid => this.database.ref(`tags/${uid}`);
+	tags = () => this.database.ref('tags');
+
 	article = uid => this.database.ref(`articles/${uid}`);
 	articles = () => this.database.ref('articles');
 }
