@@ -1,0 +1,16 @@
+@import '../utilities/values.scss';
+
+.article-list {
+    
+    @media screen and (min-width: $md-width){
+        padding-right: 30px !important;
+
+        &:nth-child(2n) {
+            padding-right: 0 !important;
+        }
+    }
+}
+
+.article-block {
+    border: 1px solid #e6e0e0;
+}

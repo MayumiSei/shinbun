@@ -5,13 +5,12 @@ import { Editor } from '@tinymce/tinymce-react';
 import CreatableSelect from 'react-select/creatable';
 import snapshotToArray from '../../Helpers/firebaseHelper';
 import '../../Assets/style/index.scss';
-import '../../Assets/style/articles/articleForm.scss'
 
-class articleAdd extends Component {
+class articleUpdate extends Component {
     constructor(props) {
         super(props);
         this.imageUpload = React.createRef();
-
+        
         this.init = {
             height: 500,
             menubar: false,
@@ -50,17 +49,28 @@ class articleAdd extends Component {
             categoriesSelected: [],
             tags: [],
             tagsSelected: [],
+            article: {},
             image: '',
             title: '',
             content: '',
-            articleCategory: '',
-            error: '',
-            isNotPublished: false,
+            imageIsRemoved: false,
+            urlParam: this.props.match.params.uid
         };
     }
 
-    // Appelé au loading de la classe articleAdd
     componentDidMount = () => {
+        this.props.firebase.article(this.state.urlParam).on('value', snapshot => {
+            const articleObject = snapshot.val();
+            this.setState({
+                article: articleObject,
+                categoriesSelected: JSON.parse(articleObject.categories),
+                tagsSelected: articleObject.tags ? JSON.parse(articleObject.tags) : [],
+                title: articleObject.title,
+                content: articleObject.content,
+                isNotPublished: articleObject.isNotPublished
+            });
+        });
+
         this.props.firebase.categories().on('value', snapshot => {
             const categories = snapshotToArray(snapshot);
             this.setState({
@@ -75,8 +85,9 @@ class articleAdd extends Component {
                 tags
             });
         });
+
     }
-    
+
     handleEditorChange = (newContent, editor) => {
         this.setState({content: newContent});
     }
@@ -99,10 +110,10 @@ class articleAdd extends Component {
 
     titleChange = event => {
         this.setState({title: event.target.value});
-    };
+    }
 
-    createUid = () => {
-        return Math.floor(Math.random() * 100) + Date.now();
+    removeImage = () => {
+        this.setState({imageIsRemoved: true});
     }
 
     slugify(string) {
@@ -146,33 +157,36 @@ class articleAdd extends Component {
             }
         }
 
-        const articleUid = this.createUid();
-        const slugTitle = this.slugify(this.state.title);
-
-        // On pousse l'image dans le Storage
-        await this.props.firebase.articlesImg(articleUid, this.state.image.name).put(this.state.image);
-        // On récupère l'URL de l'image qu'on vient de pousser dans le Storage
-        const urlImage = await this.props.firebase.articlesImg(articleUid, this.state.image.name).getDownloadURL();
+        let urlImage;
+        if(this.state.imageIsRemoved) {
+            // On pousse l'image dans le Storage
+            await this.props.firebase.articlesImg(this.state.urlParam, this.state.image.name).put(this.state.image);
+            // On récupère l'URL de l'image qu'on vient de pousser dans le Storage
+            urlImage = await this.props.firebase.articlesImg(this.state.urlParam, this.state.image.name).getDownloadURL();
+        } else {
+            urlImage = this.state.article.image;
+        }
 
         if((!this.state.title && this.state.titlte === '') || (!this.state.content && this.state.content === '')) {
             return this.setState({error: "L'article n'est pas terminé"});
         }
 
         this.props.firebase
-        .article(articleUid)
+        .article(this.state.urlParam)
         .set({
             title: this.state.title,
-            slug: slugTitle,
+            slug: this.slugify(this.state.title),
             content: this.state.content,
             categories: JSON.stringify(this.state.categoriesSelected),
             image: urlImage,
             tags: JSON.stringify(this.state.tagsSelected),
-            createdAt: new Date().toString(),
+            createdAt: this.state.article.createdAt,
             updatedAt: new Date().toString(),
             isNotPublished: this.state.isNotPublished
         })
 
     }
+
 
     render() {
         return(
@@ -186,16 +200,25 @@ class articleAdd extends Component {
                                 <h1>Ajouter un article</h1>
     
                                 <form onSubmit={this.onSubmit}>
-                                    <CreatableSelect isMulti isClearable onChange={this.handleChangeCategories} options={this.state.categories} className="mb-4 select-categories" required/>
+                                    <CreatableSelect isMulti isClearable onChange={this.handleChangeCategories} options={this.state.categories} value={this.state.categoriesSelected} className="mb-4 select-categories" required/>
+                                    {
+                                        !this.state.imageIsRemoved ?
+                                            <>
+                                                <img src={this.state.article.image} />
+                                                <button type="button" onClick={this.removeImage}>Remove</button>
+                                            </>
+                                        :
+                                            <input type="file" onChange={this.handleChangeUploadFile} className="w-100 mb-4" required></input>
+
+                                    }
                                     <input type="text" onChange={this.titleChange} value={this.state.title} className="input-title-article w-100 mb-4" required></input>
-                                    <input type="file" onChange={this.handleChangeUploadFile} className="w-100 mb-4" required></input>
-                                    <Editor initialValue="" init={this.init} onEditorChange={this.handleEditorChange} />
+                                    <Editor initialValue={this.state.content} init={this.init} onEditorChange={this.handleEditorChange} />
                                     <input name="image" type="file" id="upload" className="hidden" ref={this.imageUpload}></input>
                                     {
                                         this.state.error &&
                                             <p>{this.state.error}</p>
                                     }
-                                    <CreatableSelect isMulti isClearable onChange={this.handleChangeTags} options={this.state.tags} className="mb-4 select-tags"/>
+                                    <CreatableSelect isMulti isClearable onChange={this.handleChangeTags} options={this.state.tags} value={this.state.tagsSelected} className="mb-4 select-tags"/>
                                     <input type="checkbox" onChange={this.publishedChange} value={this.state.isNotPublished}></input>
                                     <button type="submit" className="btn">Ok</button>
                                 </form>
@@ -207,8 +230,10 @@ class articleAdd extends Component {
             </AuthUserContext.Consumer>
         );
     }
+
+
 }
 
 const condition = authUser => authUser && authUser.role === "ADMIN";
 
-export default withAuthorization(condition)(articleAdd);
+export default withAuthorization(condition)(articleUpdate);

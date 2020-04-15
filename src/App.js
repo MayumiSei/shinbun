@@ -13,6 +13,8 @@ import Account from './Pages/Account';
 import PasswordForget from './Components/PasswordForget';
 import articleAdd from './Pages/Article/articleAdd';
 import articlesList from './Pages/Article/articlesList';
+import articleDetails from './Pages/Article/articleDetails';
+import articleUpdate from './Pages/Article/articleUpdate';
 
 const App = () => {
 	return (
@@ -25,6 +27,8 @@ const App = () => {
 				<Route exact path={ROUTES.ACCOUNT} component={Account} />
 				<Route exact path={ROUTES.PASSWORD_FORGET} component={PasswordForget} />
 				<Route exact path={ROUTES.ARTICLEADD} component={articleAdd} />
+				<Route path={ROUTES.ARTICLEUPDATE} component={articleUpdate} />
+				<Route path={ROUTES.ARTICLEDETAILS} component={articleDetails} />
 				<Route path={ROUTES.ARTICLESLIST} component={articlesList} />
 			</Switch>
 		</Router>

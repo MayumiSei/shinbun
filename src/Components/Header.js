@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import '../Assets/style/index.scss';
-import '../Assets/style/header.scss'
 import { withFirebase } from './Firebase';
 import { AuthUserContext} from './Session';
 import { Link } from 'react-router-dom';
 import * as ROUTES from '../Routes';
-import snapshotToArray from '../Helpers/firebaseHelper'
+import snapshotToArray from '../Helpers/firebaseHelper';
+import '../Assets/style/index.scss';
+import '../Assets/style/header.scss';
 
 class Header extends Component {
     constructor(props) {
