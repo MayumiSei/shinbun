@@ -33,6 +33,9 @@ class articlesList extends Component {
                     this.state.articles.map((item, index) => {
                         return(
                             <div key={index}>
+                                <div dangerouslySetInnerHTML={{__html: item.content}}>
+                                    
+                                </div>
                             </div>
                         )
                     })

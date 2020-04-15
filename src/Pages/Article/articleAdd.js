@@ -7,23 +7,43 @@ import snapshotToArray from '../../Helpers/firebaseHelper';
 import '../../Assets/style/index.scss';
 import '../../Assets/style/articles/articleForm.scss'
 
-const init = {
-    height: 500,
-    menubar: false,
-    plugins: [
-        'advlist autolink lists link image charmap print preview anchor',
-        'searchreplace visualblocks code fullscreen',
-        'insertdatetime media table paste code help wordcount',
-        'code'
-    ],
-    toolbar: 'undo redo | formatselect | bold italic forecolor backcolor | \
-              alignleft aligncenter alignright alignjustify | \
-              bullist numlist outdent indent | removeformat | help | code'
-}
-
 class articleAdd extends Component {
     constructor(props) {
-		super(props);
+        super(props);
+        this.imageUpload = React.createRef();
+
+        this.init = {
+            height: 500,
+            menubar: false,
+            paste_data_images: true,
+            image_advtab: true,
+            plugins: [
+                'advlist autolink lists link image charmap print preview anchor',
+                'searchreplace visualblocks code fullscreen',
+                'insertdatetime media table paste code help wordcount',
+                'code'
+            ],
+            toolbar1: 'undo redo | formatselect | bold italic forecolor backcolor | \
+                      alignleft aligncenter alignright alignjustify | \
+                      bullist numlist outdent indent | removeformat | help | code | image',
+            toolbar2: 'print preview media',
+            file_picker_callback: function (callback, value, meta) {
+                if (meta.filetype == 'image') {
+                    // appelle la fonction file_picker_callback
+                    this.imageUpload.current.click();
+                    this.imageUpload.current.addEventListener('change', function () {
+                        let file = this.files[0];
+                        let reader = new FileReader();
+                        reader.onload = function (e) {
+                            callback(e.target.result, {
+                                alt: 'Shinbun'
+                            });
+                        }
+                        reader.readAsDataURL(file);
+                    });
+                }
+            }.bind(this),
+        }
 
 		this.state = {
             categories: [],
@@ -35,7 +55,7 @@ class articleAdd extends Component {
             content: '',
             articleCategory: '',
             error: '',
-            isNotPublished: false
+            isNotPublished: false,
         };
     }
 
@@ -151,7 +171,8 @@ class articleAdd extends Component {
                                     <CreatableSelect isMulti isClearable onChange={this.handleChangeCategories} options={this.state.categories} className="mb-4 select-categories" required/>
                                     <input type="text" onChange={this.titleChange} value={this.state.title} className="input-title-article w-100 mb-4" required></input>
                                     <input type="file" onChange={this.handleChangeUploadFile} className="w-100 mb-4" required></input>
-                                    <Editor initialValue="" init={ init } onEditorChange={this.handleEditorChange} />
+                                    <Editor initialValue="" init={this.init} onEditorChange={this.handleEditorChange} />
+                                    <input name="image" type="file" id="upload" className="hidden" ref={this.imageUpload}></input>
                                     {
                                         this.state.error &&
                                             <p>{this.state.error}</p>
