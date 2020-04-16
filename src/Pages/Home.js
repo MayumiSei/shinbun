@@ -36,8 +36,8 @@ class Home extends Component {
                         }
                         <div className="row no-gutters">
                         {
-                            this.state.articles.map((item, index) => {
-                                return(
+                            this.state.articles.map((item, index) => (
+                                index <= 10 &&
                                     <div key={index} className="col-12 col-md-6 article-list">
                                         {
                                             (authUser && authUser.role === "ADMIN") &&
@@ -54,8 +54,7 @@ class Home extends Component {
                                             </div>
                                         </Link>
                                     </div>
-                                )
-                            })
+                            ))
                         }
                         </div>
                     </div>
