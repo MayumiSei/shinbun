@@ -15,7 +15,9 @@ class Account extends Component {
             tags: [],
             articles: [],
             categoryName: '',
-            isOpen: ''
+            tagName: '',
+            isOpenCategory: '',
+            isOpenTag: ''
         };
     }
 
@@ -67,9 +69,9 @@ class Account extends Component {
         this.props.firebase.category(uid).remove();
     }
 
-    handleClickUpdate = item => {
+    handleClickUpdateCategory = item => {
         this.setState({
-            isOpen: item.uid,
+            isOpenCategory: item.uid,
             categoryName: item.label
         });
     }
@@ -103,17 +105,70 @@ class Account extends Component {
             uid
         })
 
-        this.setState({isOpen: ''});
+        this.setState({isOpenCategory: ''});
     }
 
     handleTagRemove = uid => {
-        const tag = this.state.articles.map((item, key) => {
-            if(item.tags) {
-                const tagsList = JSON.parse(item.tags);
+        this.state.articles.map((itemArticle, key) => {
+            if(itemArticle.tags) {
+                const tagsArray = JSON.parse(itemArticle.tags);
+                tagsArray.map((itemTagArticle, key) => {
+                    if(uid === itemTagArticle.uid) {
+                        tagsArray.splice(key, 1);
+                        itemArticle.tags = JSON.stringify(tagsArray);
+                        this.props.firebase
+                        .article(itemArticle.uid)
+                        .set(
+                            itemArticle
+                        )
+                    }
+                });
             }
         });
-        // this.props.firebase.tag(uid).remove();
+        this.props.firebase.tag(uid).remove();
     }
+
+    handleClickUpdateTag = item => {
+        this.setState({
+            isOpenTag: item.uid,
+            tagName: item.label
+        });
+    }
+
+    tagNameChange = event => {
+        this.setState({tagName: event.target.value});
+    }
+
+    handleTagUpdate = uid => {
+        this.state.articles.map((itemArticle, key) => {
+            if(itemArticle.tags) {
+                let tagsArray = JSON.parse(itemArticle.tags);
+
+                for(let i = 0; i < tagsArray.length; i++) {
+                    if(uid === tagsArray[i].uid) {
+                        tagsArray[i].label = this.state.tagName
+                        tagsArray[i].value = this.state.tagName.replace(/ /g,"-")
+    
+                        itemArticle.tags = JSON.stringify(tagsArray);
+                        this.props.firebase.article(itemArticle.uid)
+                        .set(
+                            itemArticle
+                        )
+                    }
+                }
+            }
+        });
+
+        this.props.firebase.tag(uid)
+        .set({
+            label: this.state.tagName,
+            value: this.state.tagName.replace(/ /g,"-"),
+            uid
+        })
+
+        this.setState({isOpenTag: ''});
+    }
+
 
     render() {
         return(
@@ -131,9 +186,9 @@ class Account extends Component {
                                         {
                                             this.state.categories.map((item, index) => {
                                                 return(
-                                                    <li key={index} className="js-category-update">
+                                                    <li key={index}>
                                                         {
-                                                            this.state.isOpen === item.uid ?
+                                                            this.state.isOpenCategory === item.uid ?
                                                             <div className="">
                                                                 <input type="text" onChange={this.categoryNameChange} value={this.state.categoryName}></input>
                                                                 <button type="submit" onClick={this.handleCategoryUpdate.bind(this, item.uid)}>Ok</button>
@@ -141,7 +196,7 @@ class Account extends Component {
                                                             :
                                                             <>
                                                                 <span>{item.label}</span>
-                                                                <button type="submit" onClick={this.handleClickUpdate.bind(this, item)}>Update</button>
+                                                                <button type="submit" onClick={this.handleClickUpdateCategory.bind(this, item)}>Update</button>
                                                             </>
                                                         }
                                                         <button type="submit" onClick={this.handleCategoryRemove.bind(this, item.uid)}>Supprimer</button>
@@ -157,7 +212,18 @@ class Account extends Component {
                                             this.state.tags.map((item, index) => {
                                                 return(
                                                     <li key={index}>
-                                                        <span>{item.label}</span>
+                                                        {
+                                                            this.state.isOpenTag === item.uid ?
+                                                            <div className="">
+                                                                <input type="text" onChange={this.tagNameChange} value={this.state.tagName}></input>
+                                                                <button type="submit" onClick={this.handleTagUpdate.bind(this, item.uid)}>Ok</button>
+                                                            </div>
+                                                            :
+                                                            <>
+                                                                <span>{item.label}</span>
+                                                                <button type="submit" onClick={this.handleClickUpdateTag.bind(this, item)}>Update</button>
+                                                            </>
+                                                        }
                                                         <button type="submit" onClick={this.handleTagRemove.bind(this, item.uid)}>Supprimer</button>
                                                     </li>
                                                 )

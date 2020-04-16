@@ -18,7 +18,6 @@ class articleDetails extends Component {
         this.props.firebase.article(this.state.urlParam).on('value', snapshot => {
             const articleObject = snapshot.val();
             this.setState({article: articleObject});
-            console.log('state ', this.state.article);
         });
 
     }
