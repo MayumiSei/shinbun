@@ -119,6 +119,10 @@ class articleUpdate extends Component {
         this.setState({imageIsRemoved: true});
     }
 
+    createUid = () => {
+        return Math.floor(Math.random() * 100) + Date.now();
+    }
+
     slugify(string) {
         const a = 'àáâäæãåāăąçćčđďèéêëēėęěğǵḧîïíīįìłḿñńǹňôöòóœøōõőṕŕřßśšşșťțûüùúūǘůűųẃẍÿýžźż·/_,:;'
         const b = 'aaaaaaaaaacccddeeeeeeeegghiiiiiilmnnnnoooooooooprrsssssttuuuuuuuuuwxyyzzz------'
@@ -138,7 +142,7 @@ class articleUpdate extends Component {
         event.preventDefault();
         const _categoriesSelected = [...this.state.categoriesSelected];
         for(let i = 0; i < _categoriesSelected.length; i++) {
-            const isCategoryExists = _categoriesSelected.filter(item => item.uid === _categoriesSelected[i].uid && item.value === _categoriesSelected[i].value);
+            const isCategoryExists = this.state.categories.filter(item => item.value === _categoriesSelected[i].value);
             if(isCategoryExists.length === 0) {
                 const categoryUid = this.createUid();
                 this.props.firebase
@@ -146,7 +150,7 @@ class articleUpdate extends Component {
                 .set({
                     label: _categoriesSelected[i].label,
                     value: _categoriesSelected[i].value.replace(/ /g,"-"),
-                    value: categoryUid
+                    uid: categoryUid
                 });
                 _categoriesSelected[i].uid = categoryUid;
             }
@@ -154,7 +158,7 @@ class articleUpdate extends Component {
 
         const _tagsSelected = [...this.state.tagsSelected];
         for(let i = 0; i < _tagsSelected.length; i++) {
-            const isTagExists = _tagsSelected.filter(item => item.uid === _tagsSelected[i].uid && item.value === _tagsSelected[i].value);
+            const isTagExists = this.state.tags.filter(item => item.uid === _tagsSelected[i].uid && item.value === _tagsSelected[i].value);
             if(isTagExists.length === 0) {
                 const tagUid = this.createUid();
                 this.props.firebase
