@@ -60,15 +60,18 @@ class articleUpdate extends Component {
 
     componentDidMount = () => {
         this.props.firebase.article(this.state.urlParam).on('value', snapshot => {
-            const articleObject = snapshot.val();
-            this.setState({
-                article: articleObject,
-                categoriesSelected: JSON.parse(articleObject.categories),
-                tagsSelected: articleObject.tags ? JSON.parse(articleObject.tags) : [],
-                title: articleObject.title,
-                content: articleObject.content,
-                isNotPublished: articleObject.isNotPublished
-            });
+            if(snapshot.val()) {
+                const articleObject = snapshot.val();
+                this.setState({
+                    article: articleObject,
+                    categoriesSelected: JSON.parse(articleObject.categories),
+                    tagsSelected: articleObject.tags ? JSON.parse(articleObject.tags) : [],
+                    title: articleObject.title,
+                    content: articleObject.content,
+                    isNotPublished: articleObject.isNotPublished
+                });
+            }
+
         });
 
         this.props.firebase.categories().on('value', snapshot => {
@@ -133,27 +136,35 @@ class articleUpdate extends Component {
 
     onSubmit = async event => {
         event.preventDefault();
-        for(let i = 0; i < this.state.categoriesSelected.length; i++) {
-            const isCategoryExists = this.state.categories.filter(item => item.uid === this.state.categoriesSelected[i].uid && item.value === this.state.categoriesSelected[i].value);
+        const _categoriesSelected = [...this.state.categoriesSelected];
+        for(let i = 0; i < _categoriesSelected.length; i++) {
+            const isCategoryExists = _categoriesSelected.filter(item => item.uid === _categoriesSelected[i].uid && item.value === _categoriesSelected[i].value);
             if(isCategoryExists.length === 0) {
+                const categoryUid = this.createUid();
                 this.props.firebase
-                .category(this.createUid())
+                .category(categoryUid)
                 .set({
-                    label: this.state.categoriesSelected[i].label,
-                    value: this.state.categoriesSelected[i].value.replace(/ /g,"-")
+                    label: _categoriesSelected[i].label,
+                    value: _categoriesSelected[i].value.replace(/ /g,"-"),
+                    value: categoryUid
                 });
+                _categoriesSelected[i].uid = categoryUid;
             }
         }
 
-        for(let i = 0; i < this.state.tagsSelected.length; i++) {
-            const isTagExists = this.state.tags.filter(item => item.uid === this.state.tagsSelected[i].uid && item.value === this.state.tagsSelected[i].value);
+        const _tagsSelected = [...this.state.tagsSelected];
+        for(let i = 0; i < _tagsSelected.length; i++) {
+            const isTagExists = _tagsSelected.filter(item => item.uid === _tagsSelected[i].uid && item.value === _tagsSelected[i].value);
             if(isTagExists.length === 0) {
+                const tagUid = this.createUid();
                 this.props.firebase
-                .tag(this.createUid())
+                .tag(tagUid)
                 .set({
-                    label: this.state.tagsSelected[i].label,
-                    value: this.state.tagsSelected[i].value.replace(/ /g,"-")
+                    label: _tagsSelected[i].label,
+                    value: _tagsSelected[i].value.replace(/ /g,"-"),
+                    uid: tagUid
                 });
+                _tagsSelected[i].uid = tagUid;
             }
         }
 
@@ -177,12 +188,13 @@ class articleUpdate extends Component {
             title: this.state.title,
             slug: this.slugify(this.state.title),
             content: this.state.content,
-            categories: JSON.stringify(this.state.categoriesSelected),
+            categories: _categoriesSelected.length > 0 ? JSON.stringify(_categoriesSelected) : [],
             image: urlImage,
-            tags: JSON.stringify(this.state.tagsSelected),
+            tags: _tagsSelected.length > 0 ? JSON.stringify(_tagsSelected) : [],
             createdAt: this.state.article.createdAt,
             updatedAt: new Date().toString(),
-            isNotPublished: this.state.isNotPublished
+            isNotPublished: this.state.isNotPublished,
+            uid: this.state.urlParam
         })
 
     }

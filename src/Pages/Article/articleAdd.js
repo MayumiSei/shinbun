@@ -122,27 +122,35 @@ class articleAdd extends Component {
 
     onSubmit = async event => {
         event.preventDefault();
-        for(let i = 0; i < this.state.categoriesSelected.length; i++) {
-            const isCategoryExists = this.state.categories.filter(item => item.uid === this.state.categoriesSelected[i].uid && item.value === this.state.categoriesSelected[i].value);
+        const _categoriesSelected = [...this.state.categoriesSelected];
+        for(let i = 0; i < _categoriesSelected.length; i++) {
+            const isCategoryExists = this.state.categories.filter(item => item.uid === _categoriesSelected[i].uid && item.value === _categoriesSelected[i].value);
             if(isCategoryExists.length === 0) {
+                const categoryUid = this.createUid();
                 this.props.firebase
-                .category(this.createUid())
+                .category(categoryUid)
                 .set({
-                    label: this.state.categoriesSelected[i].label,
-                    value: this.state.categoriesSelected[i].value.replace(/ /g,"-")
+                    label: _categoriesSelected[i].label,
+                    value: _categoriesSelected[i].value.replace(/ /g,"-"),
+                    uid: categoryUid
                 });
+                _categoriesSelected[i].uid = categoryUid;
             }
         }
 
-        for(let i = 0; i < this.state.tagsSelected.length; i++) {
-            const isTagExists = this.state.tags.filter(item => item.uid === this.state.tagsSelected[i].uid && item.value === this.state.tagsSelected[i].value);
+        const _tagsSelected = [...this.state.tagsSelected];
+        for(let i = 0; i < _tagsSelected.length; i++) {
+            const isTagExists = this.state.tags.filter(item => item.uid === _tagsSelected[i].uid && item.value === _tagsSelected[i].value);
             if(isTagExists.length === 0) {
+                const tagUid = this.createUid();
                 this.props.firebase
-                .tag(this.createUid())
+                .tag(tagUid)
                 .set({
-                    label: this.state.tagsSelected[i].label,
-                    value: this.state.tagsSelected[i].value.replace(/ /g,"-")
+                    label: _tagsSelected[i].label,
+                    value: _tagsSelected[i].value.replace(/ /g,"-"),
+                    uid: tagUid
                 });
+                _tagsSelected[i].uid = tagUid;
             }
         }
 
@@ -154,7 +162,7 @@ class articleAdd extends Component {
         // On récupère l'URL de l'image qu'on vient de pousser dans le Storage
         const urlImage = await this.props.firebase.articlesImg(articleUid, this.state.image.name).getDownloadURL();
 
-        if((!this.state.title && this.state.titlte === '') || (!this.state.content && this.state.content === '')) {
+        if((!this.state.title && this.state.title === '') || (!this.state.content && this.state.content === '')) {
             return this.setState({error: "L'article n'est pas terminé"});
         }
 
@@ -164,12 +172,13 @@ class articleAdd extends Component {
             title: this.state.title,
             slug: slugTitle,
             content: this.state.content,
-            categories: JSON.stringify(this.state.categoriesSelected),
+            categories: _categoriesSelected.length > 0 ? JSON.stringify(_categoriesSelected) : [],
             image: urlImage,
-            tags: JSON.stringify(this.state.tagsSelected),
+            tags: _tagsSelected.length > 0 ? JSON.stringify(_tagsSelected) : [],
             createdAt: new Date().toString(),
             updatedAt: new Date().toString(),
-            isNotPublished: this.state.isNotPublished
+            isNotPublished: this.state.isNotPublished,
+            uid: articleUid
         })
 
     }

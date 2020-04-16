@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { withFirebase } from '../../Components/Firebase';
+import { AuthUserContext} from '../../Components/Session';
 import snapshotToArray from '../../Helpers/firebaseHelper';
 import { Link } from 'react-router-dom';
+import ArticleRemove from '../../Components/ArticleRemove';
 import '../../Assets/style/index.scss';
 import '../../Assets/style/articles/articlesList.scss';
 
@@ -11,8 +13,23 @@ class articlesList extends Component {
 
 		this.state = {
             articles: [],
-            urlParam: props.match.params.categories
         };
+    }
+
+    // Fonction appelé après que le component ait été updaté
+    componentDidUpdate = (oldProps, newState) => {
+        // Si l'url d'avant et différent du nouvel url, alors on refiltre les articles
+        if(oldProps.match.params.categories && oldProps.match.params.categories !== this.props.match.params.categories) {
+            this.props.firebase.articles().on('value', snapshot => {
+                const articles  = snapshotToArray(snapshot);
+                const articlesFiltered = articles.filter(item => {
+                    let categoriesArray = JSON.parse(item.categories);
+                    const categoriesFiltered = categoriesArray.filter(item => item.value === this.props.match.params.categories);
+                    return categoriesFiltered[0] && categoriesFiltered[0].value === this.props.match.params.categories;
+                });
+                this.setState({articles: articlesFiltered});
+            });
+        }
     }
 
     componentDidMount = () => {
@@ -20,35 +37,45 @@ class articlesList extends Component {
             const articles  = snapshotToArray(snapshot);
             const articlesFiltered = articles.filter(item => {
                 let categoriesArray = JSON.parse(item.categories);
-                const categoriesFiltered = categoriesArray.filter(item => item.value === this.state.urlParam);
-                return categoriesFiltered[0] && categoriesFiltered[0].value === this.state.urlParam;
+                const categoriesFiltered = categoriesArray.filter(item => item.value === this.props.match.params.categories);
+                return categoriesFiltered[0] && categoriesFiltered[0].value === this.props.match.params.categories;
             });
             this.setState({articles: articlesFiltered});
-            console.log('articles ', articlesFiltered);
         });
     }
 
     render() {
         return(
-            <div className="container">
-                <div className="row no-gutters">
-                    {
-                        this.state.articles.map((item, index) => {
-                            return(
-                                <div key={index} className="col-12 col-md-6 article-list">
-                                    <Link to={`/${this.state.urlParam}/${item.slug}?uid=${item.uid}`}>
-                                        <div className="article-block">
-                                            <img src={item.image} />
-                                            <h2>{item.title}</h2>
-                                            <p dangerouslySetInnerHTML={{__html: item.content}}></p>
-                                        </div>
-                                    </Link>
-                                </div>
-                            )
-                        })
-                    }
+            <AuthUserContext.Consumer>
+                {
+                    authUser =>
+                    <div className="container">
+                    <div className="row no-gutters">
+                        {
+                            this.state.articles.map((item, index) => {
+                                return(
+                                    <div key={index} className="col-12 col-md-6 article-list">
+                                        {
+                                            (authUser && authUser.role === "ADMIN") &&
+                                                <ArticleRemove uid={item.uid}></ArticleRemove>
+                                        }
+                                        
+                                        <Link to={`/${this.props.match.params.categories}/${item.slug}?uid=${item.uid}`}>
+                                            <div className="article-block">
+                                                
+                                                <img src={item.image} />
+                                                <h2>{item.title}</h2>
+                                                <p dangerouslySetInnerHTML={{__html: item.content}}></p>
+                                            </div>
+                                        </Link>
+                                    </div>
+                                )
+                            })
+                        }
+                    </div>
                 </div>
-            </div>
+                }
+            </AuthUserContext.Consumer>
         );
     }
 
