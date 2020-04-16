@@ -27,7 +27,7 @@ class articlesList extends Component {
                     const categoriesFiltered = categoriesArray.filter(item => item.value === this.props.match.params.categories);
                     return categoriesFiltered[0] && categoriesFiltered[0].value === this.props.match.params.categories;
                 });
-                this.setState({articles: articlesFiltered});
+                this.setState({articles: articlesFiltered.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())});
             });
         }
     }
@@ -40,7 +40,7 @@ class articlesList extends Component {
                 const categoriesFiltered = categoriesArray.filter(item => item.value === this.props.match.params.categories);
                 return categoriesFiltered[0] && categoriesFiltered[0].value === this.props.match.params.categories;
             });
-            this.setState({articles: articlesFiltered});
+            this.setState({articles: articlesFiltered.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())});
         });
     }
 
@@ -65,6 +65,7 @@ class articlesList extends Component {
                                                 
                                                 <img src={item.image} />
                                                 <h2>{item.title}</h2>
+                                                <p>{new Date(item.createdAt).toLocaleDateString()}</p>
                                                 <p dangerouslySetInnerHTML={{__html: item.content}}></p>
                                             </div>
                                         </Link>
