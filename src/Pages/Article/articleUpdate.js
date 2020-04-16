@@ -219,7 +219,7 @@ class articleUpdate extends Component {
                                             <p>{this.state.error}</p>
                                     }
                                     <CreatableSelect isMulti isClearable onChange={this.handleChangeTags} options={this.state.tags} value={this.state.tagsSelected} className="mb-4 select-tags"/>
-                                    <input type="checkbox" onChange={this.publishedChange} value={this.state.isNotPublished}></input>
+                                    <input type="checkbox" onChange={this.publishedChange} checked={this.state.isNotPublished}></input>
                                     <button type="submit" className="btn">Ok</button>
                                 </form>
                             </div> :
