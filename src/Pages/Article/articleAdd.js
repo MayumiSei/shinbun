@@ -182,7 +182,7 @@ class articleAdd extends Component {
             uid: articleUid
         })
         .then(() => {
-            this.props.history.push(`/${slugTitle}?uid=${articleUid}`);
+            this.props.history.push(`/article/${slugTitle}?uid=${articleUid}`);
         })
 
     }

@@ -231,7 +231,7 @@ class Account extends Component {
                                     </ul>
                                     {
                                         this.state.articles.map((item, index) => (
-                                            item.isNotPublished &&
+                                            // item.isNotPublished &&
                                                 <div className="row no-gutters">
                                                     <Link to={`/${this.props.match.params.categories}/${item.slug}?uid=${item.uid}`}>
                                                         <div className="article-block">
@@ -242,7 +242,7 @@ class Account extends Component {
                                                         </div>
                                                     </Link>
                                                 </div>
-                                            ))
+                                        ))
                                     }
                                 </>
 

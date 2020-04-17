@@ -203,7 +203,7 @@ class articleUpdate extends Component {
             uid: this.state.urlParam
         })
         .then(() => {
-            this.props.history.push(`/${slugTitle}?uid=${this.state.article.uid}`);
+            this.props.history.push(`/article/${slugTitle}?uid=${this.state.article.uid}`);
         })
 
     }
