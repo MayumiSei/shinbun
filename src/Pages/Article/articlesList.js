@@ -14,7 +14,7 @@ class articlesList extends Component {
 
 		this.state = {
             articles: [],
-            itemsCountPerPage: 1,
+            itemsCountPerPage: 10,
             articlePaginate: [],
             offset: 0
         };
@@ -31,9 +31,13 @@ class articlesList extends Component {
                     const categoriesFiltered = categoriesArray.filter(item => item.value === this.props.match.params.categories);
                     return (categoriesFiltered[0] && categoriesFiltered[0].value === this.props.match.params.categories) && item.isNotPublished === false;
                 });
-                
                 const articleSort = articlesFiltered.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
-                const articlePaginate = articleSort.slice(this.state.itemsCountPerPage * Number(this.props.location.search.replace('?page=', '')) - 1, this.state.itemsCountPerPage * Number(this.props.location.search.replace('?page=', '')) + this.state.itemsCountPerPage - 1);
+
+                const start = this.state.itemsCountPerPage * (Number(this.props.location.search.replace('?page=', '')) - 1);
+                const indexEnd = this.state.itemsCountPerPage * (Number(this.props.location.search.replace('?page=', '')) - 1) + this.state.itemsCountPerPage
+                const end = articleSort.length < indexEnd ? articleSort.length : indexEnd
+                const articlePaginate = articleSort.slice(start, end);
+
                 this.setState({
                     articles: articleSort,
                     articlePaginate: articlePaginate
@@ -51,7 +55,12 @@ class articlesList extends Component {
                 return (categoriesFiltered[0] && categoriesFiltered[0].value === this.props.match.params.categories) && item.isNotPublished === false;
             });
             const articleSort = articlesFiltered.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
-            const articlePaginate = articleSort.slice(this.state.itemsCountPerPage * Number(this.props.location.search.replace('?page=', '')) - 1, this.state.itemsCountPerPage * Number(this.props.location.search.replace('?page=', '')) + this.state.itemsCountPerPage - 1);
+
+            const start = this.state.itemsCountPerPage * (Number(this.props.location.search.replace('?page=', '')) - 1);
+            const indexEnd = this.state.itemsCountPerPage * (Number(this.props.location.search.replace('?page=', '')) - 1) + this.state.itemsCountPerPage
+            const end = articleSort.length < indexEnd ? articleSort.length : indexEnd
+            const articlePaginate = articleSort.slice(start, end);
+
             this.setState({
                 articles: articleSort,
                 articlePaginate: articlePaginate
@@ -76,7 +85,6 @@ class articlesList extends Component {
                                 <div className="row no-gutters">
                                 {
                                     this.state.articlePaginate.map((item, index) => (
-                                            <>
                                                 <div key={index} className="col-12 col-md-6 article-list">
                                                     {
                                                         (authUser && authUser.role === "ADMIN") &&
@@ -93,7 +101,6 @@ class articlesList extends Component {
                                                         </div>
                                                     </Link>
                                                 </div>
-                                            </>
                                         ))
                                 }
                                 </div>
@@ -106,6 +113,7 @@ class articlesList extends Component {
                                         onChange={this.handlePageChange.bind(this)}
                                         itemClass="page-item"
                                         linkClass="page-link"
+                                        hideDisabled={true}
                                     />
                                 </div>
                             </>
