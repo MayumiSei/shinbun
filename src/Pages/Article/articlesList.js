@@ -16,7 +16,6 @@ class articlesList extends Component {
             articles: [],
             itemsCountPerPage: 10,
             articlePaginate: [],
-            offset: 0
         };
     }
 

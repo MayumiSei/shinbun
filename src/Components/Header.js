@@ -37,7 +37,7 @@ class Header extends Component {
                                 authUser &&
                                 <>
                                     <SignOutButton />
-                                    <Link to={ROUTES.ACCOUNT}>Compte</Link>
+                                    <Link to={`${ROUTES.ACCOUNT}?page=1`}>Compte</Link>
                                 </>
                             }
                             {

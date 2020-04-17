@@ -5,6 +5,8 @@ import { AuthUserContext} from '../Components/Session';
 import { withFirebase } from '../Components/Firebase';
 import snapshotToArray from '../Helpers/firebaseHelper';
 import { Link } from 'react-router-dom';
+import Pagination from "react-js-pagination";
+import * as ROUTES from '../Routes';
 import '../Assets/style/index.scss';
 import '../Assets/style/articles/articlesList.scss';
 
@@ -20,8 +22,29 @@ class Account extends Component {
             categoryName: '',
             tagName: '',
             isOpenCategory: '',
-            isOpenTag: ''
+            isOpenTag: '',
+            itemsCountPerPage: 10,
+            articlePaginate: [],
         };
+    }
+
+    componentDidUpdate = (oldProps, newState) => {
+        if((oldProps.match.params.categories && oldProps.match.params.categories !== this.props.match.params.categories) || this.props.location.search.replace('?page=', '') !== oldProps.location.search.replace('?page=', '')) {
+            this.props.firebase.articles().on('value', snapshot => {
+                const articles = snapshotToArray(snapshot);
+                const articlesFiltered = articles.filter(item => item.isNotPublished === true);
+                const articleSort = articlesFiltered.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    
+                const start = this.state.itemsCountPerPage * (Number(this.props.location.search.replace('?page=', '')) - 1);
+                const indexEnd = this.state.itemsCountPerPage * (Number(this.props.location.search.replace('?page=', '')) - 1) + this.state.itemsCountPerPage;
+                const end = articleSort.length < indexEnd ? articleSort.length : indexEnd;
+                const articlePaginate = articleSort.slice(start, end);
+                this.setState({
+                    articles: articleSort,
+                    articlePaginate: articlePaginate
+                });
+            });
+        }
     }
 
     componentDidMount = () => {
@@ -41,8 +64,16 @@ class Account extends Component {
 
         this.props.firebase.articles().on('value', snapshot => {
             const articles = snapshotToArray(snapshot);
+            const articlesFiltered = articles.filter(item => item.isNotPublished === true);
+            const articleSort = articlesFiltered.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+
+            const start = this.state.itemsCountPerPage * (Number(this.props.location.search.replace('?page=', '')) - 1);
+            const indexEnd = this.state.itemsCountPerPage * (Number(this.props.location.search.replace('?page=', '')) - 1) + this.state.itemsCountPerPage;
+            const end = articleSort.length < indexEnd ? articleSort.length : indexEnd;
+            const articlePaginate = articleSort.slice(start, end);
             this.setState({
-                articles
+                articles: articleSort,
+                articlePaginate: articlePaginate
             });
         });
     }
@@ -172,6 +203,11 @@ class Account extends Component {
         this.setState({isOpenTag: ''});
     }
 
+    handlePageChange(pageNumber) {
+        this.props.history.push(`${ROUTES.ACCOUNT}?page=${pageNumber}`);
+        this.setState({currentPage: pageNumber});
+    }
+
 
     render() {
         return(
@@ -230,21 +266,35 @@ class Account extends Component {
                                         }
                                     </ul>
                                     {
-                                        this.state.articles.map((item, index) => (
-                                            // item.isNotPublished &&
-                                                <div className="row no-gutters">
-                                                    <Link to={`/${this.props.match.params.categories}/${item.slug}?uid=${item.uid}`}>
-                                                        <div className="article-block">
-                                                            <img src={item.image} />
-                                                            <h2>{item.title}</h2>
-                                                            <p>{new Date(item.createdAt).toLocaleDateString()}</p>
-                                                            <p dangerouslySetInnerHTML={{__html: item.content}}></p>
+                                        this.state.articlePaginate.length > 0 &&
+                                        <div className="row no-gutters">
+                                            {
+                                                this.state.articlePaginate.map((item, index) => (
+                                                        <div key={index} className="col-12 col-md-6">
+                                                            <Link to={`/article/${item.slug}?uid=${item.uid}`}>
+                                                                <div className="article-block">
+                                                                    <img src={item.image} />
+                                                                    <h2>{item.title}</h2>
+                                                                    <p>{new Date(item.createdAt).toLocaleDateString()}</p>
+                                                                    <p dangerouslySetInnerHTML={{__html: item.content}}></p>
+                                                                </div>
+                                                            </Link>
                                                         </div>
-                                                    </Link>
-                                                </div>
-                                        ))
+                                                ))
+                                            }
+                                        </div>
                                     }
-                                </>
+                                
+                                <Pagination
+                                    activePage={Number(this.props.location.search.replace('?page=', ''))}
+                                    itemsCountPerPage={this.state.itemsCountPerPage}
+                                    totalItemsCount={this.state.articles.length}
+                                    pageRangeDisplayed={5}
+                                    onChange={this.handlePageChange.bind(this)}
+                                    itemClass="page-item"
+                                    linkClass="page-link"
+                                    hideDisabled={true} />
+                            </>
 
                         }
                     </div>
