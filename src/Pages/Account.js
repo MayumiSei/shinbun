@@ -4,6 +4,9 @@ import PasswordChangeForm from '../Components/PasswordChange';
 import { AuthUserContext} from '../Components/Session';
 import { withFirebase } from '../Components/Firebase';
 import snapshotToArray from '../Helpers/firebaseHelper';
+import { Link } from 'react-router-dom';
+import '../Assets/style/index.scss';
+import '../Assets/style/articles/articlesList.scss';
 
 class Account extends Component {
 
@@ -184,52 +187,63 @@ class Account extends Component {
                                 <>
                                     <ul className="list-unstyled">
                                         {
-                                            this.state.categories.map((item, index) => {
-                                                return(
-                                                    <li key={index}>
-                                                        {
-                                                            this.state.isOpenCategory === item.uid ?
-                                                            <div className="">
-                                                                <input type="text" onChange={this.categoryNameChange} value={this.state.categoryName}></input>
-                                                                <button type="submit" onClick={this.handleCategoryUpdate.bind(this, item.uid)}>Ok</button>
-                                                            </div>
-                                                            :
-                                                            <>
-                                                                <span>{item.label}</span>
-                                                                <button type="submit" onClick={this.handleClickUpdateCategory.bind(this, item)}>Update</button>
-                                                            </>
-                                                        }
-                                                        <button type="submit" onClick={this.handleCategoryRemove.bind(this, item.uid)}>Supprimer</button>
-                                                        
-                                                    </li>
-                                                )
-                                            })
+                                            this.state.categories.map((item, index) => (
+                                                <li key={index}>
+                                                    {
+                                                        this.state.isOpenCategory === item.uid ?
+                                                        <div className="">
+                                                            <input type="text" onChange={this.categoryNameChange} value={this.state.categoryName}></input>
+                                                            <button type="submit" onClick={this.handleCategoryUpdate.bind(this, item.uid)}>Ok</button>
+                                                        </div>
+                                                        :
+                                                        <>
+                                                            <span>{item.label}</span>
+                                                            <button type="submit" onClick={this.handleClickUpdateCategory.bind(this, item)}>Update</button>
+                                                        </>
+                                                    }
+                                                    <button type="submit" onClick={this.handleCategoryRemove.bind(this, item.uid)}>Supprimer</button>
+                                                    
+                                                </li>
+                                            ))
                                         }
                                     </ul>
                                     <hr />
                                     <ul className="list-unstyled">
                                         {
-                                            this.state.tags.map((item, index) => {
-                                                return(
-                                                    <li key={index}>
-                                                        {
-                                                            this.state.isOpenTag === item.uid ?
-                                                            <div className="">
-                                                                <input type="text" onChange={this.tagNameChange} value={this.state.tagName}></input>
-                                                                <button type="submit" onClick={this.handleTagUpdate.bind(this, item.uid)}>Ok</button>
-                                                            </div>
-                                                            :
-                                                            <>
-                                                                <span>{item.label}</span>
-                                                                <button type="submit" onClick={this.handleClickUpdateTag.bind(this, item)}>Update</button>
-                                                            </>
-                                                        }
-                                                        <button type="submit" onClick={this.handleTagRemove.bind(this, item.uid)}>Supprimer</button>
-                                                    </li>
-                                                )
-                                            })
+                                            this.state.tags.map((item, index) => (
+                                                <li key={index}>
+                                                    {
+                                                        this.state.isOpenTag === item.uid ?
+                                                        <div className="">
+                                                            <input type="text" onChange={this.tagNameChange} value={this.state.tagName}></input>
+                                                            <button type="submit" onClick={this.handleTagUpdate.bind(this, item.uid)}>Ok</button>
+                                                        </div>
+                                                        :
+                                                        <>
+                                                            <span>{item.label}</span>
+                                                            <button type="submit" onClick={this.handleClickUpdateTag.bind(this, item)}>Update</button>
+                                                        </>
+                                                    }
+                                                    <button type="submit" onClick={this.handleTagRemove.bind(this, item.uid)}>Supprimer</button>
+                                                </li>
+                                            ))
                                         }
                                     </ul>
+                                    {
+                                        this.state.articles.map((item, index) => (
+                                            item.isNotPublished &&
+                                                <div className="row no-gutters">
+                                                    <Link to={`/${this.props.match.params.categories}/${item.slug}?uid=${item.uid}`}>
+                                                        <div className="article-block">
+                                                            <img src={item.image} />
+                                                            <h2>{item.title}</h2>
+                                                            <p>{new Date(item.createdAt).toLocaleDateString()}</p>
+                                                            <p dangerouslySetInnerHTML={{__html: item.content}}></p>
+                                                        </div>
+                                                    </Link>
+                                                </div>
+                                            ))
+                                    }
                                 </>
 
                         }

@@ -4,6 +4,7 @@ import { AuthUserContext, withAuthorization} from '../../Components/Session';
 import { Editor } from '@tinymce/tinymce-react';
 import CreatableSelect from 'react-select/creatable';
 import snapshotToArray from '../../Helpers/firebaseHelper';
+import * as ROUTES from '../../Routes';
 import '../../Assets/style/index.scss';
 import '../../Assets/style/articles/articleForm.scss'
 
@@ -179,6 +180,9 @@ class articleAdd extends Component {
             updatedAt: new Date().toString(),
             isNotPublished: this.state.isNotPublished,
             uid: articleUid
+        })
+        .then(() => {
+            this.props.history.push(`/${slugTitle}?uid=${articleUid}`);
         })
 
     }

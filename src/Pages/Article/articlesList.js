@@ -52,15 +52,15 @@ class articlesList extends Component {
                     <div className="container">
                     <div className="row no-gutters">
                         {
-                            this.state.articles.map((item, index) => {
-                                return(
+                            this.state.articles.map((item, index) => (
+                                !item.isNotPublished &&
                                     <div key={index} className="col-12 col-md-6 article-list">
                                         {
                                             (authUser && authUser.role === "ADMIN") &&
                                                 <ArticleRemove uid={item.uid}></ArticleRemove>
                                         }
                                         
-                                        <Link to={`/${this.props.match.params.categories}/${item.slug}?uid=${item.uid}`}>
+                                        <Link to={`/${item.slug}?uid=${item.uid}`}>
                                             <div className="article-block">
                                                 
                                                 <img src={item.image} />
@@ -70,8 +70,8 @@ class articlesList extends Component {
                                             </div>
                                         </Link>
                                     </div>
-                                )
-                            })
+                                
+                            ))
                         }
                     </div>
                 </div>

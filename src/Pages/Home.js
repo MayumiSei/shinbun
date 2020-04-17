@@ -44,7 +44,7 @@ class Home extends Component {
                                                 <ArticleRemove uid={item.uid}></ArticleRemove>
                                         }
                                         
-                                        <Link to={`/${this.props.match.params.categories}/${item.slug}?uid=${item.uid}`}>
+                                        <Link to={`/${item.slug}?uid=${item.uid}`}>
                                             <div className="article-block">
                                                 
                                                 <img src={item.image} />
