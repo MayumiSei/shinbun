@@ -186,11 +186,13 @@ class articleUpdate extends Component {
             return this.setState({error: "L'article n'est pas terminé"});
         }
 
+        const slugTitle = this.slugify(this.state.title);
+
         this.props.firebase
         .article(this.state.urlParam)
         .set({
             title: this.state.title,
-            slug: this.slugify(this.state.title),
+            slug: slugTitle,
             content: this.state.content,
             categories: _categoriesSelected.length > 0 ? JSON.stringify(_categoriesSelected) : [],
             image: urlImage,
@@ -199,6 +201,9 @@ class articleUpdate extends Component {
             updatedAt: new Date().toString(),
             isNotPublished: this.state.isNotPublished,
             uid: this.state.urlParam
+        })
+        .then(() => {
+            this.props.history.push(`/${slugTitle}?uid=${this.state.article.uid}`);
         })
 
     }
