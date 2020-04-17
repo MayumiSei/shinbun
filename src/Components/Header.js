@@ -50,7 +50,7 @@ class Header extends Component {
                                     this.state.categories.map((item, index) => {
                                         return(
                                             <li key={index}>
-                                                <Link to={`/${item.value}`}>{item.label}</Link>
+                                                <Link to={`/${item.value}?page=1`}>{item.label}</Link>
                                             </li>
                                         )
                                     })

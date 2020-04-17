@@ -4,6 +4,7 @@ import { AuthUserContext} from '../../Components/Session';
 import snapshotToArray from '../../Helpers/firebaseHelper';
 import { Link } from 'react-router-dom';
 import ArticleRemove from '../../Components/ArticleRemove';
+import Pagination from "react-js-pagination";
 import '../../Assets/style/index.scss';
 import '../../Assets/style/articles/articlesList.scss';
 
@@ -13,21 +14,30 @@ class articlesList extends Component {
 
 		this.state = {
             articles: [],
+            itemsCountPerPage: 1,
+            articlePaginate: [],
+            offset: 0
         };
     }
 
     // Fonction appelé après que le component ait été updaté
     componentDidUpdate = (oldProps, newState) => {
         // Si l'url d'avant et différent du nouvel url, alors on refiltre les articles
-        if(oldProps.match.params.categories && oldProps.match.params.categories !== this.props.match.params.categories) {
+        if((oldProps.match.params.categories && oldProps.match.params.categories !== this.props.match.params.categories) || this.props.location.search.replace('?page=', '') !== oldProps.location.search.replace('?page=', '')) {
             this.props.firebase.articles().on('value', snapshot => {
                 const articles  = snapshotToArray(snapshot);
                 const articlesFiltered = articles.filter(item => {
                     let categoriesArray = JSON.parse(item.categories);
                     const categoriesFiltered = categoriesArray.filter(item => item.value === this.props.match.params.categories);
-                    return categoriesFiltered[0] && categoriesFiltered[0].value === this.props.match.params.categories;
+                    return (categoriesFiltered[0] && categoriesFiltered[0].value === this.props.match.params.categories) && item.isNotPublished === false;
                 });
-                this.setState({articles: articlesFiltered.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())});
+                
+                const articleSort = articlesFiltered.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+                const articlePaginate = articleSort.slice(this.state.itemsCountPerPage * Number(this.props.location.search.replace('?page=', '')) - 1, this.state.itemsCountPerPage * Number(this.props.location.search.replace('?page=', '')) + this.state.itemsCountPerPage - 1);
+                this.setState({
+                    articles: articleSort,
+                    articlePaginate: articlePaginate
+                });
             });
         }
     }
@@ -38,10 +48,20 @@ class articlesList extends Component {
             const articlesFiltered = articles.filter(item => {
                 let categoriesArray = JSON.parse(item.categories);
                 const categoriesFiltered = categoriesArray.filter(item => item.value === this.props.match.params.categories);
-                return categoriesFiltered[0] && categoriesFiltered[0].value === this.props.match.params.categories;
+                return (categoriesFiltered[0] && categoriesFiltered[0].value === this.props.match.params.categories) && item.isNotPublished === false;
             });
-            this.setState({articles: articlesFiltered.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())});
+            const articleSort = articlesFiltered.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+            const articlePaginate = articleSort.slice(this.state.itemsCountPerPage * Number(this.props.location.search.replace('?page=', '')) - 1, this.state.itemsCountPerPage * Number(this.props.location.search.replace('?page=', '')) + this.state.itemsCountPerPage - 1);
+            this.setState({
+                articles: articleSort,
+                articlePaginate: articlePaginate
+            });
         });
+    }
+
+    handlePageChange(pageNumber) {
+        this.props.history.push(`${this.props.match.params.categories}?page=${pageNumber}`);
+        this.setState({currentPage: pageNumber});
     }
 
     render() {
@@ -50,30 +70,46 @@ class articlesList extends Component {
                 {
                     authUser =>
                     <div className="container">
-                    <div className="row no-gutters">
                         {
-                            this.state.articles.map((item, index) => (
-                                !item.isNotPublished &&
-                                    <div key={index} className="col-12 col-md-6 article-list">
-                                        {
-                                            (authUser && authUser.role === "ADMIN") &&
-                                                <ArticleRemove uid={item.uid}></ArticleRemove>
-                                        }
-                                        
-                                        <Link to={`/article/${item.slug}?uid=${item.uid}`}>
-                                            <div className="article-block">
-                                                
-                                                <img src={item.image} />
-                                                <h2>{item.title}</h2>
-                                                <p>{new Date(item.createdAt).toLocaleDateString()}</p>
-                                                <p dangerouslySetInnerHTML={{__html: item.content}}></p>
-                                            </div>
-                                        </Link>
-                                    </div>
-                                
-                            ))
+                            this.state.articlePaginate.length > 0 &&
+                            <>
+                                <div className="row no-gutters">
+                                {
+                                    this.state.articlePaginate.map((item, index) => (
+                                            <>
+                                                <div key={index} className="col-12 col-md-6 article-list">
+                                                    {
+                                                        (authUser && authUser.role === "ADMIN") &&
+                                                            <ArticleRemove uid={item.uid}></ArticleRemove>
+                                                    }
+                                                    
+                                                    <Link to={`/article/${item.slug}?uid=${item.uid}`}>
+                                                        <div className="article-block">
+                                                            
+                                                            <img src={item.image} />
+                                                            <h2>{item.title}</h2>
+                                                            <p>{new Date(item.createdAt).toLocaleDateString()}</p>
+                                                            <p dangerouslySetInnerHTML={{__html: item.content}}></p>
+                                                        </div>
+                                                    </Link>
+                                                </div>
+                                            </>
+                                        ))
+                                }
+                                </div>
+                                <div>
+                                    <Pagination
+                                        activePage={Number(this.props.location.search.replace('?page=', ''))}
+                                        itemsCountPerPage={this.state.itemsCountPerPage}
+                                        totalItemsCount={this.state.articles.length}
+                                        pageRangeDisplayed={5}
+                                        onChange={this.handlePageChange.bind(this)}
+                                        itemClass="page-item"
+                                        linkClass="page-link"
+                                    />
+                                </div>
+                            </>
                         }
-                    </div>
                 </div>
                 }
             </AuthUserContext.Consumer>
