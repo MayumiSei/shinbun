@@ -128,6 +128,29 @@ header {
     flex-direction: column;
     align-items: center;
 
+    @media screen and (max-width: $sm-width){
+        font-size: 2rem;
+
+        li {
+            margin-bottom: 1rem;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+    }
+    @media screen and (min-width: $sm-width){
+        font-size: 4.25rem;
+
+        li {
+            margin-bottom: 2rem;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+    }
+
     a {
         color: $secondary-color;
     }

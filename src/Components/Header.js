@@ -81,8 +81,8 @@ class Header extends Component {
                                         {
                                             this.state.categories.map((item, index) => {
                                                 return(
-                                                    <li key={index} className="split-list-item">
-                                                        <Link to={`/${item.value}?page=1`} className="text-decoration-none">
+                                                    <li key={index} className={item.value === "Archive" && (!authUser || authUser.role !== "ADMIN") ? "d-none" : "split-list-item"}>
+                                                        <Link to={`/${item.value}?page=1`}className="text-decoration-none">
                                                             {item.label}
                                                             <span className="Mask"><span>{item.label}</span></span>
                                                             <span className="Mask"><span>{item.label}</span></span>
@@ -97,6 +97,19 @@ class Header extends Component {
                         </header>
                         <div className={this.state.openMenu ? 'modal-menu menu-open' :  'modal-menu d-none'}>
                             <ul className="list-unstyled m-0 split-list burger-menu-split">
+                                {
+                                    this.state.categories.map((item, index) => {
+                                        return(
+                                            <li key={index} className={item.value === "Archive" && (!authUser || authUser.role !== "ADMIN") ? "d-none" : "split-list-item"}>
+                                                <Link to={`/${item.value}?page=1`} className="text-decoration-none">
+                                                    {item.label}
+                                                    <span className="Mask"><span>{item.label}</span></span>
+                                                    <span className="Mask"><span>{item.label}</span></span>
+                                                </Link>
+                                            </li>
+                                        )
+                                    })
+                                }
 
                                 {
                                     authUser ?
