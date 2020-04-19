@@ -31,33 +31,49 @@ body {
     color: black;
 }
 
-.background-default {
+.background-default, .background-Archive {
     background-size: cover;
     background-attachment: fixed;
+    background-image: url('../images/background/default-background-2.jpg');
 
-    @media screen and (max-width: $sm-width) {
-        background-image: url('../images/background/japan-background_mobile.jpg');
-    }
-    @media screen and (min-width: $sm-width) and (max-width: $md-width) {
-        background-image: url('../images/background/japan-background_tablet.jpg');
-    }
-    @media screen and (min-width: $md-width) and (max-width: $lg-width) {
-        background-image: url('../images/background/japan-background_desktop-small.jpg');
-    }
-    @media screen and (min-width: $lg-width) {
-        background-image: url('../images/background/japan-background_desktop-large.jpg');
-    }
+    // @media screen and (max-width: $sm-width) {
+    //     background-image: url('../images/background/japan-background_mobile.jpg');
+    // }
+    // @media screen and (min-width: $sm-width) and (max-width: $md-width) {
+    //     background-image: url('../images/background/japan-background_tablet.jpg');
+    // }
+    // @media screen and (min-width: $md-width) and (max-width: $lg-width) {
+    //     background-image: url('../images/background/japan-background_desktop-small.jpg');
+    // }
+    // @media screen and (min-width: $lg-width) {
+    //     background-image: url('../images/background/default-background-galaxy.jpg');
+    // }
 }
 
-.background-Mythologie {
+.background-Northern {
     background-size: cover;
     background-attachment: fixed;
     background-image: url('../images/background/nothern-background.jpg');
 }
 
+.background-Mythologie {
+    background-size: cover;
+    background-attachment: fixed;
+    background-image: url('../images/background/occult-background.jpg');
+}
+
+.background-Japon {
+    background-size: cover;
+    background-attachment: fixed;
+    @media screen and (max-width: $md-width) {
+        background-image: url('../images/background/japan-background_mobile.jpg');
+    }
+    @media screen and (min-width: $md-width) {
+        background-image: url('../images/background/japan-background_tablet.jpg');
+    }
+}
+
 .container {
-    // width: 95%;
-    // max-width: 95%;
     @media screen and (max-width: $xs-width){
         width: 100%;
         max-width: 100% !important;
@@ -70,35 +86,6 @@ body {
     .col-md-6 {
         max-width: none;
     }
-    // @media screen and (max-width: $xs-width) {
-    //     width: 570px;
-    //     max-width: 570px;
-    // }
-    // @media screen and (min-width: $xs-width) and (max-width: $sm-width) {
-    //     width: 778px;
-    //     max-width: 778px;
-    // }
-    // @media screen and (min-width: $sm-width) and (max-width: $md-width) {
-    //     width: 960px;
-    //     max-width: 960px;
-    // }
-    // @media screen and (min-width: $md-width) and (max-width: $lg-width) {
-    //     width: 1140px;
-    //     max-width: 1140px;
-    // }
-    // @media screen and (min-width: $lg-width) and (max-width: $xl-width) {
-    //     width: 1400px;
-    //     max-width: 1400px;
-    // }
-    // @media screen and (min-width: $xl-width) and (max-width: $xxl-width) {
-    //     width: 1500px;
-    //     max-width: 1500px;
-    // }
-
-    // @media screen and (min-width: $xxl-width) {
-    //     width: 1600px;
-    //     max-width: 1600px;
-    // }
 }
 
 .overlay {

@@ -1,0 +1,21 @@
+.articleDetail {
+    display: flex;
+    justify-content: center;
+}
+
+.articleDetail-block {
+    background: white;
+    border: 1px solid white;
+}
+
+.articleDetail-img {
+    display: flex;
+    justify-content: center;
+    padding: 1rem 0;
+
+    img {
+        width: 90%;
+        object-fit: cover;
+    }
+    
+}

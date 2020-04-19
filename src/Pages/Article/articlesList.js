@@ -83,28 +83,31 @@ class articlesList extends Component {
             <AuthUserContext.Consumer>
                 {
                     authUser =>
-                    <div className="container">
+                    <div className="container container-margin">
                         {
                             this.state.articlePaginate.length > 0 &&
                             <>
                                 <div className="row no-gutters">
                                 {
                                     this.state.articlePaginate.map((item, index) => (
-                                                <div key={index} className="col-12 col-md-6 article-list">
-                                                    {
+                                                <div key={index} className="col-12 col-lg-6 col-xxl-4 article-list">
+                                                    {/* {
                                                         (authUser && authUser.role === "ADMIN") &&
                                                             <ArticleRemove uid={item.uid}></ArticleRemove>
-                                                    }
+                                                    } */}
                                                     
-                                                    <Link to={`/${this.props.match.params.categories}/article/${item.slug}?uid=${item.uid}`}>
-                                                        <div className="article-block">
-                                                            
-                                                            <img src={item.image} />
-                                                            <h2>{item.title}</h2>
-                                                            <p>{new Date(item.createdAt).toLocaleDateString()}</p>
-                                                            <p dangerouslySetInnerHTML={{__html: item.content}}></p>
-                                                        </div>
-                                                    </Link>
+                                                    
+                                                    <div className="article-block">
+                                                        <Link to={`/${this.props.match.params.categories}/article/${item.slug}?uid=${item.uid}`} className="text-decoration-none">
+                                                            <img src={item.image} className="article-img" />
+                                                            <div className="article-content p-3">
+                                                                <h2>{item.title}</h2>
+                                                                <p>{new Date(item.createdAt).toLocaleDateString()}</p>
+                                                                {/* <p dangerouslySetInnerHTML={{__html: item.content}}></p> */}
+                                                            </div>
+                                                        </Link>
+                                                    </div>
+                                                    
                                                 </div>
                                         ))
                                 }

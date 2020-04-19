@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withFirebase } from '../../Components/Firebase';
 import { Link } from 'react-router-dom';
 import '../../Assets/style/index.scss';
-import '../../Assets/style/articles/articlesList.scss';
+import '../../Assets/style/articles/articleDetails.scss';
 
 class articleDetails extends Component {
     constructor(props) {
@@ -24,13 +24,17 @@ class articleDetails extends Component {
 
     render() {
         return(
-            <div className="container">
-                <div className="row no-gutters">
-                    <div className="col-12">
-                        <Link to={`/article/update/${this.state.urlParam}`}>Update</Link>
-                        <h1 className="h3">{this.state.article.title}</h1>
-                        <img src={this.state.article.image} />
-                        <div dangerouslySetInnerHTML={{__html: this.state.article.content}}></div>
+            <div className="container container-margin">
+                <div className="row no-gutters articleDetail">
+                    <div className="col-12 col-lg-8 articleDetail-block">
+                        <div className="articleDetail-img">
+                            <img src={this.state.article.image} className="articleDetail-img"/>
+                        </div>
+                        <div className="articleDetail-content p-3">
+                            <h1 className="h3 text-center pb-3 pb-lg-5">{this.state.article.title}</h1>
+                            <div dangerouslySetInnerHTML={{__html: this.state.article.content}}></div>
+                            <Link to={`/article/update/${this.state.urlParam}`}>Update</Link>
+                        </div>
                     </div>
                 </div>
             </div>

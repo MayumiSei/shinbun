@@ -5,17 +5,28 @@
 // ----------------
 
 $perspective:     60rem;
-$font-size:       1.5rem;
+$font-size:       1.2rem;
 $split-position:  60%;
 $split-thickness: 2px;
 $split-color:     $secondary-color;
 
 header {
-    background: $primary-color;
+    background: transparent;
+    position: fixed;
+    width: 100%;
+    z-index: 10;
+
+    @media screen and (max-width: $md-width){
+        height: $header-height-mobile;
+    }
+    @media screen and (min-width: $md-width){
+        height: $header-height-desktop;
+    }
 
     nav {
         transform-style: preserve-3d;
         transform: perspective($perspective);
+        font-weight: bold;
 
         ul {
             li {
@@ -117,7 +128,7 @@ header {
     align-items: start;
 
     .Mask {
-        color: $darker-color;
+        color: $primary-color;
     }
 }
 
@@ -185,7 +196,7 @@ header {
 .line {
     fill:none;
     transition: stroke-dasharray 400ms, stroke-dashoffset 400ms;
-    stroke: $darker-color;
+    stroke: $primary-color;
     stroke-width:5.5;
     stroke-linecap:round;
 }

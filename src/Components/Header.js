@@ -53,8 +53,8 @@ class Header extends Component {
                         <header>
                             <div className="container py-2">
                                 <div className="position-relative">
-                                    <h1 className="font-brush h2 py-3 text-center">
-                                        <Link to={ROUTES.HOME} className="darker-color text-decoration-none">Shinbun</Link>
+                                    <h1 className="font-brush h4 py-3 text-center">
+                                        <Link to={ROUTES.HOME} className="primary-color text-decoration-none">Shinbun</Link>
                                     </h1>
                                     <svg className={this.state.openMenu ? 'ham hamRotate ham1 active' : 'ham hamRotate ham1'} viewBox="0 0 100 100" width="60" onClick={this.handleMenu} >
                                         <path
@@ -69,7 +69,7 @@ class Header extends Component {
                                     </svg>
                                 </div>
 
-                                <nav className="Menu hide-xs hide-sm hide-md">
+                                <nav className="Menu hide-xs hide-sm hide-md py-2">
                                     <ul className="list-unstyled li-inline m-0 split-list nav-split">
                                         <li className="split-list-item">
                                             <Link to={ROUTES.HOME} className="text-decoration-none">
@@ -94,52 +94,52 @@ class Header extends Component {
                                     </ul>
                                 </nav>
                             </div>
-                        </header>
-                        <div className={this.state.openMenu ? 'modal-menu menu-open' :  'modal-menu d-none'}>
-                            <ul className="list-unstyled m-0 split-list burger-menu-split">
-                                {
-                                    this.state.categories.map((item, index) => {
-                                        return(
-                                            <li key={index} className={item.value === "Archive" && (!authUser || authUser.role !== "ADMIN") ? "d-none" : "split-list-item"}>
-                                                <Link to={`/${item.value}?page=1`} className="text-decoration-none">
-                                                    {item.label}
-                                                    <span className="Mask"><span>{item.label}</span></span>
-                                                    <span className="Mask"><span>{item.label}</span></span>
-                                                </Link>
-                                            </li>
-                                        )
-                                    })
-                                }
+                            <div className={this.state.openMenu ? 'modal-menu menu-open' :  'modal-menu d-none'}>
+                                <ul className="list-unstyled m-0 split-list burger-menu-split">
+                                    {
+                                        this.state.categories.map((item, index) => {
+                                            return(
+                                                <li key={index} className={item.value === "Archive" && (!authUser || authUser.role !== "ADMIN") ? "d-none hide-lg" : "split-list-item hide-lg"}>
+                                                    <Link to={`/${item.value}?page=1`} className="text-decoration-none">
+                                                        {item.label}
+                                                        <span className="Mask"><span>{item.label}</span></span>
+                                                        <span className="Mask"><span>{item.label}</span></span>
+                                                    </Link>
+                                                </li>
+                                            )
+                                        })
+                                    }
 
-                                {
-                                    authUser ?
-                                    <>
-                                        <li className="text-uppercase split-list-item">
-                                            <a href="#" className="text-decoration-none" onClick={this.handleModal.bind(this, ROUTES.ACCOUNT)}>
-                                                Mon compte
-                                                <span className="Mask"><span>Mon compte</span></span>
-                                                <span className="Mask"><span>Mon compte</span></span>
-                                            </a>
-                                        </li>
-                                        <li className="text-uppercase split-list-item">
-                                            <a href="#" className="text-decoration-none" onClick={this.handleSignOut}>
-                                                Se déconnecter
-                                                <span className="Mask"><span>Se déconnecter</span></span>
-                                                <span className="Mask"><span>Se déconnecter</span></span>
-                                            </a>
-                                        </li>
-                                    </>
-                                    :
-                                        <li className="text-uppercase split-list-item">
-                                            <a href="#" className="text-decoration-none" onClick={this.handleModal.bind(this, `${ROUTES.SIGNIN}?page=1`)}>
-                                                Se connecter
-                                                <span className="Mask"><span>Se connecter</span></span>
-                                                <span className="Mask"><span>Se connecter</span></span>
-                                            </a>
-                                        </li>
-                                }
-                            </ul>
-                        </div>
+                                    {
+                                        authUser ?
+                                        <>
+                                            <li className="text-uppercase split-list-item">
+                                                <a href="#" className="text-decoration-none" onClick={this.handleModal.bind(this, ROUTES.ACCOUNT)}>
+                                                    Mon compte
+                                                    <span className="Mask"><span>Mon compte</span></span>
+                                                    <span className="Mask"><span>Mon compte</span></span>
+                                                </a>
+                                            </li>
+                                            <li className="text-uppercase split-list-item">
+                                                <a href="#" className="text-decoration-none" onClick={this.handleSignOut}>
+                                                    Se déconnecter
+                                                    <span className="Mask"><span>Se déconnecter</span></span>
+                                                    <span className="Mask"><span>Se déconnecter</span></span>
+                                                </a>
+                                            </li>
+                                        </>
+                                        :
+                                            <li className="text-uppercase split-list-item">
+                                                <a href="#" className="text-decoration-none" onClick={this.handleModal.bind(this, `${ROUTES.SIGNIN}?page=1`)}>
+                                                    Se connecter
+                                                    <span className="Mask"><span>Se connecter</span></span>
+                                                    <span className="Mask"><span>Se connecter</span></span>
+                                                </a>
+                                            </li>
+                                    }
+                                </ul>
+                            </div>
+                        </header>
                     </>
                 }
     

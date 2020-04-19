@@ -94,3 +94,15 @@ p {
         color: $darker-color;
     }
 }
+
+// ----------------
+// Container
+// ----------------
+.container-margin {
+    @media screen and (max-width: $md-width){
+        padding-top: $header-height-mobile + 20px;
+    }
+    @media screen and (min-width: $md-width){
+        padding-top: $header-height-desktop + 50px;
+    }
+}
