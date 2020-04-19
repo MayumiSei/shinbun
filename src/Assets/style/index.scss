@@ -56,8 +56,16 @@ body {
 }
 
 .container {
-    width: 95%;
-    max-width: 95%;
+    // width: 95%;
+    // max-width: 95%;
+    @media screen and (max-width: $xs-width){
+        width: 100%;
+        max-width: 100% !important;
+    }
+    @media screen and (min-width: $xs-width){
+        width: 95%;
+        max-width: 95%;
+    }
 
     .col-md-6 {
         max-width: none;

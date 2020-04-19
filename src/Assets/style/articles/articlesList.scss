@@ -1,36 +1,71 @@
 @import '../utilities/values.scss';
 
+
 .article-list {
+    display: flex;
+    justify-content: center;
+    // @media screen and (max-width: $sm-width){
+    //     .article-block {
+    //         width: 60%;
+    //         display: flex;
+    //         justify-content: center;
+    //     }
+    // }
     
-    @media screen and (min-width: $xs-width){
-        padding-right: 70px !important;
-        padding-left: 0 !important;
+    // @media screen and (min-width: $sm-width){
+    //     padding-right: 70px !important;
+    //     padding-left: 25px !important;
 
-        &:nth-child(2n) {
-            padding-right: 0 !important;
-            padding-left: 25px !important;
-        }
-    }
+    //     &:nth-child(2n) {
+    //         padding-right: 25px !important;
+    //         padding-left: 25px !important;
+    //     }
+    // }
 
-    @media screen and (min-width: $md-width){
-        padding-right: 50px !important;
-        padding-left: 25px !important;
+    // @media screen and (min-width: $md-width){
+    //     padding-right: 50px !important;
+    //     padding-left: 25px !important;
 
-        &:nth-child(1n) {
-            padding-right: 50px !important;
-            padding-left: 0 !important;
-        }
+    //     &:nth-child(1n) {
+    //         padding-right: 50px !important;
+    //         padding-left: 25px !important;
+    //     }
 
-        &:nth-child(3n) {
-            padding-right: 0 !important;
-            padding-left: 25px !important;
-        }
-    }
+    //     &:nth-child(3n) {
+    //         padding-right: 25px !important;
+    //         padding-left: 50px !important;
+    //     }
+    // }
 }
 
 .article-block {
     border: 1px solid #e6e0e0;
     background: white;
+
+    @media screen and (max-width: 400px){
+        width: 100%;
+    }
+    @media screen and (min-width: 400px) and (max-width: 500px){
+        width: 80%;
+    }
+    @media screen and (min-width: 500px) and (max-width: $xs-width){
+        width: 70%;
+    }
+    @media screen and (min-width: $xs-width) and (max-width: $sm-width){
+        width: 60%;
+    }
+    @media screen and (min-width: $sm-width) and (max-width: $md-width) {
+        width: 85%;
+    }
+    @media screen and (min-width: $md-width) and (max-width: 1420px) {
+        width: 75%;
+    }
+    @media screen and (min-width: 1420px) and (max-width: $lg-width) {
+        width: 85%;
+    }
+    @media screen and (min-width: $lg-width) {
+        width: 80%;
+    }
 }
 
 .article-img {

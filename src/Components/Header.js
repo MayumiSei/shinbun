@@ -69,7 +69,7 @@ class Header extends Component {
                                     </svg>
                                 </div>
 
-                                <nav className="Menu">
+                                <nav className="Menu hide-xs hide-sm hide-md">
                                     <ul className="list-unstyled li-inline m-0 split-list nav-split">
                                         <li className="split-list-item">
                                             <Link to={ROUTES.HOME} className="text-decoration-none">

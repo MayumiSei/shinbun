@@ -47,12 +47,12 @@ class Home extends Component {
                                 return(
                                     index <= 10 &&
                                     <div key={index} className="col-12 col-lg-6 col-xxl-4 article-list">
-                                    {
-                                        (authUser && authUser.role === "ADMIN") &&
-                                            <ArticleRemove uid={item.uid}></ArticleRemove>
-                                    }
-                                        <Link to={`/${categories[0].value}/article/${item.slug}?uid=${item.uid}`}>    
-                                            <div className="article-block">
+                                        {/* {
+                                            (authUser && authUser.role === "ADMIN") &&
+                                                <ArticleRemove uid={item.uid}></ArticleRemove>
+                                        } */}
+                                        <div className="article-block">
+                                            <Link to={`/${categories[0].value}/article/${item.slug}?uid=${item.uid}`}>   
                                                 <img src={item.image} className="article-img" />
                                                 <div className="article-content p-3">
                                                     <h2>{item.title}</h2>
@@ -60,8 +60,8 @@ class Home extends Component {
                                                     <p dangerouslySetInnerHTML={{__html: item.content}}></p>
 
                                                 </div>
-                                            </div>
-                                        </Link>
+                                            </Link>
+                                        </div>
                                     </div>
                                 )
 
