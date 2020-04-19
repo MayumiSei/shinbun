@@ -45,3 +45,52 @@ p {
         display: inline-block;
     }
 }
+
+// ----------------
+// Text
+// ----------------
+
+.text-decoration-none {
+    text-decoration: none !important;
+}
+
+.font-brush {
+    font-family: eclipse;
+}
+
+
+// ----------------
+// Colors
+// ----------------
+
+.primary-color {
+    color: $primary-color !important;
+
+    &:hover {
+        color: $primary-color;
+    }
+}
+
+.secondary-color {
+    color: $secondary-color !important;
+
+    &:hover {
+        color: $secondary-color;
+    }
+}
+
+.third-color {
+    color: $third-color !important;
+
+    &:hover {
+        color: $third-color;
+    }
+}
+
+.darker-color {
+    color: $darker-color !important;
+
+    &:hover {
+        color: $darker-color;
+    }
+}

@@ -2,7 +2,27 @@
 // Variable screen's size
 // ----------------
 
+$xxl-width: 1700px; // (1600 - 1700)
+$xl-width: 1600px; // (1500 - 1600)
 $lg-width: 1500px; // (1200 - 1500)
 $md-width: 1200px; // (992 - 1200)
 $sm-width: 992px; // (767 - 992)
 $xs-width: 767px; // (0 - 767)
+
+// ----------------
+// Colors
+// ----------------
+
+$primary-color: #fbb4b9;
+$secondary-color: #ee639a;
+$third-color: #FF2C75;
+$darker-color:#1d1936;
+
+// ----------------
+// Fonts
+// ----------------
+
+@font-face {
+    font-family: eclipse;
+    src: url('../../fonts/eclipse/eclipse.ttf');
+}

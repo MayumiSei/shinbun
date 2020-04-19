@@ -5,5 +5,5 @@ export const ACCOUNT = '/account';
 export const PASSWORD_FORGET = '/password-forget';
 export const ARTICLEADD = '/article/add';
 export const ARTICLESLIST = '/:categories';
-export const ARTICLEDETAILS = '/article/:article';
+export const ARTICLEDETAILS = '/:categories/article/:article';
 export const ARTICLEUPDATE = '/article/update/:uid';

@@ -19,8 +19,12 @@ class Home extends Component {
     componentDidMount = () => {
         this.props.firebase.articles().on('value', snapshot => {
             const articles  = snapshotToArray(snapshot);
+            console.log('articles ', articles);
             this.setState({articles: articles.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())});
         });
+
+        document.body.removeAttribute('class');
+        document.body.classList.add('background-default');
     }
 
     render() {
@@ -36,15 +40,17 @@ class Home extends Component {
                         }
                         <div className="row no-gutters">
                         {
-                            this.state.articles.map((item, index) => (
-                                index <= 10 &&
+                            this.state.articles.map((item, index) => {
+                                const categories = JSON.parse(item.categories);
+                                return(
+                                    index <= 10 &&
                                     <div key={index} className="col-12 col-md-6 article-list">
                                         {
                                             (authUser && authUser.role === "ADMIN") &&
                                                 <ArticleRemove uid={item.uid}></ArticleRemove>
                                         }
                                         
-                                        <Link to={`/article/${item.slug}?uid=${item.uid}`}>
+                                        <Link to={`/${categories[0].value}/article/${item.slug}?uid=${item.uid}`}>
                                             <div className="article-block">
                                                 
                                                 <img src={item.image} />
@@ -54,7 +60,9 @@ class Home extends Component {
                                             </div>
                                         </Link>
                                     </div>
-                            ))
+                                )
+
+                            })
                         }
                         </div>
                     </div>

@@ -1,13 +1,199 @@
+@import 'utilities/values.scss';
+
+// ----------------
+// Values
+// ----------------
+
+$perspective:     60rem;
+$font-size:       1.5rem;
+$split-position:  60%;
+$split-thickness: 2px;
+$split-color:     $secondary-color;
+
 header {
-    background: pink;
-}
+    background: $primary-color;
 
-.ul-header {
-    li {
-        margin-right: 2rem;
+    nav {
+        transform-style: preserve-3d;
+        transform: perspective($perspective);
 
-        &:last-child {
-            margin-right: 0;
+        ul {
+            li {
+                margin-right: 2rem;
+
+                &:last-child {
+                    margin-right: 0;
+                }
+            }
         }
     }
 }
+
+// ----------------
+// SPLIT TEXT
+// ----------------
+
+// === Menu <ul> =====
+.split-list {
+    line-height: 1.2;
+    text-align: center;
+    display: flex;
+
+    a, button {
+        color: transparent;
+    
+        &:hover {
+            color: transparent;
+        }
+    }
+}
+  
+  // === Menu item =====
+.split-list-item {
+    position: relative;
+    color: transparent;
+    cursor: pointer;
+    margin-right: 2rem;
+
+    // === Split Line =====
+    &::before {
+        content: '';
+        display: block;
+        position: absolute;
+        top: $split-position;
+        left: -10%;
+        right: -10%;
+        height: $split-thickness;
+        border-radius: $split-thickness;
+        margin-top: -($split-thickness / 2);
+        background: $split-color;
+        transform: scale(0);
+        transition: transform .8s cubic-bezier(.16,1.08,.38,.98);
+        z-index: 1;
+    }
+}
+  
+  // === Top/bottom mask =====
+.Mask {
+    display: block;
+    position: absolute;
+    overflow: hidden;
+    top: 0;
+    height: $split-position;
+    transition: all .8s cubic-bezier(.16,1.08,.38,.98);
+
+    span {
+        display: block;
+    }
+}
+
+  // === Bottom mask specific =====
+.Mask + .Mask {
+    top: $split-position - 0.1;
+    height: 100 - $split-position + 0.1;
+
+    span {
+        transform: translateY(-$split-position);
+    }
+}
+
+// === Where the fun stuff happens =====
+.split-list-item:hover,
+.split-list-item:active {
+    .Mask {
+        color: #FFF;
+        transform: skewX(12deg) translateX(5px);
+    }
+    .Mask + .Mask { 
+        transform: skewX(12deg) translateX(-5px);
+    }
+    &::before {
+        transform: scale(1);
+    }
+}
+
+.nav-split {
+    font-size: $font-size;
+    align-items: start;
+
+    .Mask {
+        color: $darker-color;
+    }
+}
+
+.burger-menu-split {
+    font-size: 4.25rem;
+    text-transform: uppercase;
+    text-align: center;
+    flex-direction: column;
+    align-items: center;
+
+    a {
+        color: $secondary-color;
+    }
+}
+
+// ----------------
+// BURGER MENU ANIMATION
+// ----------------
+.ham {
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: transform 400ms;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 2000;
+}
+.hamRotate.active {
+    transform: rotate(45deg);
+
+    .line {
+        stroke: $primary-color;
+    }
+}
+.hamRotate180.active {
+    transform: rotate(180deg);
+}
+.line {
+    fill:none;
+    transition: stroke-dasharray 400ms, stroke-dashoffset 400ms;
+    stroke: $darker-color;
+    stroke-width:5.5;
+    stroke-linecap:round;
+}
+.ham1 .top {
+    stroke-dasharray: 40 139;
+}
+.ham1 .bottom {
+    stroke-dasharray: 40 180;
+}
+.ham1.active .top {
+    stroke-dashoffset: -98px;
+}
+.ham1.active .bottom {
+    stroke-dashoffset: -138px;
+}
+
+// ----------------
+// MODAL BURGER MENU
+// ----------------
+
+.menu-open {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background: black;
+    opacity: .9;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+}
+  

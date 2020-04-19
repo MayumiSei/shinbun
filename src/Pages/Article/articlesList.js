@@ -42,6 +42,9 @@ class articlesList extends Component {
                     articlePaginate: articlePaginate
                 });
             });
+
+            document.body.removeAttribute('class');
+            document.body.classList.add('background-' + this.props.match.params.categories);
         }
     }
 
@@ -65,6 +68,9 @@ class articlesList extends Component {
                 articlePaginate: articlePaginate
             });
         });
+
+        document.body.removeAttribute('class');
+        document.body.classList.add('background-' + this.props.match.params.categories);
     }
 
     handlePageChange(pageNumber) {
@@ -90,7 +96,7 @@ class articlesList extends Component {
                                                             <ArticleRemove uid={item.uid}></ArticleRemove>
                                                     }
                                                     
-                                                    <Link to={`/article/${item.slug}?uid=${item.uid}`}>
+                                                    <Link to={`/${this.props.match.params.categories}/article/${item.slug}?uid=${item.uid}`}>
                                                         <div className="article-block">
                                                             
                                                             <img src={item.image} />
