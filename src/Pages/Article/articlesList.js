@@ -30,15 +30,15 @@ class articlesList extends Component {
                     const categoriesFiltered = categoriesArray.filter(item => item.value === this.props.match.params.categories);
                     return (categoriesFiltered[0] && categoriesFiltered[0].value === this.props.match.params.categories) && item.isNotPublished === false;
                 });
-                const articleSort = articlesFiltered.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+                const articlesSort = articlesFiltered.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 
                 const start = this.state.itemsCountPerPage * (Number(this.props.location.search.replace('?page=', '')) - 1);
                 const indexEnd = this.state.itemsCountPerPage * (Number(this.props.location.search.replace('?page=', '')) - 1) + this.state.itemsCountPerPage
-                const end = articleSort.length < indexEnd ? articleSort.length : indexEnd
-                const articlePaginate = articleSort.slice(start, end);
+                const end = articlesSort.length < indexEnd ? articlesSort.length : indexEnd
+                const articlePaginate = articlesSort.slice(start, end);
 
                 this.setState({
-                    articles: articleSort,
+                    articles: articlesSort,
                     articlePaginate: articlePaginate
                 });
             });
@@ -56,15 +56,15 @@ class articlesList extends Component {
                 const categoriesFiltered = categoriesArray.filter(item => item.value === this.props.match.params.categories);
                 return (categoriesFiltered[0] && categoriesFiltered[0].value === this.props.match.params.categories) && item.isNotPublished === false;
             });
-            const articleSort = articlesFiltered.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+            const articlesSort = articlesFiltered.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 
             const start = this.state.itemsCountPerPage * (Number(this.props.location.search.replace('?page=', '')) - 1);
             const indexEnd = this.state.itemsCountPerPage * (Number(this.props.location.search.replace('?page=', '')) - 1) + this.state.itemsCountPerPage
-            const end = articleSort.length < indexEnd ? articleSort.length : indexEnd
-            const articlePaginate = articleSort.slice(start, end);
+            const end = articlesSort.length < indexEnd ? articlesSort.length : indexEnd
+            const articlePaginate = articlesSort.slice(start, end);
 
             this.setState({
-                articles: articleSort,
+                articles: articlesSort,
                 articlePaginate: articlePaginate
             });
         });

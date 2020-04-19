@@ -100,7 +100,7 @@ class articleUpdate extends Component {
     };
 
     handleChangeTags = (newValue) => {
-        this.setState({tagsSelected: newValue});
+        this.setState({tagsSelected: newValue ? newValue : []});
     };
 
     publishedChange = event => {
@@ -157,18 +157,20 @@ class articleUpdate extends Component {
         }
 
         const _tagsSelected = [...this.state.tagsSelected];
-        for(let i = 0; i < _tagsSelected.length; i++) {
-            const isTagExists = this.state.tags.filter(item => item.uid === _tagsSelected[i].uid && item.value === _tagsSelected[i].value);
-            if(isTagExists.length === 0) {
-                const tagUid = this.createUid();
-                this.props.firebase
-                .tag(tagUid)
-                .set({
-                    label: _tagsSelected[i].label,
-                    value: _tagsSelected[i].value.replace(/ /g,"-"),
-                    uid: tagUid
-                });
-                _tagsSelected[i].uid = tagUid;
+        if(this.state.tagsSelected.length > 0) {
+            for(let i = 0; i < _tagsSelected.length; i++) {
+                const isTagExists = this.state.tags.filter(item => item.uid === _tagsSelected[i].uid && item.value === _tagsSelected[i].value);
+                if(isTagExists.length === 0) {
+                    const tagUid = this.createUid();
+                    this.props.firebase
+                    .tag(tagUid)
+                    .set({
+                        label: _tagsSelected[i].label,
+                        value: _tagsSelected[i].value.replace(/ /g,"-"),
+                        uid: tagUid
+                    });
+                    _tagsSelected[i].uid = tagUid;
+                }
             }
         }
 
@@ -203,7 +205,7 @@ class articleUpdate extends Component {
             uid: this.state.urlParam
         })
         .then(() => {
-            this.props.history.push(`/article/${slugTitle}?uid=${this.state.article.uid}`);
+            this.props.history.push(`/${_categoriesSelected[0].value}/article/${slugTitle}?uid=${this.state.article.uid}`);
         })
 
     }
