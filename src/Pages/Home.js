@@ -46,7 +46,7 @@ class Home extends Component {
                                 const categories = JSON.parse(item.categories);
                                 return(
                                     index <= 10 &&
-                                    <div key={index} className="col-12 col-md-6 col-xl-4 article-list">
+                                    <div key={index} className="col-12 col-lg-6 col-xl-4 article-list">
                                     {
                                         (authUser && authUser.role === "ADMIN") &&
                                             <ArticleRemove uid={item.uid}></ArticleRemove>

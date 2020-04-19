@@ -2,12 +2,27 @@
 
 .article-list {
     
-    @media screen and (min-width: $sm-width){
+    @media screen and (min-width: $xs-width){
         padding-right: 70px !important;
-        padding-left: 25px !important;
+        padding-left: 0 !important;
 
         &:nth-child(2n) {
-            padding-right: 70px !important;
+            padding-right: 0 !important;
+            padding-left: 25px !important;
+        }
+    }
+
+    @media screen and (min-width: $md-width){
+        padding-right: 50px !important;
+        padding-left: 25px !important;
+
+        &:nth-child(1n) {
+            padding-right: 50px !important;
+            padding-left: 0 !important;
+        }
+
+        &:nth-child(3n) {
+            padding-right: 0 !important;
             padding-left: 25px !important;
         }
     }
