@@ -79,9 +79,6 @@ class Account extends Component {
 
         document.body.removeAttribute('class');
         document.body.classList.add('background-default');
-
-        // const 
-        // if(document.getElementsByClassName('modal-menu').classList.conta)
     }
 
     handleCategoryRemove = uid => {

@@ -4,55 +4,33 @@
 .article-list {
     display: flex;
     justify-content: center;
-    // @media screen and (max-width: $sm-width){
-    //     .article-block {
-    //         width: 60%;
-    //         display: flex;
-    //         justify-content: center;
-    //     }
-    // }
-    
-    // @media screen and (min-width: $sm-width){
-    //     padding-right: 70px !important;
-    //     padding-left: 25px !important;
-
-    //     &:nth-child(2n) {
-    //         padding-right: 25px !important;
-    //         padding-left: 25px !important;
-    //     }
-    // }
-
-    // @media screen and (min-width: $md-width){
-    //     padding-right: 50px !important;
-    //     padding-left: 25px !important;
-
-    //     &:nth-child(1n) {
-    //         padding-right: 50px !important;
-    //         padding-left: 25px !important;
-    //     }
-
-    //     &:nth-child(3n) {
-    //         padding-right: 25px !important;
-    //         padding-left: 50px !important;
-    //     }
-    // }
 }
 
 .article-block {
-    border: 1px solid #e6e0e0;
+    // border: 1px solid #e6e0e0;
     background: white;
     transition: transform .2s;
     height: 405px;
     margin-bottom: 4rem;
+    box-shadow: 0 0 50px #262323;
+    border-radius: 10px;
+
+    .article-img {
+        border-radius: 10px;
+    }
+
+    .img-overlay {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        top: 0;
+        border-radius: 10px;
+        background: linear-gradient(to top right, black 70%, white);
+        opacity: .3;
+    }
 
     &:hover {
-        transform: scale(1.05, 1.05);
-
-        .article-img {
-            transform: scale(1.1, 1.1);
-            border: 1px solid white;
-            box-shadow: 0px 0px 10px white;
-        }
+        transform: scale(1.1, 1.1);
     }
 
     h2 {
@@ -93,7 +71,17 @@
 
 .article-img {
     width: 100%;
-    height: 250px;
+    height: 405px;
     transition: transform .2s;
     object-fit: cover;
+}
+
+.article-content {
+    bottom: 0;
+    width: 100%;
+}
+
+.article-content-details {
+    background: rgba(255, 255, 255, .6);
+    border-radius: 0 0 10px 10px;
 }

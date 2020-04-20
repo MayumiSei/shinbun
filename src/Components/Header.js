@@ -109,6 +109,17 @@ class Header extends Component {
                                             )
                                         })
                                     }
+                                    <li className="gradient-back-to-primary w-100 my-4 hide-lg"></li>
+                                    {
+                                        (authUser && authUser.role === "ADMIN") &&
+                                        <li className="text-uppercase split-list-item">
+                                            <a href="#" className="text-decoration-none" onClick={this.handleModal.bind(this, ROUTES.ARTICLEADD)}>
+                                                Ajouter un article
+                                                <span className="Mask"><span>Ajouter un article</span></span>
+                                                <span className="Mask"><span>Ajouter un article</span></span>
+                                            </a>
+                                        </li>
+                                    }
 
                                     {
                                         authUser ?

@@ -69,7 +69,7 @@ body {
         background-image: url('../images/background/japan-background_mobile.jpg');
     }
     @media screen and (min-width: $md-width) {
-        background-image: url('../images/background/japan-background_tablet.jpg');
+        background-image: url('../images/background/japan-background1_tablet.png');
     }
 }
 
@@ -93,7 +93,7 @@ body {
     left: 0;
     height: 100%;
     width: 100%;
-    background: black;
+    background: white;
     opacity: .3;
     position: fixed;
     z-index: -1;

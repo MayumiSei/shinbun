@@ -106,3 +106,16 @@ p {
         padding-top: $header-height-desktop + 50px;
     }
 }
+
+// ----------------
+// Line gradient
+// ----------------
+
+.gradient-back-to-primary {
+    border-width: 1px;
+    border-top-width: 1px;
+    border-style: solid;
+    border-top-style: solid;
+    border-image: linear-gradient(0.25turn, black, $primary-color, black) 1 0%;
+    border-top: none
+}
