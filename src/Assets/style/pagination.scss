@@ -1,3 +1,10 @@
+@import './utilities/values.scss';
+
 .pagination {
     justify-content: center;
+}
+
+.page-item.active .page-link {
+    background: $primary-color;
+    border: none;
 }

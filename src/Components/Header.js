@@ -13,8 +13,16 @@ class Header extends Component {
 
 		this.state = {
             categories: [],
-            openMenu: false
+            openMenu: false,
+            isDetailsPage: this.props.location.search.includes('?uid=')
         };
+    }
+
+    componentDidUpdate = (oldProps) => {
+        console.log('rff ', oldProps.location.search.includes('?uid=') )
+        if(oldProps.location.search.includes('?uid=') !== this.props.location.search.includes('?uid=')) {
+            this.setState({isDetailsPage: this.props.location.search.includes('?uid=')});
+        }
     }
 
     componentDidMount = () => {
@@ -50,7 +58,7 @@ class Header extends Component {
                 {
                     authUser =>
                     <>
-                        <header>
+                        <header className={this.state.isDetailsPage ? 'header-background-dark' : 'header-background-light'}>
                             <div className="container py-2">
                                 <div className="position-relative">
                                     <h1 className="font-brush h4 py-3 text-center">

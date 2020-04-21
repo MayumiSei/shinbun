@@ -11,7 +11,6 @@ $split-thickness: 2px;
 $split-color:     $secondary-color;
 
 header {
-    background: rgba(255, 255, 255, .3);
     position: fixed;
     width: 100%;
     z-index: 10;
@@ -39,6 +38,15 @@ header {
         }
     }
 }
+
+.header-background-light {
+    background: rgba(255, 255, 255, .3);
+}
+
+.header-background-dark {
+    background: rgba(0, 0, 0, .3);
+}
+
 
 // ----------------
 // SPLIT TEXT
