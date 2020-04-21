@@ -57,6 +57,7 @@ class articleAdd extends Component {
             articleCategory: '',
             error: '',
             isNotPublished: false,
+            authUser: {}
         };
     }
 
@@ -76,6 +77,18 @@ class articleAdd extends Component {
                 tags
             });
         });
+
+        this.listener = this.props.firebase.auth.onAuthStateChanged((_authUser) => {
+            if(_authUser) {
+                this.props.firebase.user(_authUser.uid).on("value", function(snapshot) {
+                    this.setState({authUser: snapshot.val()});
+                }.bind(this));
+            }
+        });
+    }
+    
+    componentWillUnmount() {
+        this.listener();
     }
     
     handleEditorChange = (newContent, editor) => {
@@ -172,6 +185,7 @@ class articleAdd extends Component {
         .set({
             title: this.state.title,
             slug: slugTitle,
+            author: this.state.authUser.username,
             content: this.state.content,
             categories: _categoriesSelected.length > 0 ? JSON.stringify(_categoriesSelected) : [],
             image: urlImage,

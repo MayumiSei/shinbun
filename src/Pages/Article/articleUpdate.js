@@ -195,6 +195,7 @@ class articleUpdate extends Component {
         .set({
             title: this.state.title,
             slug: slugTitle,
+            author: this.state.article.author,
             content: this.state.content,
             categories: _categoriesSelected.length > 0 ? JSON.stringify(_categoriesSelected) : [],
             image: urlImage,

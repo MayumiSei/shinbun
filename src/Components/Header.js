@@ -19,7 +19,6 @@ class Header extends Component {
     }
 
     componentDidUpdate = (oldProps) => {
-        console.log('rff ', oldProps.location.search.includes('?uid=') )
         if(oldProps.location.search.includes('?uid=') !== this.props.location.search.includes('?uid=')) {
             this.setState({isDetailsPage: this.props.location.search.includes('?uid=')});
         }
