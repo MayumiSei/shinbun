@@ -24,7 +24,7 @@ class articleDetails extends Component {
 
     render() {
         return(
-            <div className="container container-margin">
+            <div className="container header-container-padding">
                 <div className="row no-gutters articleDetail">
                     <div className="col-12 col-lg-8 articleDetail-block">
                         <div className="articleDetail-img">

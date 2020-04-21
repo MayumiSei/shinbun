@@ -98,12 +98,21 @@ p {
 // ----------------
 // Container
 // ----------------
-.container-margin {
+.header-container-padding {
     @media screen and (max-width: $md-width){
-        padding-top: $header-height-mobile + 20px;
+        padding-top: $header-height-mobile;
     }
     @media screen and (min-width: $md-width){
-        padding-top: $header-height-desktop + 50px;
+        padding-top: $header-height-desktop;
+    }
+}
+
+.container-margin {
+    @media screen and (max-width: $md-width){
+        margin-top: 3rem;
+    }
+    @media screen and (min-width: $md-width){
+        margin-top: 5rem;
     }
 }
 

@@ -1,6 +1,8 @@
 @import '../utilities/values.scss';
 
 
+$article-list-height: 350px;
+
 .article-list {
     display: flex;
     justify-content: center;
@@ -10,7 +12,7 @@
     // border: 1px solid #e6e0e0;
     background: white;
     transition: transform .2s;
-    height: 405px;
+    height: $article-list-height;
     margin-bottom: 4rem;
     box-shadow: 0 0 50px #262323;
     border-radius: 10px;
@@ -44,7 +46,7 @@
     }
 
     @media screen and (max-width: 400px){
-        width: 100%;
+        width: 90%;
     }
     @media screen and (min-width: 400px) and (max-width: 500px){
         width: 80%;
@@ -62,16 +64,16 @@
         width: 75%;
     }
     @media screen and (min-width: 1420px) and (max-width: $lg-width) {
-        width: 85%;
+        width: 75%;
     }
     @media screen and (min-width: $lg-width) {
-        width: 80%;
+        width: 70%;
     }
 }
 
 .article-img {
     width: 100%;
-    height: 405px;
+    height: $article-list-height;
     transition: transform .2s;
     object-fit: cover;
 }
@@ -84,4 +86,15 @@
 .article-content-details {
     background: rgba(255, 255, 255, .6);
     border-radius: 0 0 10px 10px;
+    height: 115px;
+    overflow: hidden;
+}
+
+.article-date {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: white;
+    background: rgba(0, 0, 0, .3);
+    padding: 1rem;
 }
