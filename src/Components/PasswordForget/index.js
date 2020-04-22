@@ -2,24 +2,24 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../Routes';
+import iconUser from '../../Assets/images/icon/account/user.png'
 
-const PasswordForget = () => (
-    <div>
-        <h1>PasswordForget</h1>
-        <PasswordForgetForm />
-    </div>
-);
 
 const INITIAL_STATE = {
     email: '',
     error: null,
 };
 
-class PasswordForgetFormBase extends Component {
+class PasswordForget extends Component {
     constructor(props) {
         super(props);
         this.state = { ...INITIAL_STATE };
     }
+
+    componentDidMount = () => {
+		document.body.removeAttribute('class');
+        document.body.classList.add('background-signin');
+	}
 
     onSubmit = event => {
         const { email } = this.state;
@@ -43,31 +43,46 @@ class PasswordForgetFormBase extends Component {
         const isInvalid = email === '';
 
         return (
-            <form onSubmit={this.onSubmit}>
-                <input
-                    name="email"
-                    value={this.state.email}
-                    onChange={this.onChange}
-                    type="text"
-                    placeholder="Email Address"
-                />
-                <button disabled={isInvalid} type="submit">
-                    Modifier mon mot de passe
-                </button>
-                {error && <p>{error.message}</p>}
-            </form>
+            <div className="header-container-padding">
+                <div className="container container-margin">
+                    <h1 className="text-center primary-color margin-signin">Mot de passe oublié</h1>
+                    <form onSubmit={this.onSubmit}>
+                        <div className="row no-gutters d-flex justify-content-center mb-5">
+                            <div className="col-8 col-md-6 col-lg-4 position-relative">
+                                <input
+                                    name="email"
+                                    value={this.state.email}
+                                    onChange={this.onChange}
+                                    type="text"
+                                    placeholder="Adresse email"
+                                    className="mb-4 w-100 pl-5 input-signin"
+                                />
+                                <img src={iconUser} className="input-signin-icon" />
+                            </div>
+                        </div>
+                        <div className="row no-gutters d-flex justify-content-center">
+                            <div className="col-8 col-md-6 col-lg-4 text-center">
+                                <button disabled={isInvalid} type="submit" className="btn btn-primary py-3 px-4">
+                                    Modifier mot de passe
+                                </button>
+                            </div>
+                        </div>
+
+                        {error && <p>{error.message}</p>}
+                    </form>
+                </div>
+            </div>
+
         );
     }
 }
 
 const PasswordForgetLink = () => (
     <p>
-        <Link to={ROUTES.PASSWORD_FORGET} className="primary-color">Mot de passe oublié ?</Link>
+        <Link to={ROUTES.PASSWORD_FORGET}>Forgot Password?</Link>
     </p>
 );
 
-export default PasswordForget;
+export default withFirebase(PasswordForget);
 
-const PasswordForgetForm = withFirebase(PasswordForgetFormBase);
-
-export { PasswordForgetForm, PasswordForgetLink };
+export { PasswordForgetLink };

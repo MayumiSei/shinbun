@@ -5,8 +5,8 @@ import { SignUpLink } from './SignUp';
 import { withFirebase } from '../Components/Firebase';
 import * as ROUTES from '../Routes';
 import { PasswordForgetLink } from '../Components/PasswordForget';
-import iconUser from '../Assets/images/icon/signin/user.png';
-import iconPassword from '../Assets/images/icon/signin/password.png';
+import iconUser from '../Assets/images/icon/account/user.png';
+import iconPassword from '../Assets/images/icon/account/password.png';
 
 const INITIAL_STATE = {
 	email: '',
