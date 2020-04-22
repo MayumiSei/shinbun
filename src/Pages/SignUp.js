@@ -72,6 +72,7 @@ class SignUp extends Component {
 
 		return (
 			<div className="header-container-padding">
+				<div class="overlay overlay-background"></div>
 				<div className="container container-margin">
 					<h1 className="text-center primary-color margin-signin">Inscription</h1>
 					<form onSubmit={this.onSubmit}>

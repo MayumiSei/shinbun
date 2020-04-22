@@ -85,6 +85,7 @@ class articlesList extends Component {
                 {
                     authUser =>
                     <div className="header-container-padding">
+                        <div class="overlay overlay-background"></div>
                         {/* <div className={`background-categories background-${this.props.match.params.categories}`}></div> */}
                         <div className="container">
                             <h1 className="primary-color text-center py-5">{this.props.match.params.categories}</h1>

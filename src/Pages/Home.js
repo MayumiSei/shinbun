@@ -34,6 +34,7 @@ class Home extends Component {
                 {
                     authUser =>
                     <div className="header-container-padding">
+                        <div class="overlay overlay-background"></div>
                         <div className="container container-margin">
                             <div className="row no-gutters">
                             {

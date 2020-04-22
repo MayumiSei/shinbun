@@ -233,6 +233,7 @@ class Account extends Component {
                 {
                     authUser =>
                     <div className="header-container-padding">
+                        <div class="overlay overlay-background"></div>
                         <div className="container container-margin">
                             <h1 className="text-center primary-color mb-5">Mon compte</h1>
                             {/* <PasswordForgetForm />
