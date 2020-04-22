@@ -110,9 +110,11 @@ p {
 .container-margin {
     @media screen and (max-width: $md-width){
         margin-top: 3rem;
+        margin-bottom: 3rem;
     }
     @media screen and (min-width: $md-width){
         margin-top: 5rem;
+        margin-bottom: 5rem;
     }
 }
 
@@ -127,4 +129,18 @@ p {
     border-top-style: solid;
     border-image: linear-gradient(0.25turn, black, $primary-color, black) 1 0%;
     border-top: none
+}
+
+
+// ----------------
+// Button
+// ----------------
+
+.btn-primary {
+    background: $primary-color !important;
+    border: 1px solid $primary-color !important;
+
+    &:focus {
+        box-shadow: none !important;
+    }
 }

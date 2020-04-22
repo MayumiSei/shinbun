@@ -85,6 +85,9 @@ class articleAdd extends Component {
                 }.bind(this));
             }
         });
+
+        document.body.removeAttribute('class');
+        document.body.classList.add('background-default');
     }
     
     componentWillUnmount() {
@@ -206,29 +209,38 @@ class articleAdd extends Component {
             <AuthUserContext.Consumer>
                 {
                     authUser =>
-                    <div className="container">
-                        {
-                            (authUser && authUser.role === "ADMIN") ?
-                            <div>
-                                <h1>Ajouter un article</h1>
-    
-                                <form onSubmit={this.onSubmit}>
-                                    <CreatableSelect isMulti isClearable onChange={this.handleChangeCategories} options={this.state.categories} className="mb-4 select-categories" required/>
-                                    <input type="text" onChange={this.titleChange} value={this.state.title} className="input-title-article w-100 mb-4" required></input>
-                                    <input type="file" onChange={this.handleChangeUploadFile} className="w-100 mb-4" required></input>
-                                    <Editor initialValue="" init={this.init} onEditorChange={this.handleEditorChange} />
-                                    <input name="image" type="file" id="upload" className="hidden" ref={this.imageUpload}></input>
-                                    {
-                                        this.state.error &&
-                                            <p>{this.state.error}</p>
-                                    }
-                                    <CreatableSelect isMulti isClearable onChange={this.handleChangeTags} options={this.state.tags} className="mb-4 select-tags"/>
-                                    <input type="checkbox" onChange={this.publishedChange} value={this.state.isNotPublished}></input>
-                                    <button type="submit" className="btn">Ok</button>
-                                </form>
-                            </div> :
-                            <p style={ { color: 'black'} }>Vous ne pouvez pas accéder à cette page</p>
-                        }
+                    <div className="header-container-padding">
+                        <div className="container container-margin">
+                            {
+                                (authUser && authUser.role === "ADMIN") ?
+                                <div>
+                                    <h1 className="text-center primary-color mb-5">Ajouter un article</h1>
+        
+                                    <form onSubmit={this.onSubmit} className="article-form">
+                                        <CreatableSelect isMulti isClearable onChange={this.handleChangeCategories} options={this.state.categories} className="mb-4 select-categories" required/>
+                                        <input type="text" onChange={this.titleChange} value={this.state.title} className="input-title-article w-100 mb-4" required></input>
+                                        <input type="file" onChange={this.handleChangeUploadFile} className="w-100 mb-4" required></input>
+                                        <Editor initialValue="" init={this.init} onEditorChange={this.handleEditorChange} />
+                                        <input name="image" type="file" id="upload" className="hidden" ref={this.imageUpload}></input>
+                                        {
+                                            this.state.error &&
+                                                <p>{this.state.error}</p>
+                                        }
+                                        <CreatableSelect isMulti isClearable onChange={this.handleChangeTags} options={this.state.tags} className="my-4 select-tags"/>
+                                        <div>
+                                            <input type="checkbox" onChange={this.publishedChange} value={this.state.isNotPublished}></input>
+                                            <span className="primary-color h4 ml-4">Mettre en brouillon</span>
+                                        </div>
+                                        <div className="mt-4 text-center">
+                                            <button type="submit" className="btn btn-primary add-btn">
+                                                <span className="h3">Publier</span>
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div> :
+                                <p style={ { color: 'black'} }>Vous ne pouvez pas accéder à cette page</p>
+                            }
+                        </div>
                     </div>
                 }
             </AuthUserContext.Consumer>
