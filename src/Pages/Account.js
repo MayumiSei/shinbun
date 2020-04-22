@@ -21,6 +21,7 @@ class Account extends Component {
             categories: [],
             tags: [],
             articles: [],
+            articlesSort: [],
             categoryName: '',
             tagName: '',
             isOpenCategory: '',
@@ -75,7 +76,8 @@ class Account extends Component {
             // const end = articleSort.length < indexEnd ? articleSort.length : indexEnd;
             // const articlePaginate = articleSort.slice(start, end);
             this.setState({
-                articles: articleSort,
+                articles: articles,
+                articlesSort: articleSort,
                 // articlePaginate: articlePaginate
             });
         });
@@ -110,6 +112,7 @@ class Account extends Component {
                         });
                     }
                     itemArticle.categories = JSON.stringify(categoriesArray);
+                    console.log('itemArticle ', itemArticle.categories);
                     this.props.firebase
                     .article(itemArticle.uid)
                     .set(
@@ -242,10 +245,10 @@ class Account extends Component {
                                 authUser &&
                                     <>
                                         <div className="row no-gutters">
-                                            <div className="col-12">
-                                                <p>Mon identifiant : {this.state.authUser.username}</p>
-                                                <p>Mon email : {this.state.authUser.email}</p>
-                                                <p>Mon rôle : {this.state.authUser.role}</p>
+                                            <div className="col-12 ">
+                                                <p className="white-color">Mon identifiant : {this.state.authUser.username}</p>
+                                                <p className="white-color">Mon email : {this.state.authUser.email}</p>
+                                                <p className="white-color">Mon rôle : {this.state.authUser.role}</p>
                                             </div>
                                             <div className="col-12">
                                             </div>
@@ -269,7 +272,7 @@ class Account extends Component {
                                                             </div>
                                                             :
                                                             <>
-                                                                <span className="mr-4">{item.label}</span>
+                                                                <span className="mr-4 white-color">{item.label}</span>
                                                                 <button type="submit" onClick={this.handleClickUpdateCategory.bind(this, item)} className="btn btn-primary mr-3">Update</button>
                                                             </>
                                                         }
@@ -304,10 +307,10 @@ class Account extends Component {
                                     </div>
   
                                         {
-                                            this.state.articles.length > 0 &&
+                                            this.state.articlesSort.length > 0 &&
                                                 <div className="row no-gutters mt-5">
                                                     {
-                                                        this.state.articles.map((item, index) => {
+                                                        this.state.articlesSort.map((item, index) => {
                                                             const categories = JSON.parse(item.categories);
                                                             return(
                                                                 index <= 10 &&
