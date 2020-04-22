@@ -79,7 +79,7 @@ class PasswordForget extends Component {
 
 const PasswordForgetLink = () => (
     <p>
-        <Link to={ROUTES.PASSWORD_FORGET}>Forgot Password?</Link>
+        <Link to={ROUTES.PASSWORD_FORGET} className="primary-color">Mot de passé oublié ?</Link>
     </p>
 );
 
