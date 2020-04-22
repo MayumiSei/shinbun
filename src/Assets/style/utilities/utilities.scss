@@ -95,6 +95,14 @@ p {
     }
 }
 
+.white-color {
+    color: white !important;
+    
+    &:hover {
+        color: white;
+    }
+}
+
 // ----------------
 // Container
 // ----------------

@@ -10,6 +10,7 @@ import * as ROUTES from '../Routes';
 import '../Assets/style/index.scss';
 import '../Assets/style/articles/articlesList.scss';
 import '../Assets/style/pagination.scss';
+import '../Assets/style/account.scss';
 
 class Account extends Component {
 

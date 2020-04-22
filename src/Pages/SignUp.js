@@ -83,8 +83,8 @@ class SignUpFormBase extends Component {
 }
 
 const SignUpLink = () => (
-	<p>
-		Don't have an account? <Link to={'/signup'}>Sign Up</Link>
+	<p className="white-color">
+		Don't have an account? <Link to={'/signup'} className="primary-color">Sign Up</Link>
 	</p>
 );
 

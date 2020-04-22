@@ -39,6 +39,12 @@ body {
     position: fixed;
 }
 
+.background-signin {
+    background-size: cover;
+    background-attachment: fixed;
+    background-image: url('../images/background/signin/background-signin.png');
+}
+
 .background-default, .background-Archive {
     background-size: cover;
     background-attachment: fixed;

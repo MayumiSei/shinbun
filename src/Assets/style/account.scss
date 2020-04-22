@@ -1,0 +1,26 @@
+@import './utilities/values.scss';
+
+.input-signin {
+    background: transparent;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid $primary-color;
+    color: white;
+    padding: 1rem 0;
+}
+
+.input-signin-icon {
+    position: absolute;
+    left: 10px;
+    top: 11px;
+}
+
+.margin-signin {
+    @media screen and (max-width: $md-width){
+        margin-bottom: 3rem;
+    }
+    @media screen and (min-width: $md-width){
+        margin-bottom: 6rem;
+    }
+}
