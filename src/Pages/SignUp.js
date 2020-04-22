@@ -3,13 +3,9 @@ import { Link, withRouter } from 'react-router-dom';
 import { withFirebase } from '../Components/Firebase';
 import * as ROUTES from '../Routes';
 import { compose } from 'recompose';
-
-const SignUp = () => (
-	<div>
-		<h1>SignUp</h1>
-		<SignUpForm />
-	</div>
-);
+import iconUser from '../Assets/images/icon/account/user.png';
+import iconMail from '../Assets/images/icon/account/mail.png';
+import iconPassword from '../Assets/images/icon/account/password.png';
 
 const INITIAL_STATE = {
 	username: '',
@@ -19,11 +15,16 @@ const INITIAL_STATE = {
 	error: null,
 };
 
-class SignUpFormBase extends Component {
+class SignUp extends Component {
 	constructor(props) {
 		super(props);
 
 		this.state = { ...INITIAL_STATE };
+	}
+
+	componentDidMount = () => {
+		document.body.removeAttribute('class');
+        document.body.classList.add('background-signin');
 	}
 
 	onSubmit = event => {
@@ -70,14 +71,50 @@ class SignUpFormBase extends Component {
 			username === '';
 
 		return (
-			<form onSubmit={this.onSubmit}>
-				<input name="username" value={username} onChange={this.onChange} type="text" placeholder="Full Name" />
-				<input name="email" value={email} onChange={this.onChange} type="text" placeholder="Email Address" />
-				<input name="passwordOne" value={passwordOne} onChange={this.onChange} type="password" placeholder="Password" />
-				<input name="passwordTwo" value={passwordTwo} onChange={this.onChange} type="password" placeholder="Confirm Password" />
-				<button disabled={isInvalid} type="submit">Sign Up</button>
-				{error && <p>{error.message}</p>}
-			</form>
+			<div className="header-container-padding">
+				<div className="container container-margin">
+					<h1 className="text-center primary-color margin-signin">Inscription</h1>
+					<form onSubmit={this.onSubmit}>
+						<div className="row no-gutters d-flex justify-content-center">
+								<div className="col-8 col-md-6 col-lg-4 position-relative">
+									<input name="username" value={username} onChange={this.onChange} type="text"
+										placeholder="Nom d'utilisateur" className="mb-4 w-100 pl-5 input-signin" />
+								<img src={iconUser} className="input-signin-icon" />
+							</div>
+						</div>
+						<div className="row no-gutters d-flex justify-content-center">
+								<div className="col-8 col-md-6 col-lg-4 position-relative">
+								<input name="email" value={email} onChange={this.onChange} type="text"
+									placeholder="Adresse email" className="mb-4 w-100 pl-5 input-signin" />
+								<img src={iconMail} className="input-signin-icon" />
+							</div>
+						</div>
+						<div className="row no-gutters d-flex justify-content-center">
+								<div className="col-8 col-md-6 col-lg-4 position-relative">
+								<input name="passwordOne" value={passwordOne} onChange={this.onChange} type="password"
+								placeholder="Mot de passe" className="mb-4 w-100 pl-5 input-signin" />
+								<img src={iconPassword} className="input-signin-icon" />
+							</div>
+						</div>
+						<div className="row no-gutters d-flex justify-content-center">
+								<div className="col-8 col-md-6 col-lg-4 position-relative">
+								<input name="passwordTwo" value={passwordTwo} onChange={this.onChange} type="password"
+								placeholder="Confirmer le mot de passe" className="mb-4 w-100 pl-5 input-signin" />
+								<img src={iconPassword} className="input-signin-icon" />
+							</div>
+						</div>
+						
+						<div className="row no-gutters d-flex justify-content-center">
+							<div className="col-8 col-md-6 col-lg-4 text-center">
+								<button disabled={isInvalid} type="submit" className="btn btn-primary py-3 px-4 mb-5">
+									S'inscrire
+								</button>
+								{error && <p className="white-color mb-5">{error.message}</p>}
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
 		);
 	}
 }
@@ -88,10 +125,10 @@ const SignUpLink = () => (
 	</p>
 );
 
-const SignUpForm = compose(
+const SignUpPage = compose(
 	withRouter,
 	withFirebase,
-)(SignUpFormBase);
+)(SignUp);
 
-export default SignUp;
-export { SignUpForm, SignUpLink };
+export default SignUpPage;
+export { SignUpLink };
