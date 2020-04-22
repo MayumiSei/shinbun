@@ -218,7 +218,7 @@ class articleAdd extends Component {
         
                                     <form onSubmit={this.onSubmit} className="article-form">
                                         <CreatableSelect isMulti isClearable onChange={this.handleChangeCategories} options={this.state.categories} className="mb-4 select-categories" required/>
-                                        <input type="text" onChange={this.titleChange} value={this.state.title} className="input-title-article w-100 mb-4" required></input>
+                                        <input type="text" onChange={this.titleChange} value={this.state.title} className="input-form w-100 mb-4" required></input>
                                         <input type="file" onChange={this.handleChangeUploadFile} className="w-100 mb-4" required></input>
                                         <Editor initialValue="" init={this.init} onEditorChange={this.handleEditorChange} />
                                         <input name="image" type="file" id="upload" className="hidden" ref={this.imageUpload}></input>

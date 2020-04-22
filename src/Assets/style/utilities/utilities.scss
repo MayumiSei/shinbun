@@ -119,7 +119,7 @@ p {
 }
 
 // ----------------
-// Line gradient
+// Line
 // ----------------
 
 .gradient-back-to-primary {
@@ -131,9 +131,23 @@ p {
     border-top: none
 }
 
+.vertical-hr {
+    position: relative;
+
+    &:before {
+        content: '';
+        position: absolute;
+        left: 50%;
+        width: 1px;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.1);
+        display: block;
+    }
+}
+
 
 // ----------------
-// Button
+// Button & input
 // ----------------
 
 .btn-primary {
@@ -143,4 +157,19 @@ p {
     &:focus {
         box-shadow: none !important;
     }
+}
+
+.btn-primary-border {
+    background: white !important;
+    border: 1px solid $primary-color !important;
+
+    &:focus {
+        box-shadow: none !important;
+    }
+}
+
+.input-form {
+    padding: .5rem;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
 }

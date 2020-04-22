@@ -9,6 +9,7 @@ import Pagination from "react-js-pagination";
 import * as ROUTES from '../Routes';
 import '../Assets/style/index.scss';
 import '../Assets/style/articles/articlesList.scss';
+import '../Assets/style/pagination.scss';
 
 class Account extends Component {
 
@@ -24,7 +25,8 @@ class Account extends Component {
             isOpenCategory: '',
             isOpenTag: '',
             itemsCountPerPage: 10,
-            articlePaginate: [],
+            // articlePaginate: [],
+            authUser: {}
         };
     }
 
@@ -67,18 +69,30 @@ class Account extends Component {
             const articlesFiltered = articles.filter(item => item.isNotPublished === true);
             const articleSort = articlesFiltered.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 
-            const start = this.state.itemsCountPerPage * (Number(this.props.location.search.replace('?page=', '')) - 1);
-            const indexEnd = this.state.itemsCountPerPage * (Number(this.props.location.search.replace('?page=', '')) - 1) + this.state.itemsCountPerPage;
-            const end = articleSort.length < indexEnd ? articleSort.length : indexEnd;
-            const articlePaginate = articleSort.slice(start, end);
+            // const start = this.state.itemsCountPerPage * (Number(this.props.location.search.replace('?page=', '')) - 1);
+            // const indexEnd = this.state.itemsCountPerPage * (Number(this.props.location.search.replace('?page=', '')) - 1) + this.state.itemsCountPerPage;
+            // const end = articleSort.length < indexEnd ? articleSort.length : indexEnd;
+            // const articlePaginate = articleSort.slice(start, end);
             this.setState({
                 articles: articleSort,
-                articlePaginate: articlePaginate
+                // articlePaginate: articlePaginate
             });
+        });
+
+        this.listener = this.props.firebase.auth.onAuthStateChanged((_authUser) => {
+            if(_authUser) {
+                this.props.firebase.user(_authUser.uid).on("value", function(snapshot) {
+                    this.setState({authUser: snapshot.val()});
+                }.bind(this));
+            }
         });
 
         document.body.removeAttribute('class');
         document.body.classList.add('background-default');
+    }
+
+    componentWillUnmount() {
+        this.listener();
     }
 
     handleCategoryRemove = uid => {
@@ -217,89 +231,129 @@ class Account extends Component {
             <AuthUserContext.Consumer>
                 {
                     authUser =>
-                    <div className="container">
-                        <h1>Account Page</h1>
-                        <PasswordForgetForm />
-                        <PasswordChangeForm />
-                        {
-                            (authUser && authUser.role === "ADMIN") &&
-                                <>
-                                    <ul className="list-unstyled">
-                                        {
-                                            this.state.categories.map((item, index) => (
-                                                <li key={index}>
-                                                    {
-                                                        this.state.isOpenCategory === item.uid ?
-                                                        <div className="">
-                                                            <input type="text" onChange={this.categoryNameChange} value={this.state.categoryName}></input>
-                                                            <button type="submit" onClick={this.handleCategoryUpdate.bind(this, item.uid)}>Ok</button>
-                                                        </div>
-                                                        :
-                                                        <>
-                                                            <span>{item.label}</span>
-                                                            <button type="submit" onClick={this.handleClickUpdateCategory.bind(this, item)}>Update</button>
-                                                        </>
-                                                    }
-                                                    <button type="submit" onClick={this.handleCategoryRemove.bind(this, item.uid)}>Supprimer</button>
-                                                    
-                                                </li>
-                                            ))
-                                        }
-                                    </ul>
-                                    <hr />
-                                    <ul className="list-unstyled">
-                                        {
-                                            this.state.tags.map((item, index) => (
-                                                <li key={index}>
-                                                    {
-                                                        this.state.isOpenTag === item.uid ?
-                                                        <div className="">
-                                                            <input type="text" onChange={this.tagNameChange} value={this.state.tagName}></input>
-                                                            <button type="submit" onClick={this.handleTagUpdate.bind(this, item.uid)}>Ok</button>
-                                                        </div>
-                                                        :
-                                                        <>
-                                                            <span>{item.label}</span>
-                                                            <button type="submit" onClick={this.handleClickUpdateTag.bind(this, item)}>Update</button>
-                                                        </>
-                                                    }
-                                                    <button type="submit" onClick={this.handleTagRemove.bind(this, item.uid)}>Supprimer</button>
-                                                </li>
-                                            ))
-                                        }
-                                    </ul>
-                                    {
-                                        this.state.articlePaginate.length > 0 &&
+                    <div className="header-container-padding">
+                        <div className="container container-margin">
+                            <h1 className="text-center primary-color mb-5">Mon compte</h1>
+                            {/* <PasswordForgetForm />
+                            <PasswordChangeForm /> */}
+                            {
+                                authUser &&
+                                    <>
                                         <div className="row no-gutters">
+                                            <div className="col-12">
+                                                <p>Mon identifiant : {this.state.authUser.username}</p>
+                                                <p>Mon email : {this.state.authUser.email}</p>
+                                                <p>Mon rôle : {this.state.authUser.role}</p>
+                                            </div>
+                                            <div className="col-12">
+                                            </div>
+                                        </div>
+                                        <hr />
+                                    </>
+                            }
+                            {
+                                (authUser && authUser.role === "ADMIN") &&
+                                    <>
+                                    <div className="row no-gutters">
+                                        <ul className="list-unstyled col-12 col-md-5">
                                             {
-                                                this.state.articlePaginate.map((item, index) => (
-                                                        <div key={index} className="col-12 col-md-6">
-                                                            <Link to={`/article/${item.slug}?uid=${item.uid}`}>
-                                                                <div className="article-block">
-                                                                    <img src={item.image} />
-                                                                    <h2>{item.title}</h2>
-                                                                    <p>{new Date(item.createdAt).toLocaleDateString()}</p>
-                                                                    <p dangerouslySetInnerHTML={{__html: item.content}}></p>
-                                                                </div>
-                                                            </Link>
-                                                        </div>
+                                                this.state.categories.map((item, index) => (
+                                                    <li key={index} className="mb-4">
+                                                        {
+                                                            this.state.isOpenCategory === item.uid ?
+                                                            <div className="">
+                                                                <input type="text" onChange={this.categoryNameChange} value={this.state.categoryName} className="input-form mr-3"></input>
+                                                                <button type="submit" onClick={this.handleCategoryUpdate.bind(this, item.uid)} className="btn btn-primary mr-3">Ok</button>
+                                                            </div>
+                                                            :
+                                                            <>
+                                                                <span className="mr-4">{item.label}</span>
+                                                                <button type="submit" onClick={this.handleClickUpdateCategory.bind(this, item)} className="btn btn-primary mr-3">Update</button>
+                                                            </>
+                                                        }
+                                                        <button type="submit" onClick={this.handleCategoryRemove.bind(this, item.uid)} className="btn btn-primary-border">Supprimer</button>
+                                                        
+                                                    </li>
                                                 ))
                                             }
-                                        </div>
-                                    }
-                                
-                                <Pagination
-                                    activePage={Number(this.props.location.search.replace('?page=', ''))}
-                                    itemsCountPerPage={this.state.itemsCountPerPage}
-                                    totalItemsCount={this.state.articles.length}
-                                    pageRangeDisplayed={5}
-                                    onChange={this.handlePageChange.bind(this)}
-                                    itemClass="page-item"
-                                    linkClass="page-link"
-                                    hideDisabled={true} />
-                            </>
+                                        </ul>
+                                        <div className="vertical-hr hide-xs hide-sm col-md-2"></div>
+                                        <ul className="list-unstyled col-12 col-md-5">
+                                            {
+                                                this.state.tags.map((item, index) => (
+                                                    <li key={index} className="mb-4">
+                                                        {
+                                                            this.state.isOpenTag === item.uid ?
+                                                            <div className="">
+                                                                <input type="text" onChange={this.tagNameChange} value={this.state.tagName} className="input-form mr-3"></input>
+                                                                <button type="submit" onClick={this.handleTagUpdate.bind(this, item.uid)} className="btn btn-primary mr-3">Ok</button>
+                                                            </div>
+                                                            :
+                                                            <>
+                                                                <span className="mr-4">{item.label}</span>
+                                                                <button type="submit" onClick={this.handleClickUpdateTag.bind(this, item)} className="btn btn-primary mr-3">Update</button>
+                                                            </>
+                                                        }
+                                                        <button type="submit" onClick={this.handleTagRemove.bind(this, item.uid)} className="btn btn-primary-border">Supprimer</button>
+                                                    </li>
+                                                ))
+                                            }
+                                        </ul>
+                                    </div>
+  
+                                        {
+                                            this.state.articles.length > 0 &&
+                                                <div className="row no-gutters mt-5">
+                                                    {
+                                                        this.state.articles.map((item, index) => {
+                                                            const categories = JSON.parse(item.categories);
+                                                            return(
+                                                                index <= 10 &&
+                                                                <div key={index} className="col-12 col-lg-6 col-xxl-4 article-list">
+                                                                    {/* {
+                                                                        (authUser && authUser.role === "ADMIN") &&
+                                                                            <ArticleRemove uid={item.uid}></ArticleRemove>
+                                                                    } */}
+                                                                    <div className="article-block position-relative">
+                                                                        <Link to={`/${categories[0].value}/article/${item.slug}?uid=${item.uid}`} className="text-decoration-none">   
+                                                                            <div className="position-relative">
+                                                                                <img src={item.image} className="article-img" />
+                                                                                <div className="img-overlay"></div>
+                                                                            </div>
+                                                                            <div className="article-date">
+                                                                                <span>{new Date(item.createdAt).toLocaleDateString()}</span>
+                                                                            </div>
+                                                                            <div className="article-content position-absolute">
+                                                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+                                                                                    <path fill="#ffffff" fill-opacity="0.6" d="M0,320L60,282.7C120,245,240,171,360,144C480,117,600,139,720,170.7C840,203,960,245,1080,240C1200,235,1320,181,1380,154.7L1440,128L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path>
+                                                                                </svg>
+                                                                                <div className="article-content-details p-3">
+                                                                                    <h2>{item.title}</h2>
+                                                                                </div>
+                                                                            </div>
+                                                                        </Link>
+                                                                    </div>
+                                                                </div>
+                                                            )
+                        
+                                                        })
+                                                    }
+                                                </div>
+                                        }
+                                    
+                                    {/* <Pagination
+                                        activePage={Number(this.props.location.search.replace('?page=', ''))}
+                                        itemsCountPerPage={this.state.itemsCountPerPage}
+                                        totalItemsCount={this.state.articles.length}
+                                        pageRangeDisplayed={5}
+                                        onChange={this.handlePageChange.bind(this)}
+                                        itemClass="page-item"
+                                        linkClass="page-link"
+                                        hideDisabled={true} /> */}
+                                </>
 
-                        }
+                            }
+                        </div>
                     </div>
                 }
             </AuthUserContext.Consumer>
