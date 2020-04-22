@@ -34,6 +34,7 @@ class articleDetails extends Component {
                         <div className="col-12 col-xl-10 col-xxl-8 article-detail-block p-5">
                             <h1 className="h3 text-center pb-3 pb-lg-5">{this.state.article.title}</h1>
                             <div dangerouslySetInnerHTML={{__html: this.state.article.content}}></div>
+                            <Link to={`/article/update/${this.state.urlParam}`}>Update</Link>
                         </div>
                     </div>
                 </div>
