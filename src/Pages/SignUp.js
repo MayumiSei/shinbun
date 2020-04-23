@@ -24,7 +24,7 @@ class SignUp extends Component {
 
 	componentDidMount = () => {
 		document.body.removeAttribute('class');
-        document.body.classList.add('background-signin');
+        document.body.classList.add('background-default');
 	}
 
 	onSubmit = event => {
