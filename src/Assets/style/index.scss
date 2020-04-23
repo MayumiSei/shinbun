@@ -84,11 +84,11 @@ body {
 .background-Japon {
     background-size: cover;
     background-attachment: fixed;
-    @media screen and (max-width: $md-width) {
-        background-image: url('../images/background/japan-background_mobile.jpg');
-    }
+    // @media screen and (max-width: $md-width) {
+    //     background-image: url('../images/background/japan-background_mobile.jpg');
+    // }
     @media screen and (min-width: $md-width) {
-        background-image: url('../images/background/japan-background1_tablet.png');
+        background-image: url('../images/background/japan/background-japan.jpg');
     }
 }
 
@@ -113,7 +113,7 @@ body {
     height: 100%;
     width: 100%;
     // background: linear-gradient(to bottom, transparent 40%, rgba(255, 255, 255, .6));
-    background: linear-gradient(to bottom, rgba(0, 0, 0, .3) 50%, rgba(255, 255, 255, 0.4));
+    background: linear-gradient(to bottom, rgba(0, 0, 0, .5) 50%, rgba(255, 255, 255, 0.4));
     position: fixed;
     z-index: -1;
 }
