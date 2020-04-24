@@ -58,11 +58,35 @@ class Header extends Component {
                     authUser =>
                     <>
                         <header className={this.state.isDetailsPage ? 'header-background-dark' : 'header-background-light'}>
-                            <div className="container py-2">
-                                <div className="position-relative">
-                                    <h1 className="font-brush h4 py-3 text-center">
+                            <div className="container py-2 h-100">
+                                <div className="position-relative h-100">
+                                    <h1 className="font-brush h4 py-3 header-title">
                                         <Link to={ROUTES.HOME} className="primary-color text-decoration-none">Shinbun</Link>
                                     </h1>
+                                    <nav className="Menu hide-xs hide-sm hide-md py-2 d-flex justify-content-center align-items-center h-100">
+                                        <ul className="list-unstyled li-inline m-0 split-list nav-split">
+                                            <li className="split-list-item">
+                                                <Link to={ROUTES.HOME} className="text-decoration-none">
+                                                    Accueil
+                                                    <span className="Mask"><span>Accueil</span></span>
+                                                    <span className="Mask"><span>Accueil</span></span>
+                                                </Link>
+                                            </li>
+                                            {
+                                                this.state.categories.map((item, index) => {
+                                                    return(
+                                                        <li key={index} className={item.value === "Archive" && (!authUser || authUser.role !== "ADMIN") ? "d-none" : "split-list-item"}>
+                                                            <Link to={`/${item.value}?page=1`}className="text-decoration-none">
+                                                                {item.label}
+                                                                <span className="Mask"><span>{item.label}</span></span>
+                                                                <span className="Mask"><span>{item.label}</span></span>
+                                                            </Link>
+                                                        </li>
+                                                    )
+                                                })
+                                            }
+                                        </ul>
+                                    </nav>
                                     <svg className={this.state.openMenu ? 'ham hamRotate ham1 active' : 'ham hamRotate ham1'} viewBox="0 0 100 100" width="60" onClick={this.handleMenu} >
                                         <path
                                                 className="line top"
@@ -75,31 +99,6 @@ class Header extends Component {
                                                 d="m 30,67 h 40 c 12.796276,0 15.357889,-11.717785 15.357889,-26.851538 0,-15.133752 -4.786586,-27.274118 -16.667516,-27.274118 -11.88093,0 -18.499247,6.994427 -18.435284,17.125656 l 0.252538,40" />
                                     </svg>
                                 </div>
-
-                                <nav className="Menu hide-xs hide-sm hide-md py-2">
-                                    <ul className="list-unstyled li-inline m-0 split-list nav-split">
-                                        <li className="split-list-item">
-                                            <Link to={ROUTES.HOME} className="text-decoration-none">
-                                                Accueil
-                                                <span className="Mask"><span>Accueil</span></span>
-                                                <span className="Mask"><span>Accueil</span></span>
-                                            </Link>
-                                        </li>
-                                        {
-                                            this.state.categories.map((item, index) => {
-                                                return(
-                                                    <li key={index} className={item.value === "Archive" && (!authUser || authUser.role !== "ADMIN") ? "d-none" : "split-list-item"}>
-                                                        <Link to={`/${item.value}?page=1`}className="text-decoration-none">
-                                                            {item.label}
-                                                            <span className="Mask"><span>{item.label}</span></span>
-                                                            <span className="Mask"><span>{item.label}</span></span>
-                                                        </Link>
-                                                    </li>
-                                                )
-                                            })
-                                        }
-                                    </ul>
-                                </nav>
                             </div>
                             <div className={this.state.openMenu ? 'modal-menu menu-open' :  'modal-menu d-none'}>
                                 <ul className="list-unstyled m-0 split-list burger-menu-split">

@@ -14,13 +14,7 @@ header {
     position: fixed;
     width: 100%;
     z-index: 10;
-
-    @media screen and (max-width: $md-width){
-        height: $header-height-mobile;
-    }
-    @media screen and (min-width: $md-width){
-        height: $header-height-desktop;
-    }
+    height: $header-height;
 
     nav {
         transform-style: preserve-3d;
@@ -45,6 +39,17 @@ header {
 
 .header-background-dark {
     background: rgba(0, 0, 0, .3);
+}
+
+.header-title {
+    @media screen and (max-width: $md-width){
+        text-align: center;
+    }
+    @media screen and (min-width: $md-width){
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
 }
 
 

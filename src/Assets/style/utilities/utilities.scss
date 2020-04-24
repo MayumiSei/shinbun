@@ -107,12 +107,7 @@ p {
 // Container
 // ----------------
 .header-container-padding {
-    @media screen and (max-width: $md-width){
-        padding-top: $header-height-mobile;
-    }
-    @media screen and (min-width: $md-width){
-        padding-top: $header-height-desktop;
-    }
+    padding-top: $header-height;
 }
 
 .container-margin {
