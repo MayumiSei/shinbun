@@ -42,7 +42,8 @@ class Home extends Component {
                             </div>
                             <img src={lineBrush} className="line-brush" />
                         </div>
-                        <div className="container container-margin">
+                        <div className="container">
+                        <h2 className="text-center font-weight-bold secondary-color my-5">The latest articles</h2>
                             <div className="row no-gutters">
                             {
                                 this.state.articles.map((item, index) => {
@@ -59,6 +60,15 @@ class Home extends Component {
                                                     <div className="position-relative h-100">
                                                         <img src={item.image} className="article-img" />
                                                         <div className="img-overlay"></div>
+                                                    </div>
+                                                    <div className="article-categories">
+                                                        {
+                                                            categories.map((category, index) => {
+                                                                return(
+                                                                    <img src={require(`../Assets/images/icon/categories/${category.value}.png`)} />
+                                                                )
+                                                            })
+                                                        }
                                                     </div>
                                                     <div className="article-date">
                                                         <span>{new Date(item.createdAt).toLocaleDateString()}</span>
