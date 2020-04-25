@@ -115,7 +115,7 @@ class Header extends Component {
                                             )
                                         })
                                     }
-                                    <li className="gradient-back-to-primary w-100 my-4 hide-lg"></li>
+                                    <li className="gradient-back-to-primary my-4 hide-lg"></li>
                                     {
                                         (authUser && authUser.role === "ADMIN") &&
                                         <li className="text-uppercase split-list-item">

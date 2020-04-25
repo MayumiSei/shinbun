@@ -38,7 +38,7 @@ class Home extends Component {
                             <div className="top-background-overlay"></div>
                             <div className="font-primary text-center">
                                 <h1 className="font-weight-bold">explore</h1>
-                                <p className="h4">A brand new world</p>
+                                <p className="h4">— A brand new world —</p>
                             </div>
                             <img src={lineBrush} className="line-brush" />
                         </div>

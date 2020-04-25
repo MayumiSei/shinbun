@@ -185,7 +185,7 @@ p {
 // Background
 // ----------------
 
-@media screen and (max-width: $md-width){
+@media screen and (max-width: $sm-width){
     .top-background {
         height: 300px;
 
@@ -198,6 +198,21 @@ p {
         height: 70px;
     }
 }
+
+@media screen and (min-width: $sm-width) and (max-width: $md-width){
+    .top-background {
+        height: 500px;
+
+        h1 {
+            font-size: 4rem;
+        }
+    }
+
+    .line-brush {
+        height: 130px;
+    }
+}
+
 @media screen and (min-width: $md-width){
     .top-background {
         height: 600px;
