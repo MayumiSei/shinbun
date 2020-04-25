@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withFirebase } from './Firebase';
 import { AuthUserContext} from './Session';
-import { Link, withRouter } from 'react-router-dom';
+import { Link, withRouter, NavLink } from 'react-router-dom';
 import * as ROUTES from '../Routes';
 import snapshotToArray from '../Helpers/firebaseHelper';
 import '../Assets/style/index.scss';
@@ -66,21 +66,21 @@ class Header extends Component {
                                     <nav className="Menu hide-xs hide-sm hide-md py-2 d-flex justify-content-center align-items-center h-100">
                                         <ul className="list-unstyled li-inline m-0 split-list nav-split">
                                             <li className="split-list-item">
-                                                <Link to={ROUTES.HOME} className="text-decoration-none">
+                                                <NavLink to={ROUTES.HOME} className="text-decoration-none">
                                                     Accueil
                                                     <span className="Mask"><span>Accueil</span></span>
                                                     <span className="Mask"><span>Accueil</span></span>
-                                                </Link>
+                                                </NavLink>
                                             </li>
                                             {
                                                 this.state.categories.map((item, index) => {
                                                     return(
                                                         <li key={index} className={item.value === "Archive" && (!authUser || authUser.role !== "ADMIN") ? "d-none" : "split-list-item"}>
-                                                            <Link to={`/${item.value}?page=1`}className="text-decoration-none">
+                                                            <NavLink to={`/${item.value}?page=1`}className="text-decoration-none">
                                                                 {item.label}
                                                                 <span className="Mask"><span>{item.label}</span></span>
                                                                 <span className="Mask"><span>{item.label}</span></span>
-                                                            </Link>
+                                                            </NavLink>
                                                         </li>
                                                     )
                                                 })

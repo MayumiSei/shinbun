@@ -6,6 +6,7 @@ import { withFirebase } from '../Components/Firebase';
 import snapshotToArray from '../Helpers/firebaseHelper';
 import ArticleRemove from '../Components/ArticleRemove';
 import '../Assets/style/index.scss';
+import lineBrush from '../Assets/images/background/homePage/line-brush.png';
 
 class Home extends Component {
     constructor(props) {
@@ -25,7 +26,6 @@ class Home extends Component {
         });
 
         document.body.removeAttribute('class');
-        document.body.classList.add('background-default');
     }
 
     render() {
@@ -33,8 +33,15 @@ class Home extends Component {
             <AuthUserContext.Consumer>
                 {
                     authUser =>
-                    <div className="header-container-padding">
-                        <div class="overlay overlay-background"></div>
+                    <div className="">
+                        <div className="top-background top-background-home">
+                            <div className="top-background-overlay"></div>
+                            <div>
+                                <h1>explore</h1>
+                                <p className="h4 text-center">A brand new world</p>
+                            </div>
+                            <img src={lineBrush} className="line-brush" />
+                        </div>
                         <div className="container container-margin">
                             <div className="row no-gutters">
                             {
