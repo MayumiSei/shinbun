@@ -8,6 +8,7 @@ import Pagination from "react-js-pagination";
 import '../../Assets/style/index.scss';
 import '../../Assets/style/articles/articlesList.scss';
 import '../../Assets/style/pagination.scss';
+import lineBrush from '../../Assets/images/background/homePage/line-brush.png';
 
 class articlesList extends Component {
     constructor(props) {
@@ -45,7 +46,7 @@ class articlesList extends Component {
             });
 
             document.body.removeAttribute('class');
-            document.body.classList.add('background-' + this.props.match.params.categories);
+            // document.body.classList.add('background-' + this.props.match.params.categories);
         }
     }
 
@@ -71,7 +72,7 @@ class articlesList extends Component {
         });
 
         document.body.removeAttribute('class');
-        document.body.classList.add('background-' + this.props.match.params.categories);
+        // document.body.classList.add('background-' + this.props.match.params.categories);
     }
 
     handlePageChange(pageNumber) {
@@ -84,11 +85,17 @@ class articlesList extends Component {
             <AuthUserContext.Consumer>
                 {
                     authUser =>
-                    <div className="header-container-padding">
-                        <div class="overlay overlay-background"></div>
+                    <div className="">
+                        <div className={`top-background top-background-articlesList top-background-${this.props.match.params.categories}`}>
+                            <div className="top-background-overlay"></div>
+                            <div className="font-primary text-center">
+                                <h1 className="font-weight-bold">{this.props.match.params.categories}</h1>
+                            </div>
+                            <img src={lineBrush} className="line-brush" />
+                        </div>
+                        {/* <div class="overlay overlay-background"></div> */}
                         {/* <div className={`background-categories background-${this.props.match.params.categories}`}></div> */}
                         <div className="container">
-                            <h1 className="primary-color text-center py-5">{this.props.match.params.categories}</h1>
                         {
                             this.state.articlePaginate.length > 0 &&
                             <>
