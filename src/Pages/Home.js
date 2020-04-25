@@ -51,10 +51,6 @@ class Home extends Component {
                                     return(
                                         index <= 2 &&
                                         <div key={index} className="col-12 col-lg-6 col-xxl-4 article-list">
-                                            {/* {
-                                                (authUser && authUser.role === "ADMIN") &&
-                                                    <ArticleRemove uid={item.uid}></ArticleRemove>
-                                            } */}
                                             <div className="article-block position-relative">
                                                 <Link to={`/${categories[0].value}/article/${item.slug}?uid=${item.uid}`} className="text-decoration-none">   
                                                     <div className="position-relative h-100">
