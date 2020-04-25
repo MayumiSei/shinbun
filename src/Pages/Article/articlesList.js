@@ -95,7 +95,7 @@ class articlesList extends Component {
                         </div>
                         {/* <div class="overlay overlay-background"></div> */}
                         {/* <div className={`background-categories background-${this.props.match.params.categories}`}></div> */}
-                        <div className="container">
+                        <div className="container mt-5">
                         {
                             this.state.articlePaginate.length > 0 &&
                             <>
