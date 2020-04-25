@@ -58,6 +58,10 @@ p {
     font-family: eclipse;
 }
 
+.font-primary {
+    font-family: modern;
+}
+
 
 // ----------------
 // Colors
@@ -181,20 +185,42 @@ p {
 // Background
 // ----------------
 
+@media screen and (max-width: $md-width){
+    .top-background {
+        height: 300px;
+
+        h1 {
+            font-size: 3rem;
+        }
+    }
+
+    .line-brush {
+        height: 70px;
+    }
+}
+@media screen and (min-width: $md-width){
+    .top-background {
+        height: 600px;
+
+        h1 {
+            font-size: 7rem;
+        }
+    }
+
+    .line-brush {
+        height: 200px;
+    }
+}
+
 .top-background {
     position: relative;
     width: 100%;
-    height: 600px;
     display: flex;
     justify-content: center;
     align-items: center;
 
     h1, p {
         color: rgba(0, 0, 0, .4);
-    }
-    
-    h1 {
-        font-size: 7rem;
     }
 }
 
@@ -219,5 +245,4 @@ p {
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 200px;
 }

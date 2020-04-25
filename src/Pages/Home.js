@@ -36,9 +36,9 @@ class Home extends Component {
                     <div className="">
                         <div className="top-background top-background-home">
                             <div className="top-background-overlay"></div>
-                            <div>
-                                <h1>explore</h1>
-                                <p className="h4 text-center">A brand new world</p>
+                            <div className="font-primary text-center">
+                                <h1 className="font-weight-bold">explore</h1>
+                                <p className="h4">A brand new world</p>
                             </div>
                             <img src={lineBrush} className="line-brush" />
                         </div>
@@ -48,7 +48,7 @@ class Home extends Component {
                                 this.state.articles.map((item, index) => {
                                     const categories = JSON.parse(item.categories);
                                     return(
-                                        index <= 10 &&
+                                        index <= 2 &&
                                         <div key={index} className="col-12 col-lg-6 col-xxl-4 article-list">
                                             {/* {
                                                 (authUser && authUser.role === "ADMIN") &&

@@ -19,7 +19,6 @@ class articleDetails extends Component {
             const articleObject = snapshot.val();
             this.setState({article: articleObject});
         });
-        document.body.removeAttribute('class');
     }
 
     render() {

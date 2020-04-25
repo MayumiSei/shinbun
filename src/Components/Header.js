@@ -63,7 +63,7 @@ class Header extends Component {
                                     <h1 className="font-brush h4 py-3 header-title">
                                         <Link to={ROUTES.HOME} className="primary-color text-decoration-none">Shinbun</Link>
                                     </h1>
-                                    <nav className="Menu hide-xs hide-sm hide-md py-2 d-flex justify-content-center align-items-center h-100">
+                                    <nav className="Menu nav-header py-2 h-100">
                                         <ul className="list-unstyled li-inline m-0 split-list nav-split">
                                             <li className="split-list-item">
                                                 <NavLink to={ROUTES.HOME} className="text-decoration-none">

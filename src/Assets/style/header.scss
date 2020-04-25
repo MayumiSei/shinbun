@@ -5,7 +5,7 @@
 // ----------------
 
 $perspective:     60rem;
-$font-size:       1.2rem;
+$font-size:       1.5rem;
 $split-position:  60%;
 $split-thickness: 2px;
 $split-color:     $secondary-color;
@@ -30,6 +30,17 @@ header {
                 }
             }
         }
+    }
+}
+
+.nav-header {
+    @media screen and (max-width: $md-width){
+        display: none;
+    }
+    @media screen and (min-width: $md-width){
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 }
 
