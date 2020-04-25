@@ -5,6 +5,7 @@ import { Editor } from '@tinymce/tinymce-react';
 import CreatableSelect from 'react-select/creatable';
 import snapshotToArray from '../../Helpers/firebaseHelper';
 import '../../Assets/style/index.scss';
+import lineBrush from '../../Assets/images/background/homePage/line-brush.png';
 
 class articleUpdate extends Component {
     constructor(props) {
@@ -90,7 +91,6 @@ class articleUpdate extends Component {
         });
 
         document.body.removeAttribute('class');
-        document.body.classList.add('background-default');
     }
 
     handleEditorChange = (newContent, editor) => {
@@ -219,15 +219,25 @@ class articleUpdate extends Component {
             <AuthUserContext.Consumer>
                 {
                     authUser =>
-                    <div className="header-container-padding">
+                    <div className="">
+                        <div className="top-background top-background-home">
+                            <div className="top-background-overlay"></div>
+                            <div className="font-primary text-center">
+                                <h1 className="font-weight-bold">Editing</h1>
+                                <p className="h4">— Edit and improve an article —</p>
+                            </div>
+                            <img src={lineBrush} className="line-brush" />
+                        </div>
                         <div className="container container-margin">
                             {
                                 (authUser && authUser.role === "ADMIN") ?
                                 <div>
-                                    <h1 className="text-center primary-color mb-5">Editer l'article</h1>
-        
                                     <form onSubmit={this.onSubmit}>
+                                        <h2 className="secondary-color h3">Catégorie(s)*</h2>
                                         <CreatableSelect isMulti isClearable onChange={this.handleChangeCategories} options={this.state.categories} value={this.state.categoriesSelected} className="mb-4 select-categories" required/>
+                                        <h2 className="secondary-color h3">Titre*</h2>
+                                        <input type="text" onChange={this.titleChange} value={this.state.title} className="input-form w-100 mb-4" required></input>
+                                        <h2 className="secondary-color h3">Image*</h2>
                                         {
                                             !this.state.imageIsRemoved ?
                                                 <>
@@ -242,17 +252,18 @@ class articleUpdate extends Component {
                                                 <input type="file" onChange={this.handleChangeUploadFile} className="w-100 mb-4" required></input>
 
                                         }
-                                        <input type="text" onChange={this.titleChange} value={this.state.title} className="input-form w-100 mb-4" required></input>
+                                        <h2 className="secondary-color h3">Contenu*</h2>
                                         <Editor initialValue={this.state.content} init={this.init} onEditorChange={this.handleEditorChange} />
                                         <input name="image" type="file" id="upload" className="hidden" ref={this.imageUpload}></input>
                                         {
                                             this.state.error &&
                                                 <p>{this.state.error}</p>
                                         }
-                                        <CreatableSelect isMulti isClearable onChange={this.handleChangeTags} options={this.state.tags} value={this.state.tagsSelected} className="my-4 select-tags"/>
+                                        <h2 className="secondary-color h3 mt-4">Tag(s)</h2>
+                                        <CreatableSelect isMulti isClearable onChange={this.handleChangeTags} options={this.state.tags} value={this.state.tagsSelected} className="mb-4 select-tags"/>
                                         <div>
                                             <input type="checkbox" onChange={this.publishedChange} checked={this.state.isNotPublished}></input>
-                                            <span className="primary-color h4 ml-4">Mettre en brouillon</span>
+                                            <span className="secondary-color h4 ml-4">Mettre en brouillon</span>
                                         </div>
                                         <div className="mt-4 text-center">
                                             <button type="submit" className="btn btn-primary add-btn">
