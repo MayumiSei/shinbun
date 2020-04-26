@@ -8,7 +8,8 @@ import Pagination from "react-js-pagination";
 import '../../Assets/style/index.scss';
 import '../../Assets/style/articles/articlesList.scss';
 import '../../Assets/style/pagination.scss';
-import lineBrush from '../../Assets/images/background/homePage/line-brush.png';
+import lineBrush from '../../Assets/images/background/default/line-brush.png';
+import lineBrushReverse from '../../Assets/images/background/default/line-brush-reverse.png';
 
 class articlesList extends Component {
     constructor(props) {
@@ -159,6 +160,9 @@ class articlesList extends Component {
                                 </div>
                             </>
                         }
+                    </div>
+                    <div className={`bottom-background bottom-background-${this.props.match.params.categories}`}>
+                        <img src={lineBrushReverse} className="line-brush-reverse" />
                     </div>
                 </div>
                 }

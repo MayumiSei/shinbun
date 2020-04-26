@@ -11,7 +11,7 @@ import '../Assets/style/index.scss';
 import '../Assets/style/articles/articlesList.scss';
 import '../Assets/style/pagination.scss';
 import '../Assets/style/account.scss';
-import lineBrush from '../Assets/images/background/homePage/line-brush.png';
+import lineBrush from '../Assets/images/background/default/line-brush.png';
 
 class Account extends Component {
 

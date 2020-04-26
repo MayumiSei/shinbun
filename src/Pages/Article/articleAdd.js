@@ -7,7 +7,7 @@ import snapshotToArray from '../../Helpers/firebaseHelper';
 import * as ROUTES from '../../Routes';
 import '../../Assets/style/index.scss';
 import '../../Assets/style/articles/articleForm.scss';
-import lineBrush from '../../Assets/images/background/homePage/line-brush.png';
+import lineBrush from '../../Assets/images/background/default/line-brush.png';
 
 class articleAdd extends Component {
     constructor(props) {
@@ -88,7 +88,6 @@ class articleAdd extends Component {
         });
 
         document.body.removeAttribute('class');
-        // document.body.classList.add('background-default');
     }
     
     componentWillUnmount() {

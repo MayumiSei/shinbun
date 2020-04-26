@@ -18,7 +18,7 @@ class PasswordForget extends Component {
 
     componentDidMount = () => {
 		document.body.removeAttribute('class');
-        document.body.classList.add('background-default');
+        document.body.classList.add('background-account');
 	}
 
     onSubmit = event => {

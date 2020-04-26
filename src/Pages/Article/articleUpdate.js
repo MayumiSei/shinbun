@@ -5,7 +5,7 @@ import { Editor } from '@tinymce/tinymce-react';
 import CreatableSelect from 'react-select/creatable';
 import snapshotToArray from '../../Helpers/firebaseHelper';
 import '../../Assets/style/index.scss';
-import lineBrush from '../../Assets/images/background/homePage/line-brush.png';
+import lineBrush from '../../Assets/images/background/default/line-brush.png';
 
 class articleUpdate extends Component {
     constructor(props) {

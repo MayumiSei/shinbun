@@ -45,40 +45,10 @@ body {
     position: fixed;
 }
 
-.background-signin {
+.background-account {
     background-size: cover;
     background-attachment: fixed;
-    background-image: url('../images/background/default/background-default.png');
-}
-
-.background-default, .background-Archive {
-    background-size: cover;
-    background-attachment: fixed;
-    background-image: url('../images/background/default/background-default2.jpg');
-    // background-image: url('../images/background/default-background-2.jpg');
-}
-
-.background-Northern {
-    background-size: cover;
-    background-attachment: fixed;
-    background-image: url('../images/background/nothern-background.jpg');
-}
-
-.background-Occultisme {
-    background-size: cover;
-    background-attachment: fixed;
-    background-image: url('../images/background/occult-background.jpg');
-}
-
-.background-Japon {
-    background-size: cover;
-    background-attachment: fixed;
-    // @media screen and (max-width: $md-width) {
-    //     background-image: url('../images/background/japan-background_mobile.jpg');
-    // }
-    @media screen and (min-width: $md-width) {
-        background-image: url('../images/background/japan/background-japan.jpg');
-    }
+    background-image: url('../images/background/account/background-default.jpg');
 }
 
 .container {
