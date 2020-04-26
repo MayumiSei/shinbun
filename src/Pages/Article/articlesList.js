@@ -3,13 +3,13 @@ import { withFirebase } from '../../Components/Firebase';
 import { AuthUserContext} from '../../Components/Session';
 import snapshotToArray from '../../Helpers/firebaseHelper';
 import { Link } from 'react-router-dom';
-import ArticleRemove from '../../Components/ArticleRemove';
+// import ArticleRemove from '../../Components/ArticleRemove';
 import Pagination from "react-js-pagination";
+import Footer from '../../Components/Footer';
 import '../../Assets/style/index.scss';
 import '../../Assets/style/articles/articlesList.scss';
 import '../../Assets/style/pagination.scss';
 import lineBrush from '../../Assets/images/background/default/line-brush.png';
-import lineBrushReverse from '../../Assets/images/background/default/line-brush-reverse.png';
 
 class articlesList extends Component {
     constructor(props) {
@@ -71,6 +71,8 @@ class articlesList extends Component {
                 articlePaginate: articlePaginate
             });
         });
+
+        console.log('this ', this.props);
 
         document.body.removeAttribute('class');
         // document.body.classList.add('background-' + this.props.match.params.categories);
@@ -161,9 +163,7 @@ class articlesList extends Component {
                             </>
                         }
                     </div>
-                    <div className={`bottom-background bottom-background-${this.props.match.params.categories}`}>
-                        <img src={lineBrushReverse} className="line-brush-reverse" />
-                    </div>
+                    <Footer></Footer>
                 </div>
                 }
             </AuthUserContext.Consumer>

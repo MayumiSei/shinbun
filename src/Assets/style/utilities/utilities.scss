@@ -186,7 +186,7 @@ p {
 // ----------------
 
 @media screen and (max-width: $sm-width){
-    .top-background {
+    .top-background, .bottom-background {
         height: 300px;
 
         h1 {

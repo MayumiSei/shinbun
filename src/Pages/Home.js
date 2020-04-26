@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import * as ROUTES from '../Routes';
+// import * as ROUTES from '../Routes';
 import { AuthUserContext} from '../Components/Session';
 import { withFirebase } from '../Components/Firebase';
 import snapshotToArray from '../Helpers/firebaseHelper';
-import ArticleRemove from '../Components/ArticleRemove';
+// import ArticleRemove from '../Components/ArticleRemove';
+import Footer from '../Components/Footer';
 import '../Assets/style/index.scss';
 import lineBrush from '../Assets/images/background/default/line-brush.png';
-import lineBrushReverse from '../Assets/images/background/default/line-brush-reverse.png';
 
 class Home extends Component {
     constructor(props) {
@@ -87,9 +87,7 @@ class Home extends Component {
                                 }
                             </div>
                         </div>
-                        <div className="bottom-background bottom-background-default">
-                            <img src={lineBrushReverse} className="line-brush-reverse" />
-                        </div>
+                        <Footer></Footer>
                     </div>
                 }
     

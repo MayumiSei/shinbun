@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-import { PasswordForgetForm } from '../Components/PasswordForget';
-import PasswordChangeForm from '../Components/PasswordChange';
+// import { PasswordForgetForm } from '../Components/PasswordForget';
+// import PasswordChangeForm from '../Components/PasswordChange';
 import { AuthUserContext} from '../Components/Session';
 import { withFirebase } from '../Components/Firebase';
 import snapshotToArray from '../Helpers/firebaseHelper';
 import { Link } from 'react-router-dom';
-import Pagination from "react-js-pagination";
+// import Pagination from "react-js-pagination";
 import * as ROUTES from '../Routes';
+import Footer from '../Components/Footer';
 import '../Assets/style/index.scss';
 import '../Assets/style/articles/articlesList.scss';
 import '../Assets/style/pagination.scss';
@@ -90,6 +91,8 @@ class Account extends Component {
                 }.bind(this));
             }
         });
+
+        console.log('this ', this.props.location)
 
         document.body.removeAttribute('class');
     }
@@ -369,6 +372,7 @@ class Account extends Component {
 
                             }
                         </div>
+                        <Footer></Footer>
                     </div>
                 }
             </AuthUserContext.Consumer>

@@ -14,14 +14,15 @@ class Header extends Component {
 		this.state = {
             categories: [],
             openMenu: false,
-            isDetailsPage: this.props.location.search.includes('?uid=')
+            // isDetailsPage: this.props.location.search.includes('?uid='),
+            onScroll: false,
         };
     }
 
     componentDidUpdate = (oldProps) => {
-        if(oldProps.location.search.includes('?uid=') !== this.props.location.search.includes('?uid=')) {
-            this.setState({isDetailsPage: this.props.location.search.includes('?uid=')});
-        }
+        // if(oldProps.location.search.includes('?uid=') !== this.props.location.search.includes('?uid=')) {
+        //     this.setState({isDetailsPage: this.props.location.search.includes('?uid=')});
+        // }
     }
 
     componentDidMount = () => {
@@ -31,6 +32,15 @@ class Header extends Component {
                 categories
             });
         });
+
+        window.addEventListener('scroll', function() {
+            let scroll = document.documentElement.scrollTop;
+            if(scroll > 0) {
+                this.setState({onScroll: true});
+            } else {
+                this.setState({onScroll: false})
+            }      
+        }.bind(this));
     }
 
     handleSignOut = (e) => {
@@ -57,7 +67,7 @@ class Header extends Component {
                 {
                     authUser =>
                     <>
-                        <header className={this.state.isDetailsPage ? 'header-background-dark' : 'header-background-light'}>
+                        <header className={this.state.onScroll ? 'header-background-dark' : ''}>
                             <div className="container py-2 h-100">
                                 <div className="position-relative h-100">
                                     <h1 className="font-brush h4 py-3 header-title">
@@ -101,7 +111,7 @@ class Header extends Component {
                                 </div>
                             </div>
                             <div className={this.state.openMenu ? 'modal-menu menu-open' :  'modal-menu d-none'}>
-                                <ul className="list-unstyled m-0 split-list burger-menu-split">
+                                <ul className="list-unstyled m-0 split-list burger-menu-split px-2">
                                     {
                                         this.state.categories.map((item, index) => {
                                             return(
@@ -119,11 +129,11 @@ class Header extends Component {
                                     {
                                         (authUser && authUser.role === "ADMIN") &&
                                         <li className="text-uppercase split-list-item">
-                                            <a href="#" className="text-decoration-none" onClick={this.handleModal.bind(this, ROUTES.ARTICLEADD)}>
+                                            <span className="text-decoration-none link" onClick={this.handleModal.bind(this, ROUTES.ARTICLEADD)}>
                                                 Ajouter un article
                                                 <span className="Mask"><span>Ajouter un article</span></span>
                                                 <span className="Mask"><span>Ajouter un article</span></span>
-                                            </a>
+                                            </span>
                                         </li>
                                     }
 
@@ -131,27 +141,27 @@ class Header extends Component {
                                         authUser ?
                                         <>
                                             <li className="text-uppercase split-list-item">
-                                                <a href="#" className="text-decoration-none" onClick={this.handleModal.bind(this, ROUTES.ACCOUNT)}>
+                                                <span className="text-decoration-none link" onClick={this.handleModal.bind(this, ROUTES.ACCOUNT)}>
                                                     Mon compte
                                                     <span className="Mask"><span>Mon compte</span></span>
                                                     <span className="Mask"><span>Mon compte</span></span>
-                                                </a>
+                                                </span>
                                             </li>
                                             <li className="text-uppercase split-list-item">
-                                                <a href="#" className="text-decoration-none" onClick={this.handleSignOut}>
+                                                <span className="text-decoration-none link" onClick={this.handleSignOut}>
                                                     Se déconnecter
                                                     <span className="Mask"><span>Se déconnecter</span></span>
                                                     <span className="Mask"><span>Se déconnecter</span></span>
-                                                </a>
+                                                </span>
                                             </li>
                                         </>
                                         :
                                             <li className="text-uppercase split-list-item">
-                                                <a href="#" className="text-decoration-none" onClick={this.handleModal.bind(this, `${ROUTES.SIGNIN}?page=1`)}>
+                                                <span className="text-decoration-none link" onClick={this.handleModal.bind(this, `${ROUTES.SIGNIN}?page=1`)}>
                                                     Se connecter
                                                     <span className="Mask"><span>Se connecter</span></span>
                                                     <span className="Mask"><span>Se connecter</span></span>
-                                                </a>
+                                                </span>
                                             </li>
                                     }
                                 </ul>
