@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link, withRouter, NavLink } from 'react-router-dom';
 import * as ROUTES from '../Routes';
 import '../Assets/style/index.scss';
+import '../Assets/style/footer.scss';
 import lineBrushReverse from '../Assets/images/background/default/line-brush-reverse.png';
 
 class Footer extends Component {
@@ -56,6 +57,7 @@ class Footer extends Component {
         return(
             <div className={this.state.isDefault ? 'bottom-background bottom-background-default' : 'bottom-background bottom-background-' + this.props.match.params.categories}>
                 <img src={lineBrushReverse} className="line-brush-reverse" />
+                <p className="primary-color footer-copyright m-0">© Shinbun 2020</p>
             </div>
         )
             

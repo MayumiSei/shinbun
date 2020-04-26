@@ -186,12 +186,16 @@ p {
 // ----------------
 
 @media screen and (max-width: $sm-width){
-    .top-background, .bottom-background {
+    .top-background {
         height: 300px;
 
         h1 {
             font-size: 3rem;
         }
+    }
+
+    .bottom-background {
+        height: 300px;
     }
 
     .line-brush {
@@ -200,12 +204,16 @@ p {
 }
 
 @media screen and (min-width: $sm-width) and (max-width: $md-width){
-    .top-background, .bottom-background {
+    .top-background {
         height: 500px;
 
         h1 {
             font-size: 4rem;
         }
+    }
+
+    .bottom-background {
+        height: 300px;
     }
 
     .line-brush, .line-brush-reverse {
@@ -214,12 +222,16 @@ p {
 }
 
 @media screen and (min-width: $md-width){
-    .top-background, .bottom-background {
+    .top-background {
         height: 600px;
 
         h1 {
             font-size: 7rem;
         }
+    }
+
+    .bottom-background {
+        height: 400px;
     }
 
     .line-brush, .line-brush-reverse {
@@ -292,6 +304,9 @@ p {
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
+    display: flex;
+    justify-content: center;
+    padding: 2rem;
 }
 
 .line-brush-reverse {

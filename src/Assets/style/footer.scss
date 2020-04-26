@@ -1,0 +1,70 @@
+@import './utilities/values.scss';
+
+.footer-copyright {
+    display: flex;
+    align-items: flex-end;
+}
+
+// ----------------
+// Background
+// ----------------
+
+@media screen and (max-width: $sm-width){
+    .bottom-background {
+        height: 300px;
+    }
+}
+
+@media screen and (min-width: $sm-width) and (max-width: $md-width){
+    .bottom-background {
+        height: 300px;
+    }
+
+    .line-brush-reverse {
+        height: 130px;
+    }
+}
+
+@media screen and (min-width: $md-width){
+    .bottom-background {
+        height: 400px;
+    }
+
+    .line-brush-reverse {
+        height: 200px;
+    }
+}
+
+.bottom-background {
+    position: relative;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.line-brush-reverse {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+.bottom-background-default, .bottom-background-Archive {
+    background-image: url('../images/background/default/bottom-background-default.jpg');
+}
+
+.bottom-background-Occultisme {
+    background-image: url('../images/background/occultism/bottom-background-occultism.png');
+}
+
+.bottom-background-Northern {
+    background-image: url('../images/background/northern/bottom-background-northern.png');
+}
+
+.bottom-background-Japon {
+    background-image: url('../images/background/japan/bottom-background-japan.png');
+}
