@@ -33,7 +33,7 @@ class Home extends Component {
                 {
                     authUser =>
                     <div className="">
-                        <div className="top-background top-background-home">
+                        <div className="top-background top-background-default">
                             <div className="top-background-overlay"></div>
                             <div className="font-primary text-center">
                                 <h1 className="font-weight-bold">explore</h1>

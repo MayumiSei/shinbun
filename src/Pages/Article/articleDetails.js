@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { withFirebase } from '../../Components/Firebase';
 import { AuthUserContext } from '../../Components/Session';
 import { Link } from 'react-router-dom';
+import * as ROUTES from '../../Routes';
 import ArticleRemove from '../../Components/ArticleRemove';
 import '../../Assets/style/index.scss';
 import '../../Assets/style/articles/articleDetails.scss';
@@ -54,7 +55,7 @@ class articleDetails extends Component {
                                             (this.state.article.tags) && 
                                             tags.map((itemTags, index) => {
                                                 return(
-                                                    <p key={index}>{itemTags.value}</p>
+                                                    <Link to={`/tags/${itemTags.value}?page=1`} key={index}>{itemTags.value}</Link>
                                                 )
                                                 
                                             })

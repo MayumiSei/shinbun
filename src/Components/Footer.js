@@ -26,7 +26,6 @@ class Footer extends Component {
 
     componentDidMount = () => {
         let routes = this.props.location.pathname;
-        console.log('routes ', routes)
         if(routes === "/Occultisme" || routes === "/Japon" || routes === "/Northern") {
             this.setState({isDefault: false});
         } else {

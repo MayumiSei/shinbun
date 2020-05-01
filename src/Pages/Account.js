@@ -92,8 +92,6 @@ class Account extends Component {
             }
         });
 
-        console.log('this ', this.props.location)
-
         document.body.removeAttribute('class');
     }
 
@@ -115,7 +113,6 @@ class Account extends Component {
                         });
                     }
                     itemArticle.categories = JSON.stringify(categoriesArray);
-                    console.log('itemArticle ', itemArticle.categories);
                     this.props.firebase
                     .article(itemArticle.uid)
                     .set(
@@ -239,7 +236,7 @@ class Account extends Component {
                 {
                     authUser =>
                     <div>
-                        <div className="top-background top-background-home">
+                        <div className="top-background top-background-default">
                             <div className="top-background-overlay"></div>
                             <div className="font-primary text-center">
                                 <h1 className="font-weight-bold">Account</h1>

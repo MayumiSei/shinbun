@@ -10,7 +10,7 @@ import '../../Assets/style/articles/articlesList.scss';
 import '../../Assets/style/pagination.scss';
 import lineBrush from '../../Assets/images/background/default/line-brush.png';
 
-class articlesList extends Component {
+class articleTags extends Component {
     constructor(props) {
 		super(props);
 
@@ -21,42 +21,19 @@ class articlesList extends Component {
         };
     }
 
-    // Fonction appelé après que le component ait été updaté
-    componentDidUpdate = (oldProps, newState) => {
-        // Si l'url d'avant et différent du nouvel url, alors on refiltre les articles
-        if((oldProps.match.params.categories && oldProps.match.params.categories !== this.props.match.params.categories) || this.props.location.search.replace('?page=', '') !== oldProps.location.search.replace('?page=', '')) {
-            this.props.firebase.articles().on('value', snapshot => {
-                const articles  = snapshotToArray(snapshot);
-                const articlesFiltered = articles.filter(item => {
-                    let categoriesArray = JSON.parse(item.categories);
-                    const categoriesFiltered = categoriesArray.filter(item => item.value === this.props.match.params.categories);
-                    return (categoriesFiltered[0] && categoriesFiltered[0].value === this.props.match.params.categories) && item.isNotPublished === false;
-                });
-                const articlesSort = articlesFiltered.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
-
-                const start = this.state.itemsCountPerPage * (Number(this.props.location.search.replace('?page=', '')) - 1);
-                const indexEnd = this.state.itemsCountPerPage * (Number(this.props.location.search.replace('?page=', '')) - 1) + this.state.itemsCountPerPage
-                const end = articlesSort.length < indexEnd ? articlesSort.length : indexEnd
-                const articlePaginate = articlesSort.slice(start, end);
-
-                this.setState({
-                    articles: articlesSort,
-                    articlePaginate: articlePaginate
-                });
-            });
-
-            document.body.removeAttribute('class');
-        }
-    }
-
     componentDidMount = () => {
         this.props.firebase.articles().on('value', snapshot => {
             const articles  = snapshotToArray(snapshot);
+            console.log('articles ', articles)
             const articlesFiltered = articles.filter(item => {
-                let categoriesArray = JSON.parse(item.categories);
-                const categoriesFiltered = categoriesArray.filter(item => item.value === this.props.match.params.categories);
-                return (categoriesFiltered[0] && categoriesFiltered[0].value === this.props.match.params.categories) && item.isNotPublished === false;
+                if(item.tags) {
+                    let tagsArray = JSON.parse(item.tags);
+                    const tagsFiltered = tagsArray.filter(item => item.value === this.props.match.params.tags);
+                    return (tagsFiltered[0] && tagsFiltered[0].value === this.props.match.params.tags) && item.isNotPublished === false;
+                }
+                
             });
+            console.log('articles ', articlesFiltered)
             const articlesSort = articlesFiltered.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 
             const start = this.state.itemsCountPerPage * (Number(this.props.location.search.replace('?page=', '')) - 1);
@@ -74,7 +51,7 @@ class articlesList extends Component {
     }
 
     handlePageChange(pageNumber) {
-        this.props.history.push(`${this.props.match.params.categories}?page=${pageNumber}`);
+        this.props.history.push(`${this.props.match.params.tags}?page=${pageNumber}`);
         this.setState({currentPage: pageNumber});
     }
 
@@ -84,10 +61,10 @@ class articlesList extends Component {
                 {
                     authUser =>
                     <div className="">
-                        <div className={`top-background top-background-articlesList top-background-${this.props.match.params.categories}`}>
+                        <div className={`top-background top-background-articlesList top-background-default`}>
                             <div className="top-background-overlay"></div>
                             <div className="font-primary text-center">
-                                <h1 className="font-weight-bold">{this.props.match.params.categories}</h1>
+                                <h1 className="font-weight-bold">{this.props.match.params.tags}</h1>
                             </div>
                             <img src={lineBrush} className="line-brush" alt="brush" />
                         </div>
@@ -106,7 +83,7 @@ class articlesList extends Component {
                                                             <ArticleRemove uid={item.uid}></ArticleRemove>
                                                     } */}
                                                     
-                                                    <ArticleCard item={item} categories={categories} linkArticle={`/${this.props.match.params.categories}/article/${item.slug}?uid=${item.uid}`} />
+                                                    <ArticleCard item={item} categories={categories} linkArticle={`/${categories[0].value}/article/${item.slug}?uid=${item.uid}`} />
                                                 </div>
                                             )
                                         })
@@ -136,4 +113,4 @@ class articlesList extends Component {
 
 }
 
-export default withFirebase(articlesList);
+export default withFirebase(articleTags);

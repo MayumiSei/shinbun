@@ -33,7 +33,7 @@ class ArticleCard extends Component {
                         {
                             this.props.categories.map((category, index) => {
                                 return(
-                                    <img src={require(`../Assets/images/icon/categories/${category.value}.png`)} alt={this.props.item.category.value} />
+                                    <img src={require(`../Assets/images/icon/categories/${category.value}.png`)} alt={category.value} />
                                 )
                             })
                         }
