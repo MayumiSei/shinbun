@@ -19,7 +19,11 @@ class Home extends Component {
     componentDidMount = () => {
         this.props.firebase.articles().on('value', snapshot => {
             const articles  = snapshotToArray(snapshot);
-            const articlesFiltered = articles.filter(item => item.isNotPublished === false);
+            const articlesFiltered = articles.filter(item => {
+                let categoriesArray = JSON.parse(item.categories);
+                const isPrivate = categoriesArray.filter(item => item.value === "Private");
+                return (item.isNotPublished === false && isPrivate.length === 0);
+            });
             const articlesSort = articlesFiltered.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
             this.setState({articles: articlesSort});
         });

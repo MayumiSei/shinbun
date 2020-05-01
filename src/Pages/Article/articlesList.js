@@ -30,7 +30,13 @@ class articlesList extends Component {
                 const articlesFiltered = articles.filter(item => {
                     let categoriesArray = JSON.parse(item.categories);
                     const categoriesFiltered = categoriesArray.filter(item => item.value === this.props.match.params.categories);
-                    return (categoriesFiltered[0] && categoriesFiltered[0].value === this.props.match.params.categories) && item.isNotPublished === false;
+                    const isPrivate = categoriesArray.filter(item => item.value === "Private");
+                    const isPrivateUrl = this.props.match.params.categories === "Private";
+                    if(isPrivate && isPrivateUrl) {
+                        return (categoriesFiltered[0] && categoriesFiltered[0].value === this.props.match.params.categories) && item.isNotPublished === false;
+                    } else {
+                        return (categoriesFiltered[0] && categoriesFiltered[0].value === this.props.match.params.categories) && item.isNotPublished === false && isPrivate.length === 0;
+                    }
                 });
                 const articlesSort = articlesFiltered.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 
@@ -55,7 +61,14 @@ class articlesList extends Component {
             const articlesFiltered = articles.filter(item => {
                 let categoriesArray = JSON.parse(item.categories);
                 const categoriesFiltered = categoriesArray.filter(item => item.value === this.props.match.params.categories);
-                return (categoriesFiltered[0] && categoriesFiltered[0].value === this.props.match.params.categories) && item.isNotPublished === false;
+                const isPrivate = categoriesArray.filter(item => item.value === "Private");
+                const isPrivateUrl = this.props.match.params.categories === "Private";
+                if(isPrivate && isPrivateUrl) {
+                    return (categoriesFiltered[0] && categoriesFiltered[0].value === this.props.match.params.categories) && item.isNotPublished === false;
+                } else {
+                    return (categoriesFiltered[0] && categoriesFiltered[0].value === this.props.match.params.categories) && item.isNotPublished === false && isPrivate.length === 0;
+                }
+                // return (categoriesFiltered[0] && categoriesFiltered[0].value === this.props.match.params.categories) && item.isNotPublished === false && isPrivate.length === 0;
             });
             const articlesSort = articlesFiltered.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 

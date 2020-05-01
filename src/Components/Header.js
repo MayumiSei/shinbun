@@ -85,8 +85,8 @@ class Header extends Component {
                                             {
                                                 this.state.categories.map((item, index) => {
                                                     return(
-                                                        <li key={index} className={item.value === "Archive" && (!authUser || authUser.role !== "ADMIN") ? "d-none" : "split-list-item"}>
-                                                            <NavLink to={`/${item.value}?page=1`}className="text-decoration-none">
+                                                        <li key={index} className={item.value === ("Archive" || "Private") && (!authUser || authUser.role !== "ADMIN") ? "d-none" : "split-list-item"}>
+                                                            <NavLink to={`/${item.value}?page=1`} className="text-decoration-none">
                                                                 {item.label}
                                                                 <span className="Mask"><span>{item.label}</span></span>
                                                                 <span className="Mask"><span>{item.label}</span></span>
