@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { withFirebase } from '../../Components/Firebase';
 import { AuthUserContext} from '../../Components/Session';
 import snapshotToArray from '../../Helpers/firebaseHelper';
-import { Link } from 'react-router-dom';
-// import ArticleRemove from '../../Components/ArticleRemove';
 import Pagination from "react-js-pagination";
 import Footer from '../../Components/Footer';
 import ArticleCard from '../../Components/articleCard';
@@ -48,7 +46,6 @@ class articlesList extends Component {
             });
 
             document.body.removeAttribute('class');
-            // document.body.classList.add('background-' + this.props.match.params.categories);
         }
     }
 
@@ -76,7 +73,6 @@ class articlesList extends Component {
         console.log('this ', this.props);
 
         document.body.removeAttribute('class');
-        // document.body.classList.add('background-' + this.props.match.params.categories);
     }
 
     handlePageChange(pageNumber) {
@@ -95,10 +91,8 @@ class articlesList extends Component {
                             <div className="font-primary text-center">
                                 <h1 className="font-weight-bold">{this.props.match.params.categories}</h1>
                             </div>
-                            <img src={lineBrush} className="line-brush" />
+                            <img src={lineBrush} className="line-brush" alt="brush" />
                         </div>
-                        {/* <div class="overlay overlay-background"></div> */}
-                        {/* <div className={`background-categories background-${this.props.match.params.categories}`}></div> */}
                         <div className="container mt-5">
                         {
                             this.state.articlePaginate.length > 0 &&

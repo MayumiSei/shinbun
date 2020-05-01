@@ -62,7 +62,7 @@ class SignIn extends Component {
 									placeholder="Email Address"
 									className="mb-4 w-100 pl-5 input-signin"
 								/>
-								<img src={iconUser} className="input-signin-icon" />
+								<img src={iconUser} className="input-signin-icon" alt="user" />
 							</div>
 						</div>
 
@@ -76,7 +76,7 @@ class SignIn extends Component {
 									placeholder="Password"
 									className="w-100 pl-5 input-signin"
 								/>
-								<img src={iconPassword} className="input-signin-icon" />
+								<img src={iconPassword} className="input-signin-icon" alt="password" />
 							</div>
 						</div>
 						<div className="row no-gutters d-flex justify-content-center">

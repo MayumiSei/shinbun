@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-// import * as ROUTES from '../Routes';
 import { AuthUserContext} from '../Components/Session';
 import { withFirebase } from '../Components/Firebase';
 import snapshotToArray from '../Helpers/firebaseHelper';
-// import ArticleRemove from '../Components/ArticleRemove';
 import ArticleCard from '../Components/articleCard'
 import Footer from '../Components/Footer';
 import '../Assets/style/index.scss';
@@ -42,7 +39,7 @@ class Home extends Component {
                                 <h1 className="font-weight-bold">explore</h1>
                                 <p className="h4">— A brand new world —</p>
                             </div>
-                            <img src={lineBrush} className="line-brush" />
+                            <img src={lineBrush} className="line-brush" alt="brush" />
                         </div>
                         <div className="container">
                             <h2 className="text-center font-weight-bold secondary-color my-5">The latest articles</h2>

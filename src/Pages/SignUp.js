@@ -80,28 +80,28 @@ class SignUp extends Component {
 								<div className="col-8 col-md-6 col-lg-4 position-relative">
 									<input name="username" value={username} onChange={this.onChange} type="text"
 										placeholder="Nom d'utilisateur" className="mb-4 w-100 pl-5 input-signin" />
-								<img src={iconUser} className="input-signin-icon" />
+								<img src={iconUser} className="input-signin-icon" alt="user" />
 							</div>
 						</div>
 						<div className="row no-gutters d-flex justify-content-center">
 								<div className="col-8 col-md-6 col-lg-4 position-relative">
 								<input name="email" value={email} onChange={this.onChange} type="text"
 									placeholder="Adresse email" className="mb-4 w-100 pl-5 input-signin" />
-								<img src={iconMail} className="input-signin-icon" />
+								<img src={iconMail} className="input-signin-icon" alt="mail" />
 							</div>
 						</div>
 						<div className="row no-gutters d-flex justify-content-center">
 								<div className="col-8 col-md-6 col-lg-4 position-relative">
 								<input name="passwordOne" value={passwordOne} onChange={this.onChange} type="password"
 								placeholder="Mot de passe" className="mb-4 w-100 pl-5 input-signin" />
-								<img src={iconPassword} className="input-signin-icon" />
+								<img src={iconPassword} className="input-signin-icon" alt="password" />
 							</div>
 						</div>
 						<div className="row no-gutters d-flex justify-content-center">
 								<div className="col-8 col-md-6 col-lg-4 position-relative">
 								<input name="passwordTwo" value={passwordTwo} onChange={this.onChange} type="password"
 								placeholder="Confirmer le mot de passe" className="mb-4 w-100 pl-5 input-signin" />
-								<img src={iconPassword} className="input-signin-icon" />
+								<img src={iconPassword} className="input-signin-icon" alt="passwordConfirm" />
 							</div>
 						</div>
 						

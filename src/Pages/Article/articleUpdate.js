@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { withFirebase } from '../../Components/Firebase';
 import { AuthUserContext, withAuthorization} from '../../Components/Session';
 import { Editor } from '@tinymce/tinymce-react';
 import CreatableSelect from 'react-select/creatable';
@@ -28,7 +27,7 @@ class articleUpdate extends Component {
                       bullist numlist outdent indent | removeformat | help | code | image',
             toolbar2: 'print preview media',
             file_picker_callback: function (callback, value, meta) {
-                if (meta.filetype == 'image') {
+                if (meta.filetype === 'image') {
                     // appelle la fonction file_picker_callback
                     this.imageUpload.current.click();
                     this.imageUpload.current.addEventListener('change', function () {
@@ -226,7 +225,7 @@ class articleUpdate extends Component {
                                 <h1 className="font-weight-bold">Editing</h1>
                                 <p className="h4">— Edit and improve an article —</p>
                             </div>
-                            <img src={lineBrush} className="line-brush" />
+                            <img src={lineBrush} className="line-brush" alt="brush" />
                         </div>
                         <div className="container container-margin">
                             {
@@ -242,7 +241,7 @@ class articleUpdate extends Component {
                                             !this.state.imageIsRemoved ?
                                                 <>
                                                 <div className="update-article-img mb-4">
-                                                    <img src={this.state.article.image} className="update-article-img" />
+                                                    <img src={this.state.article.image} className="update-article-img" alt={this.state.article.title} />
                                                     <button type="button" onClick={this.removeImage} className="btn btn-primary">
                                                         <span className="h4">Supprimer</span>
                                                     </button>

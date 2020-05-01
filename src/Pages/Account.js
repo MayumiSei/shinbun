@@ -245,7 +245,7 @@ class Account extends Component {
                                 <h1 className="font-weight-bold">Account</h1>
                                 <p className="h4">— All about your informations —</p>
                             </div>
-                            <img src={lineBrush} className="line-brush" />
+                            <img src={lineBrush} className="line-brush" alt="brush" />
                         </div>
                         <div className="container mt-4">
                             {/* <PasswordForgetForm />
@@ -326,14 +326,14 @@ class Account extends Component {
                                                                     <div className="article-block position-relative">
                                                                         <Link to={`/${categories[0].value}/article/${item.slug}?uid=${item.uid}`} className="text-decoration-none">   
                                                                             <div className="position-relative h-100">
-                                                                                <img src={item.image} className="article-img" />
+                                                                                <img src={item.image} className="article-img" alt={item.title} />
                                                                                 <div className="img-overlay"></div>
                                                                             </div>
                                                                             <div className="article-categories">
                                                                                 {
                                                                                     categories.map((category, index) => {
                                                                                         return(
-                                                                                            <img src={require(`../Assets/images/icon/categories/${category.value}.png`)} />
+                                                                                            <img src={require(`../Assets/images/icon/categories/${category.value}.png`)} alt={item.category.value} />
                                                                                         )
                                                                                     })
                                                                                 }

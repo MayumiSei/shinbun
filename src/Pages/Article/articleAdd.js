@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import { withFirebase } from '../../Components/Firebase';
 import { AuthUserContext, withAuthorization} from '../../Components/Session';
 import { Editor } from '@tinymce/tinymce-react';
 import CreatableSelect from 'react-select/creatable';
 import snapshotToArray from '../../Helpers/firebaseHelper';
-import * as ROUTES from '../../Routes';
 import '../../Assets/style/index.scss';
 import '../../Assets/style/articles/articleForm.scss';
 import lineBrush from '../../Assets/images/background/default/line-brush.png';
@@ -30,7 +28,7 @@ class articleAdd extends Component {
                       bullist numlist outdent indent | removeformat | help | code | image',
             toolbar2: 'print preview media',
             file_picker_callback: function (callback, value, meta) {
-                if (meta.filetype == 'image') {
+                if (meta.filetype === 'image') {
                     // appelle la fonction file_picker_callback
                     this.imageUpload.current.click();
                     this.imageUpload.current.addEventListener('change', function () {
@@ -216,7 +214,7 @@ class articleAdd extends Component {
                                 <h1 className="font-weight-bold">Adding</h1>
                                 <p className="h4">— Add a new article —</p>
                             </div>
-                            <img src={lineBrush} className="line-brush" />
+                            <img src={lineBrush} className="line-brush" alt="brush" />
                         </div>
                         <div className="container container-margin">
                             {

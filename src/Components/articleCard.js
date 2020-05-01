@@ -23,7 +23,7 @@ class ArticleCard extends Component {
             <div className="article-block position-relative">
                 <Link to={this.props.linkArticle} className="text-decoration-none">
                     <div className="position-relative h-100">
-                        <img src={this.props.item.image} className="article-img" />
+                        <img src={this.props.item.image} className="article-img" alt={this.props.item.title} />
                         <div className="img-overlay"></div>
                     </div>
                     <div className="article-date">
@@ -33,7 +33,7 @@ class ArticleCard extends Component {
                         {
                             this.props.categories.map((category, index) => {
                                 return(
-                                    <img src={require(`../Assets/images/icon/categories/${category.value}.png`)} />
+                                    <img src={require(`../Assets/images/icon/categories/${category.value}.png`)} alt={this.props.item.category.value} />
                                 )
                             })
                         }

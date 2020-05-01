@@ -6,9 +6,6 @@ import '../Assets/style/index.scss';
 import remove from '../Assets/images/icon/article/remove.png';
 
 class ArticleRemove extends Component {
-    constructor(props) {
-        super(props);
-    }
 
     handleClick = event => {
         this.props.firebase.article(this.props.uid).remove();
@@ -18,7 +15,7 @@ class ArticleRemove extends Component {
     render() {
         return(
             <button type="submit" onClick={this.handleClick} className="btn">
-                 <img src={remove} />
+                 <img src={remove} alt="remove" />
             </button>
         );
     }

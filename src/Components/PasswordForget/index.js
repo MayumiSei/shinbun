@@ -58,7 +58,7 @@ class PasswordForget extends Component {
                                     placeholder="Adresse email"
                                     className="mb-4 w-100 pl-5 input-signin"
                                 />
-                                <img src={iconUser} className="input-signin-icon" />
+                                <img src={iconUser} className="input-signin-icon" alt="user" />
                             </div>
                         </div>
                         <div className="row no-gutters d-flex justify-content-center">
