@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 // import ArticleRemove from '../../Components/ArticleRemove';
 import Pagination from "react-js-pagination";
 import Footer from '../../Components/Footer';
+import ArticleCard from '../../Components/articleCard';
 import '../../Assets/style/index.scss';
 import '../../Assets/style/articles/articlesList.scss';
 import '../../Assets/style/pagination.scss';
@@ -113,36 +114,7 @@ class articlesList extends Component {
                                                             <ArticleRemove uid={item.uid}></ArticleRemove>
                                                     } */}
                                                     
-                                                    
-                                                    <div className="article-block position-relative">
-                                                        <Link to={`/${this.props.match.params.categories}/article/${item.slug}?uid=${item.uid}`} className="text-decoration-none">
-                                                            <div className="position-relative h-100">
-                                                                <img src={item.image} className="article-img" />
-                                                                <div className="img-overlay"></div>
-                                                            </div>
-                                                            <div className="article-date">
-                                                                <span>{new Date(item.createdAt).toLocaleDateString()}</span>
-                                                            </div>
-                                                            <div className="article-categories">
-                                                                {
-                                                                    categories.map((category, index) => {
-                                                                        return(
-                                                                            <img src={require(`../../Assets/images/icon/categories/${category.value}.png`)} />
-                                                                        )
-                                                                    })
-                                                                }
-                                                            </div>
-                                                            <div className="article-content position-absolute">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-                                                                    <path fill="#ffffff" fill-opacity="0.6" d="M0,320L60,282.7C120,245,240,171,360,144C480,117,600,139,720,170.7C840,203,960,245,1080,240C1200,235,1320,181,1380,154.7L1440,128L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path>
-                                                                </svg>
-                                                                <div className="article-content-details p-3">
-                                                                    <h2 className="h4">{item.title}</h2>
-                                                                </div>
-                                                            </div>
-                                                        </Link>
-                                                    </div>
-                                                    
+                                                    <ArticleCard item={item} categories={categories} linkArticle={`/${this.props.match.params.categories}/article/${item.slug}?uid=${item.uid}`} />
                                                 </div>
                                             )
                                         })

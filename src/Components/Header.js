@@ -116,11 +116,11 @@ class Header extends Component {
                                         this.state.categories.map((item, index) => {
                                             return(
                                                 <li key={index} className={item.value === "Archive" && (!authUser || authUser.role !== "ADMIN") ? "d-none hide-lg" : "split-list-item hide-lg"}>
-                                                    <Link to={`/${item.value}?page=1`} className="text-decoration-none">
+                                                    <span onClick={this.handleModal.bind(this, `/${item.value}?page=1`)} className="text-decoration-none link">
                                                         {item.label}
                                                         <span className="Mask"><span>{item.label}</span></span>
                                                         <span className="Mask"><span>{item.label}</span></span>
-                                                    </Link>
+                                                    </span>
                                                 </li>
                                             )
                                         })

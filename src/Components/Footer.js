@@ -57,7 +57,7 @@ class Footer extends Component {
         return(
             <div className={this.state.isDefault ? 'bottom-background bottom-background-default' : 'bottom-background bottom-background-' + this.props.match.params.categories}>
                 <img src={lineBrushReverse} className="line-brush-reverse" />
-                <p className="primary-color footer-copyright m-0">© Shinbun 2020</p>
+                <p className="white-color footer-copyright m-0">© Shinbun 2020</p>
             </div>
         )
             
