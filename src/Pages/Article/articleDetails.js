@@ -47,27 +47,39 @@ class articleDetails extends Component {
                             <div className="container">
                                 <div className="row no-gutters d-flex justify-content-center">
                                     {
-                                        (authUser && authUser.role === "ADMIN" && this.state.isPrivate) ?
-                                            <div className="col-12 col-xl-10 col-xxl-8 article-details-block p-5">
-                                                {
+                                        (!this.state.isPrivate || (authUser && authUser.role === "ADMIN" && this.state.isPrivate)) ?
+                                            <div className="col-12 col-xl-10 col-xxl-8 article-details-block">
+                                                <div className="row no-gutters article-details-header p-3">
+                                                    <div className="col-6">
+                                                        <p>{this.state.article.author}</p>
+                                                    </div>
+                                                    {
                                                     (authUser && authUser.role === "ADMIN") &&
-                                                    <div className="article-details-action">
+                                                    <div className="col-6 article-details-action">
                                                         <Link to={`/article/update/${this.state.urlParam}`}>
-                                                            <img src={edit} className="mr-4" alt="edit" />
+                                                            <img src={edit} className="mr-2 mr-sm-4" alt="edit" />
                                                         </Link>
                                                         <ArticleRemove uid={this.state.article.uid} />
                                                     </div>
                                                 }
-                                                <h1 className="h3 text-center pb-3 pb-lg-5">{this.state.article.title}</h1>
-                                                <div dangerouslySetInnerHTML={{__html: this.state.article.content}}></div>
+                                                </div>
+                                                <div className="article-details-content p-3 p-sm-5">
+                                                    <h1 className="h3 text-center pb-3 pb-lg-5">{this.state.article.title}</h1>
+                                                    <div dangerouslySetInnerHTML={{__html: this.state.article.content}}></div>
+                                                </div>
                                                 {
                                                     (this.state.article.tags) && 
-                                                    tags.map((itemTags, index) => {
-                                                        return(
-                                                            <Link to={`/tags/${itemTags.value}?page=1`} key={index}>{itemTags.value}</Link>
-                                                        )
-                                                        
-                                                    })
+                                                    <div className="row no-gutters p-3">
+                                                        {
+                                                            tags.map((itemTags, index) => {
+                                                                return(
+                                                                    <Link to={`/tags/${itemTags.value}?page=1`} key={index}>{itemTags.value}</Link>
+                                                                )
+                                                                
+                                                            })
+                                                        }
+
+                                                    </div>
                                                 }
                                             </div>
                                         :

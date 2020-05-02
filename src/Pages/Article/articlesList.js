@@ -18,6 +18,7 @@ class articlesList extends Component {
             articles: [],
             itemsCountPerPage: 10,
             articlePaginate: [],
+            isPrivate: false
         };
     }
 
@@ -32,6 +33,9 @@ class articlesList extends Component {
                     const categoriesFiltered = categoriesArray.filter(item => item.value === this.props.match.params.categories);
                     const isPrivate = categoriesArray.filter(item => item.value === "Private");
                     const isPrivateUrl = this.props.match.params.categories === "Private";
+                    this.setState({
+                        isPrivate: isPrivate.length > 0
+                    })
                     if(isPrivate && isPrivateUrl) {
                         return (categoriesFiltered[0] && categoriesFiltered[0].value === this.props.match.params.categories) && item.isNotPublished === false;
                     } else {
@@ -63,12 +67,14 @@ class articlesList extends Component {
                 const categoriesFiltered = categoriesArray.filter(item => item.value === this.props.match.params.categories);
                 const isPrivate = categoriesArray.filter(item => item.value === "Private");
                 const isPrivateUrl = this.props.match.params.categories === "Private";
+                this.setState({
+                    isPrivate: isPrivate.length > 0
+                })
                 if(isPrivate && isPrivateUrl) {
                     return (categoriesFiltered[0] && categoriesFiltered[0].value === this.props.match.params.categories) && item.isNotPublished === false;
                 } else {
                     return (categoriesFiltered[0] && categoriesFiltered[0].value === this.props.match.params.categories) && item.isNotPublished === false && isPrivate.length === 0;
                 }
-                // return (categoriesFiltered[0] && categoriesFiltered[0].value === this.props.match.params.categories) && item.isNotPublished === false && isPrivate.length === 0;
             });
             const articlesSort = articlesFiltered.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 
@@ -107,37 +113,35 @@ class articlesList extends Component {
                         <div className="container mt-5">
                         {
                             this.state.articlePaginate.length > 0 &&
-                            <>
-                                <div className="row no-gutters">
-                                {
-                                    this.state.articlePaginate.map((item, index) => {
-                                        const categories = JSON.parse(item.categories);
-                                            return(
-                                                <div key={index} className="col-12 col-lg-6 col-xxl-4 article-list">
-                                                    {/* {
-                                                        (authUser && authUser.role === "ADMIN") &&
-                                                            <ArticleRemove uid={item.uid}></ArticleRemove>
-                                                    } */}
-                                                    
-                                                    <ArticleCard item={item} categories={categories} linkArticle={`/${this.props.match.params.categories}/article/${item.slug}?uid=${item.uid}`} />
-                                                </div>
-                                            )
-                                        })
-                                }
-                                </div>
-                                <div>
-                                    <Pagination
-                                        activePage={Number(this.props.location.search.replace('?page=', ''))}
-                                        itemsCountPerPage={this.state.itemsCountPerPage}
-                                        totalItemsCount={this.state.articles.length}
-                                        pageRangeDisplayed={5}
-                                        onChange={this.handlePageChange.bind(this)}
-                                        itemClass="page-item"
-                                        linkClass="page-link"
-                                        hideDisabled={true}
-                                    />
-                                </div>
-                            </>
+                            (!this.state.isPrivate || (authUser && authUser.role === "ADMIN" && this.state.isPrivate)) ?
+                                <>
+                                    <div className="row no-gutters">
+                                    {
+                                        this.state.articlePaginate.map((item, index) => {
+                                            const categories = JSON.parse(item.categories);
+                                                return(
+                                                    <div key={index} className="col-12 col-lg-6 col-xxl-4 article-list">
+                                                        <ArticleCard item={item} categories={categories} linkArticle={`/${this.props.match.params.categories}/article/${item.slug}?uid=${item.uid}`} />
+                                                    </div>
+                                                )
+                                            })
+                                    }
+                                    </div>
+                                    <div>
+                                        <Pagination
+                                            activePage={Number(this.props.location.search.replace('?page=', ''))}
+                                            itemsCountPerPage={this.state.itemsCountPerPage}
+                                            totalItemsCount={this.state.articles.length}
+                                            pageRangeDisplayed={5}
+                                            onChange={this.handlePageChange.bind(this)}
+                                            itemClass="page-item"
+                                            linkClass="page-link"
+                                            hideDisabled={true}
+                                        />
+                                    </div>
+                                </>
+                                :
+                                    <p className="my-5 text-center">Vous n'avez pas accès à cette page.</p>
                         }
                     </div>
                     <Footer></Footer>

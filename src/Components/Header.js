@@ -70,8 +70,11 @@ class Header extends Component {
                         <header className={this.state.onScroll ? 'header-background-dark' : ''}>
                             <div className="container py-2 h-100">
                                 <div className="position-relative h-100">
-                                    <h1 className="font-brush h4 py-3 header-title">
-                                        <Link to={ROUTES.HOME} className="primary-color text-decoration-none">Shinbun</Link>
+                                    <h1 className="h4 py-3 header-title">
+                                        <Link to={ROUTES.HOME} className="primary-color text-decoration-none">
+                                            <span className="font-brush mr-3">Shinbun</span>
+                                            <span className="font-japanese">精</span>
+                                            </Link>
                                     </h1>
                                     <nav className="Menu nav-header py-2 h-100">
                                         <ul className="list-unstyled li-inline m-0 split-list nav-split">
@@ -85,7 +88,7 @@ class Header extends Component {
                                             {
                                                 this.state.categories.map((item, index) => {
                                                     return(
-                                                        <li key={index} className={item.value === ("Archive" || "Private") && (!authUser || authUser.role !== "ADMIN") ? "d-none" : "split-list-item"}>
+                                                        <li key={index} className={(item.value === "Archive" || item.value === "Private") && (!authUser || authUser.role !== "ADMIN") ? "d-none" : "split-list-item"}>
                                                             <NavLink to={`/${item.value}?page=1`} className="text-decoration-none">
                                                                 {item.label}
                                                                 <span className="Mask"><span>{item.label}</span></span>

@@ -40,7 +40,7 @@ header {
     @media screen and (min-width: $md-width){
         display: flex;
         justify-content: center;
-        align-items: center;
+        align-items: flex-end;
     }
 }
 
@@ -50,14 +50,23 @@ header {
 
 .header-title {
     z-index: 10;
+
     
     @media screen and (max-width: $md-width){
         text-align: center;
+        position: relative;
+        top: -12px;
     }
     @media screen and (min-width: $md-width){
         position: absolute;
-        top: 0;
+        top: -12px;
         left: 0;
+    }
+
+    .font-japanese {
+        font-size: 2.5rem;
+        position: relative;
+        top: 7px;
     }
 }
 

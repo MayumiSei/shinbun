@@ -38,10 +38,20 @@
     }
 }
 
+.article-details-header {
+}
+
 .article-details-action {
-    position: absolute;
-    top: 5px;
-    right: 5px;
+    text-align: right;
+
+    img {
+        @media screen and (max-width: $sm-width){
+            width: 24px
+        }
+        @media screen and (min-width: $sm-width){
+            width: 32px;
+        }
+    }
 }
 
 .article-details-wave {
