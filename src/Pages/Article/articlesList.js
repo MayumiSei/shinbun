@@ -110,40 +110,62 @@ class articlesList extends Component {
                             </div>
                             <img src={lineBrush} className="line-brush" alt="brush" />
                         </div>
-                        <div className="container mt-5">
-                        {
-                            this.state.articlePaginate.length > 0 &&
-                            (!this.state.isPrivate || (authUser && authUser.role === "ADMIN" && this.state.isPrivate)) ?
-                                <>
-                                    <div className="row no-gutters">
-                                    {
-                                        this.state.articlePaginate.map((item, index) => {
-                                            const categories = JSON.parse(item.categories);
-                                                return(
-                                                    <div key={index} className="col-12 col-lg-6 col-xxl-4 article-list">
-                                                        <ArticleCard item={item} categories={categories} linkArticle={`/${this.props.match.params.categories}/article/${item.slug}?uid=${item.uid}`} />
-                                                    </div>
-                                                )
-                                            })
-                                    }
+                        <div className="container position-relative d-flex justify-content-center">
+                            {
+                                this.props.match.params.categories === 'Japon' &&
+                                    <div class="category-text">
+                                        <p className="font-calligraphy vertical-rl position-absolute japanese-text hide-xs">昔々あるところに</p>
                                     </div>
-                                    <div>
-                                        <Pagination
-                                            activePage={Number(this.props.location.search.replace('?page=', ''))}
-                                            itemsCountPerPage={this.state.itemsCountPerPage}
-                                            totalItemsCount={this.state.articles.length}
-                                            pageRangeDisplayed={5}
-                                            onChange={this.handlePageChange.bind(this)}
-                                            itemClass="page-item"
-                                            linkClass="page-link"
-                                            hideDisabled={true}
-                                        />
+                            }
+                            {
+                                this.props.match.params.categories === 'Northern' &&
+                                    <div class="category-text">
+                                        <p class="vertical-rl position-absolute northern-text hide-xs">ᚦᚫᚱ ᛖᚱ ᛒᛖᛏᚱᛁ ᚹᛁᛞ ᛊᛏᚫᚾᛞᚫ ᛖᚦᚫ ᚹᛖᚷᚫ ᛖᚫᛓᚦᚢ ᛊᛏᛁᚲᛚᚨᛊ ᚦᚢ ᚢᛁᛚᛁ ᚨᚦᛊᚾ ᛞᛖᛃᚨᚦᚱᛖ ᛃᛏᛏᚢᚱ</p>
                                     </div>
-                                </>
-                                :
-                                    <p className="my-5 text-center">Vous n'avez pas accès à cette page.</p>
-                        }
-                    </div>
+                            }
+                            {
+                                this.props.match.params.categories === 'Occultisme' &&
+                                    <div class="category-text">
+                                        <p className="font-roman vertical-rl position-absolute occultism-text hide-xs">Le grand péché du monde moderne, c’est le refus de l’invisible.</p>
+                                    </div>
+                            }
+                            <div className="container-medium article-list-block position-relative">
+                                
+                                
+                                {
+                                    this.state.articlePaginate.length > 0 &&
+                                    (!this.state.isPrivate || (authUser && authUser.role === "ADMIN" && this.state.isPrivate)) ?
+                                        <>
+                                            <div className="row no-gutters">
+                                            {
+                                                this.state.articlePaginate.map((item, index) => {
+                                                    const categories = JSON.parse(item.categories);
+                                                        return(
+                                                            <div key={index} className="col-12 col-lg-6 col-xxl-4 article-list">
+                                                                <ArticleCard item={item} categories={categories} currentCategory={this.props.match.params.categories} linkArticle={`/${this.props.match.params.categories}/article/${item.slug}?uid=${item.uid}`} />
+                                                            </div>
+                                                        )
+                                                    })
+                                            }
+                                            </div>
+                                            <div>
+                                                <Pagination
+                                                    activePage={Number(this.props.location.search.replace('?page=', ''))}
+                                                    itemsCountPerPage={this.state.itemsCountPerPage}
+                                                    totalItemsCount={this.state.articles.length}
+                                                    pageRangeDisplayed={5}
+                                                    onChange={this.handlePageChange.bind(this)}
+                                                    itemClass="page-item"
+                                                    linkClass="page-link"
+                                                    hideDisabled={true}
+                                                />
+                                            </div>
+                                        </>
+                                        :
+                                            <p className="my-5 text-center">Vous n'avez pas accès à cette page.</p>
+                                }
+                            </div>
+                        </div>
                     <Footer></Footer>
                 </div>
                 }

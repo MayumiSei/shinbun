@@ -118,13 +118,18 @@ class Header extends Component {
                                     {
                                         this.state.categories.map((item, index) => {
                                             return(
-                                                <li key={index} className={item.value === "Archive" && (!authUser || authUser.role !== "ADMIN") ? "d-none hide-lg" : "split-list-item hide-lg"}>
-                                                    <span onClick={this.handleModal.bind(this, `/${item.value}?page=1`)} className="text-decoration-none link">
-                                                        {item.label}
-                                                        <span className="Mask"><span>{item.label}</span></span>
-                                                        <span className="Mask"><span>{item.label}</span></span>
-                                                    </span>
-                                                </li>
+                                                <>
+                                                    <li key={index} className={item.value === "Archive" && (!authUser || authUser.role !== "ADMIN") ? "d-none hide-lg" : "hide-lg"}>
+                                                        <img src={require(`../Assets/images/icon/categories/${item.value}.png`)} className="d-inline-block mr-2" />
+                                                        <div className="split-list-item d-inline-block">
+                                                            <span onClick={this.handleModal.bind(this, `/${item.value}?page=1`)} className="text-decoration-none link">
+                                                                {item.label}
+                                                                <span className="Mask"><span>{item.label}</span></span>
+                                                                <span className="Mask"><span>{item.label}</span></span>
+                                                            </span>
+                                                        </div>
+                                                    </li>
+                                                </>
                                             )
                                         })
                                     }

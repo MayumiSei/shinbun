@@ -66,6 +66,26 @@ p {
     font-family: genkai;
 }
 
+.font-calligraphy {
+    font-family: hkgyokk;
+}
+
+.font-newspaper {
+    font-family: old-newspaper;
+}
+
+.font-roman {
+    font-family: morris-roman;
+}
+
+.font-roman2 {
+    font-family: island-roman;
+}
+
+.vertical-rl {
+    writing-mode: vertical-rl;
+}
+
 
 // ----------------
 // Colors
@@ -126,6 +146,18 @@ p {
     @media screen and (min-width: $md-width){
         margin-top: 5rem;
         margin-bottom: 5rem;
+    }
+}
+
+.container-medium {
+    @media screen and (max-width: $sm-width){
+        width: 100%;
+    }
+    @media screen and (min-width: $sm-width) and (max-width: $lg-width){
+        width: 90%;
+    }
+    @media screen and (min-width: $lg-width){
+        width: 85%;
     }
 }
 
@@ -298,7 +330,7 @@ p {
     background-image: url('../../images/background/japan/top-background-japan.png');
 
     h1, p {
-        color: rgba(255, 255, 255, .5);
+        color: rgba(255, 255, 255, .6);
     }
 }
 

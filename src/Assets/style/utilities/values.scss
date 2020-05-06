@@ -38,6 +38,24 @@ $secondary-color: #BB5975;
     src: url('../../fonts/Genkai-Mincho-font/genkai-mincho.ttf');
 }
 
+@font-face {
+    font-family: hkgyokk;
+    src: url('../../fonts/hkgyokk/hkgyokk.ttf');
+}
+@font-face {
+    font-family: old-newspaper;
+    src: url('../../fonts/old-newspaper/OldNewspaperTypes.ttf');
+}
+@font-face {
+    font-family: morris-roman;
+    src: url('../../fonts/morris_roman/MorrisRomanBlack.ttf');
+}
+@font-face {
+    font-family: island-roman;
+    src: url('../../fonts/island_roman/Island_Roman.ttf');
+}
+
+
 // ----------------
 // Header
 // ----------------

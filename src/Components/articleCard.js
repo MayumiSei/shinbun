@@ -20,7 +20,7 @@ class ArticleCard extends Component {
 
     render() {
         return(
-            <div className="article-block position-relative">
+            <div className={`article-block position-relative article-block-${this.props.currentCategory}`}>
                 <Link to={this.props.linkArticle} className="text-decoration-none">
                     <div className="position-relative h-100">
                         <img src={this.props.item.image} className="article-img" alt={this.props.item.title} />

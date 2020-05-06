@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { withFirebase } from '../../Components/Firebase';
 import { AuthUserContext } from '../../Components/Session';
 import { Link } from 'react-router-dom';
-import * as ROUTES from '../../Routes';
 import ArticleRemove from '../../Components/ArticleRemove';
 import '../../Assets/style/index.scss';
 import '../../Assets/style/articles/articleDetails.scss';
@@ -51,7 +50,8 @@ class articleDetails extends Component {
                                             <div className="col-12 col-xl-10 col-xxl-8 article-details-block">
                                                 <div className="row no-gutters article-details-header p-3">
                                                     <div className="col-6">
-                                                        <p>{this.state.article.author}</p>
+                                                        <p className="m-0">{new Date(this.state.article.createdAt).toLocaleDateString()}</p>
+                                                        <p className="m-0">by <span class="primary-color font-weight-bold">{this.state.article.author}</span></p>
                                                     </div>
                                                     {
                                                     (authUser && authUser.role === "ADMIN") &&
@@ -64,7 +64,7 @@ class articleDetails extends Component {
                                                 }
                                                 </div>
                                                 <div className="article-details-content p-3 p-sm-5">
-                                                    <h1 className="h3 text-center pb-3 pb-lg-5">{this.state.article.title}</h1>
+                                                    <h1 className="h3 text-center pb-3 pb-lg-5 secondary-color">{this.state.article.title}</h1>
                                                     <div dangerouslySetInnerHTML={{__html: this.state.article.content}}></div>
                                                 </div>
                                                 {
@@ -73,7 +73,9 @@ class articleDetails extends Component {
                                                         {
                                                             tags.map((itemTags, index) => {
                                                                 return(
-                                                                    <Link to={`/tags/${itemTags.value}?page=1`} key={index}>{itemTags.value}</Link>
+                                                                    <div className="article-details-tag">
+                                                                        <Link to={`/tags/${itemTags.value}?page=1`} key={index} className="white-color text-decoration-none">{itemTags.value}</Link>
+                                                                    </div>
                                                                 )
                                                                 
                                                             })
