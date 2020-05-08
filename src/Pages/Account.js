@@ -330,7 +330,7 @@ class Account extends Component {
                                                                                 {
                                                                                     categories.map((category, index) => {
                                                                                         return(
-                                                                                            <img src={require(`../Assets/images/icon/categories/${category.value}.png`)} alt={item.category.value} />
+                                                                                            <img src={require(`../Assets/images/icon/categories/${category.value}.png`)} alt={category.value} />
                                                                                         )
                                                                                     })
                                                                                 }
